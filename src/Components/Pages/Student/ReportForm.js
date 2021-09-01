@@ -1,10 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-
 import * as Yup from "yup";
 import DatePicker from "react-datepicker";
-
 // import TextError from "../../TextError";
 import "react-datepicker/dist/react-datepicker.css";
 import "./AdmissionForm.css";
@@ -13,7 +11,7 @@ function ReportForm(props) {
   let newId = "";
   newId = props.match.params.id;
 
-  const [dob, setDob] = useState("");
+  const [dob, setDob] = useState();
   const [doj, setDojDate] = useState(new Date());
 
   const [initialValues, setInitialValues] = useState();
@@ -39,9 +37,38 @@ function ReportForm(props) {
     console.log(e.target.name);
     const input = e.target.name;
     if (input === "fullName") {
-      setFullName(e.target.value);
+      setFullName(e.target.value)
+    }else if(input === "gender"){
+      setGender(e.target.value)
+    }else if(input === "religion"){
+      setGender(e.target.value)
+    }else if(input === "cast"){
+      setGender(e.target.value)
+    }else if(input === "nationality"){
+      setGender(e.target.value)
+    }else if(input === "Sclass"){
+      setGender(e.target.value)
+    }else if(input === "section"){
+      setGender(e.target.value)
+    }else if(input === "rollno"){
+      setGender(e.target.value)
+    }else if(input === "bloodGroup"){
+      setGender(e.target.value)
+    }else if(input === "address"){
+      setGender(e.target.value)
+    }else if(input === "image"){
+      setGender(e.target.value)
+    }else if(input === "father"){
+      setGender(e.target.value)
+    }else if(input === "fatherOccupation"){
+      setGender(e.target.value)
+    }else if(input === "phoneNo"){
+      setGender(e.target.value)
+    }else if(input === "email"){
+      setGender(e.target.value)
     }
   };
+
   const formatChange = (date) => {
     let newdate = new Date(date);
 
@@ -68,7 +95,7 @@ function ReportForm(props) {
       setAdmissionId(res.data[0].STUDENT_ID);
       setFullName(res.data[0].STD_NAME);
       setGender(res.data[0].STD_GENDER);
-      //setDob(formatChange(res.data[0].STD_DOB));
+      //setDob(res.data[0].STD_DOB);
       //setDojDate(formatChange(res.data[0].STD_DOJ));
       setReligion(res.data[0].STD_REL);
       setCast(res.data[0].STD_CAST);
@@ -257,7 +284,7 @@ function ReportForm(props) {
                   placeholder="DD/MM/YYYY"
                   dateFormat="dd/MM/yyyy"
                   defaultValue={null}
-                  value={dob} 
+                  value={formatChange(dob)} 
                 />
               </div>
 
@@ -402,12 +429,12 @@ function ReportForm(props) {
                   id="gender"
                   name="gender"
                   className="form-control"
-                  value={gender}
+                  value={bloodGroup}
                 >
-                  {optionGender.map((optionGender) => {
+                  {optionBlood.map((optionBlood) => {
                     return (
-                      <option key={optionGender.key} value={optionGender.value}>
-                        {optionGender.key}
+                      <option key={optionBlood.key} value={optionBlood.value}>
+                        {optionBlood.key}
                       </option>
                     );
                   })}
