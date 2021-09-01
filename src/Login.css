@@ -1,0 +1,253 @@
+body, html {
+    height: 100%;
+    font-family: Poppins-Regular,sans-serif;
+}
+.limiter {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.container-login100 {
+    width: 100%;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: linear-gradient(-135deg,#ffffff,#006fa7);
+}
+
+.wrap-login100 {
+    width: 960px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    /* padding: 177px 130px 33px 95px; */
+    padding-bottom: 90px;
+    padding-top: 45px;
+}
+
+.login100-pic {
+    width: 316px;
+}
+
+.login100-pic img {
+    max-width: 100%;
+}
+img {
+    vertical-align: middle;
+    border-style: none;
+    margin-top: 60px;
+}
+
+.login100-form {
+    width: 290px;
+    margin-right: 190px;
+}
+
+.login100-form-title {
+    font-family: Poppins-Bold;
+    font-size: 24px;
+    color: #333;
+    line-height: 1.2;
+    text-align: center;
+    width: 100%;
+    display: block;
+    padding-bottom: 54px;
+}
+
+.validate-input {
+    position: relative;
+}
+.wrap-input100 {
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    margin-bottom: 10px;
+}
+
+.input100 {
+    font-family: Poppins-Medium;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #666;
+    display: block;
+    width: 100%;
+    background: #e6e6e6;
+    height: 50px;
+    border-radius: 25px;
+    padding: 0 30px 0 68px;
+}
+input {
+    outline: none;
+    border: none;
+}
+button, input {
+    overflow: visible;
+}
+button, input, optgroup, select, textarea {
+    margin: 0;
+   
+}
+[role=button], a, area, button, input, label, select, summary, textarea {
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+}
+
+.focus-input100 {
+    display: block;
+    position: absolute;
+    border-radius: 25px;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0;
+    color: rgba(87,184,70,.8);
+}
+
+.symbol-input100 {
+    font-size: 15px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    border-radius: 25px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding-left: 35px;
+    pointer-events: none;
+    color: #666;
+    -webkit-transition: all .4s;
+    -o-transition: all .4s;
+    -moz-transition: all .4s;
+    transition: all .4s;
+}
+
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    
+}
+
+.container-login100-form-btn {
+    width: 100%;
+   
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 20px }
+
+    .login100-form-btn:hover{
+        background-color: #00BCD4;
+       
+    }
+    .login100-form-btn:focus {     
+        background-color:rgb(119, 49, 87);    
+    }
+    .login100-form-btn {
+        font-family: Montserrat-Bold;
+        font-size: 15px;
+        line-height: 1.5;
+        color: #fff;
+        text-transform: uppercase;
+        width: 100%;
+        height: 50px;
+        border-radius: 25px;
+        background: #4a5569;
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 25px;
+        
+        transition: all .4s;
+    }
+    button {
+        outline: none!important;
+        border: none;
+      
+    }
+    [type=reset], [type=submit], button, html [type=button] {
+        -webkit-appearance: button;
+    }
+    
+    button, input {
+        overflow: visible;
+    }
+    button, input, optgroup, select, textarea {
+        margin: 0;
+        
+    }
+    [role=button] button{
+        
+        touch-action: manipulation;
+    }
+
+    .p-t-12 {
+        padding-top: 12px;
+    }
+    .text-center {
+        text-align: center!important;
+    }
+
+    .txt1 {
+        font-family: Poppins-Regular;
+        font-size: 13px;
+        line-height: 1.5;
+        color: #999;
+    }
+    .txt2 {
+        font-family: Poppins-Regular;
+        font-size: 13px;
+        line-height: 1.5;
+        color: #666;
+    }
+
+    a{
+        margin: 0;
+        
+        touch-action: manipulation;
+        text-decoration: none;
+    background-color: transparent;
+    }
+
+    .p-t-136 {
+        padding-top: 136px;
+    }
+    .text-center {
+        text-align: center!important;
+    }
+
+    .m-l-5 {
+        margin-left: 5px;
+    }
+    .fa {
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        
+    }

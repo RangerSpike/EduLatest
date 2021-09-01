@@ -1,0 +1,15 @@
+.text-center{
+ 
+}
+
+/* td {
+    border: 1px solid black;
+    word-wrap:break-word;
+    max-width: 1000px;
+ 
+} */
+.table>:not(:last-child)>:last-child>* {
+    border-bottom-color: currentColor;
+    background: #a8c0ff;  
+
+}

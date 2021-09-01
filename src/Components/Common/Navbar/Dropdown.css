@@ -1,0 +1,44 @@
+.heropanti-menu {
+  /* background: red; */
+  width: 200px;
+  position: absolute;
+  top: 80px;
+  list-style: none;
+  text-align: start;
+  margin-left: -40px;
+}
+
+.heropanti-menu li {
+  background: #3e3e5a;
+  cursor: pointer;
+  border-radius: 20px;
+  height: 40px;
+  width: auto;
+}
+
+.heropanti-menu li:hover {
+  background: #c5bdbd;
+}
+
+.heropanti-menu.clicked {
+  display: none;
+}
+
+.heropanti-link {
+  display:table; 
+   height: 100%;
+  width: 84%; 
+  text-decoration: none; 
+  color: rgb(255, 255, 255);
+  padding: 16px;
+  border-bottom: 1.5px dotted;
+  border-radius: 20px;
+  font-size: 12px;
+  line-height: 2px;
+}
+
+@media screen and (max-width: 960px) {
+  .fa-caret-down {
+    display: none;
+  }
+}

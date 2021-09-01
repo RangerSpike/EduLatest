@@ -1,0 +1,226 @@
+.height-auto {
+    height: auto !important;
+ 
+}
+.card {
+    padding: 100px;
+    position:relative;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+   background-clip: border-box;
+   border-radius: .25rem;
+   
+}
+
+.card-body{
+    padding: 15px 30px 30px;
+    background-color: white;
+    border-radius: 4px;
+    flex: auto;
+    box-shadow: 0px 10px 20px 0px rgb(229 229 229 / 75%);
+}
+.heading-layout1{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    margin-bottom: 12px;
+}
+
+.heading-layout1 .item-title h3 {
+    color: #111111;
+    font-weight: 500;
+    margin-bottom: 0;
+    font-size: 22px;
+    line-height: 1.4;
+    font-family: 'Roboto', sans-serif;
+    margin: 0 0 20px 0;
+}
+/* .heading-layout1 .dropdown .dropdown-t  {
+    color: #bcbcbc;
+    font-size: 36px;
+    display: inline-block;
+    line-height: 1;
+    padding-bottom: 15px;
+    position: relative;
+    right: -10px;
+}
+.heading-layout1 .dropdown .dropdown-menu {
+    border: none;
+    padding: 15px 0 18px;
+} */
+
+/* .dropdown .dropdown-menu {
+    top: 58px;
+    min-width: 140px;
+    border-radius: 4px;
+    box-shadow: 0px 0px 10px 0px rgb(33 30 30 / 15%);
+}
+.dropdown-menu-right {
+    right: 0;
+    left: auto;
+}
+
+.dropdown-menu {
+    position: absolute;
+    z-index: 1000;
+    display: none;
+    float: left;
+    margin: .125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    
+} */
+.row {
+    display: flex;
+   flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    margin-top: calc(var(--bs-gutter-y) * -1);
+}
+.form-group {
+    margin-bottom:3rem;
+
+}
+.new-added-form .form-group {
+    position: absolute;
+    justify-content: center;
+    margin-bottom: 2.3rem;
+    margin-left: 40px;
+}
+@media (min-width: 1200px){
+.col-xl-3 {
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 25%;
+}}
+
+.col-12{
+position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.new-added-form .form-group label {
+    margin-bottom: 12px;
+    display: block;
+    
+}
+.new-added-form .form-group .form-control {
+    background-color: #f0f1f3;
+    height: 40px;
+}
+.form-group .form-control {
+   
+    font-size: 14px;
+    color: #111111;
+    border-radius: 4px;
+    border: none;
+    padding: 5px 15px;
+}
+.form-control {
+    display: block;
+    width: 100%;
+   line-height: 1.5;
+   background-clip: padding-box;
+   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.input {
+    overflow: visible;
+    margin: 0;
+    font-family: inherit;
+    
+}
+
+.select2{
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    text-transform: none;
+    padding: 10px;
+    background-color: #f0f1f3;
+    border-radius: 4px;
+     border: none;
+}
+.option{
+    font-weight: normal;
+    display: block;
+    white-space: nowrap;
+    min-height: 1.2em;
+    padding: 0px 2px 1px;
+}
+
+
+
+.new-added-form .form-group:last-child {
+    margin-bottom: 0;
+}
+
+.new-added-form .form-group {
+    position: relative;
+    
+}
+
+.mg-t-8 {
+    margin-top: 8px;
+}
+
+.new-added-form .form-group .btn-fill-lg {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.btn-gradient-yellow {
+    background-color: #ccb963;
+}
+.btn-fill-lg {
+    display: inline-block;
+    border: none;
+    margin-left: 800px;
+    border-radius: 100px;
+    font-weight: 500;
+    color: #ffffff;
+    letter-spacing: 1px;
+    padding: 12px 45px;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+}
+
+.bg-blue-dark {
+    background-color: #354f6d;
+}
+
+.new-added-form .form-group .textarea {
+    height: 80px;
+}
+
+
+      .btn-fill-lg2 {
+      
+        border: none;
+        margin-left: 800px;
+        width: 50PX;
+        height: 50px;
+        font-weight: 200;
+        color: #ffffff;
+        letter-spacing: 2px;
+        padding: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease-out;
+    }
+
+    .table>:not(:last-child)>:last-child>* {
+       
+        text-align: center;
+    }
