@@ -74,25 +74,30 @@ function PromotionReport() {
     console.log(std);
     console.log(sec);
   };
-  let x;
-  
+  let x = "";
+
   const onsubmitHandler = () => {
     alert("Submited Array");
-    console.log(Vresult);
-    Vresult.map((data) => {
+    //console.log(Vresult);
+    formValues.map((data) => {
       if (data.select === true) {
-        
-        x = x + "," + data.studentId;
-        console.log("SAMAMN", x);
+        if (x === "") {
+          x = `"` + data.studentId;
+        } else {
+          x = x + "," + data.studentId;
+        }
       }
     });
-    x = "";
+    
+    console.log("SAMAMN", x+`"`);
+    //x = "";
   };
 
   const [Vresult, setVresult] = useState([]);
 
   const updateRecordsAfterFilter = (val) => {
     setVresult((Vresult) => [...Vresult, val]);
+    //console.log(Vresult);
   };
   return (
     <>
