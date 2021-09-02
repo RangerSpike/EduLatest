@@ -4,6 +4,8 @@
 import React, { useEffect, useState } from "react";
 import "./PromotionReport.css";
 import Axios from "axios";
+import Navbar from "../../../Components/Common/Navbar/Navbar";
+
 
 function PromotionReport() {
   const [std, setStd] = useState("");
@@ -96,11 +98,12 @@ function PromotionReport() {
   const [Vresult, setVresult] = useState([]);
 
   const updateRecordsAfterFilter = (val) => {
-    setVresult((Vresult) => [...Vresult, val]);
+    //setVresult((Vresult) => [...Vresult, val]);
     //console.log(Vresult);
   };
   return (
     <>
+    <Navbar />
       <div className="card height-auto">
         <div className="card-body">
           <div className="heading-layout1">
