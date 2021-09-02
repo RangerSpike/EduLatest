@@ -1,6 +1,5 @@
 /*eslint-disable*/
 import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
 import Axios from "axios";
 import Navbar from "../../../Components/Common/Navbar/Navbar";
 import * as Yup from "yup";
@@ -15,12 +14,58 @@ function AdmissionForm() {
   const [dob, setDobDate] = useState();
   const [doj, setDojDate] = useState(new Date());
 
-  const [dbAction, setDbAction] = useState("Create");
-  const [formValues, setFormValues] = useState(null);
+  const [admissionId, setAdmissionId] = useState();
+  const [fullName, setFullName] = useState();
+  const [gender, setGender] = useState();
+  const [religion, setReligion] = useState();
+  const [cast, setCast] = useState();
+  const [nationality, setNationality] = useState();
+  const [Sclass, setSclass] = useState();
+  const [Ssection, setSSection] = useState();
+  const [rollno, setRollNo] = useState();
+  const [bloodGroup, setBloodGroup] = useState();
+  const [address, setAddress] = useState();
+  const [image, setImage] = useState();
+  const [father, setFather] = useState();
+  const [fatherOccupation, setFatherOccupation] = useState();
+  const [phoneNo, setPhone] = useState();
+  const [email, setEmail] = useState();
 
-  const onSubmit = (value, onSubmitProps) => {
-    onSubmitProps.setSubmitting(false);
-    onSubmitProps.resetForm();
+  const handleChange = (e) => {
+    console.log(e.target.value);
+
+    const input = e.target.name;
+    if (input === "fullName") {
+      setFullName(e.target.value);
+    } else if (input === "gender") {
+      setGender(e.target.value);
+    } else if (input === "religion") {
+      setReligion(e.target.value);
+    } else if (input === "cast") {
+      setCast(e.target.value);
+    } else if (input === "nationality") {
+      setNationality(e.target.value);
+    } else if (input === "Sclass") {
+      setSclass(e.target.value);
+    } else if (input === "Ssection") {
+      setSSection(e.target.value);
+    } else if (input === "rollno") {
+      setRollNo(e.target.value);
+    } else if (input === "bloodGroup") {
+      setBloodGroup(e.target.value);
+    } else if (input === "address") {
+      setAddress(e.target.value);
+    } else if (input === "image") {
+      setImage(e.target.value);
+    } else if (input === "father") {
+      setFather(e.target.value);
+    } else if (input === "fatherOccupation") {
+      setFatherOccupation(e.target.value);
+    } else if (input === "phoneNo") {
+      setPhone(e.target.value);
+    } else if (input === "email") {
+      setEmail(e.target.value);
+    }
   };
 
   const formatChange = (date) => {
@@ -39,27 +84,45 @@ function AdmissionForm() {
     return newdate;
   };
 
-  const newForm = (formData) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     Axios.post("http://localhost:3004/createStudent", {
-      stdname: formData.fullName,
-      stdgender: formData.gender,
-      stddob: formatChange(formData.dob),
-      stddoj: formatChange(formData.doj),
-      stdrel: formData.religion,
-      stdcast: formData.cast,
-      stdntn: formData.nationality,
-      stdclass: formData.class,
-      section: formData.section,
-      stdroll: formData.rollno,
-      stdbg: formData.bloodGroup,
-      stdadd: formData.address,
-      stdphoto: formData.image,
-      stdpg: formData.father,
-      stdpo: formData.fatherOccupation,
-      stdph: formData.phoneNo,
-      stdemail: formData.email,
+      stdname: fullName,
+      stdgender: gender,
+      stddob: formatChange(dob),
+      stddoj: formatChange(doj),
+      stdrel: religion,
+      stdcast: cast,
+      stdntn: nationality,
+      stdclass: Sclass,
+      section: Ssection,
+      stdroll: rollno,
+      stdbg: bloodGroup,
+      stdadd: address,
+      stdphoto: image,
+      stdpg: father,
+      stdpo: fatherOccupation,
+      stdph: phoneNo,
+      stdemail: email,
     }).then(() => {
       console.log("Successfully Created");
+      setAdmissionId("");
+      setFullName("");
+      setGender("");
+      setDobDate("");      
+      setReligion("");
+      setCast("");
+      setNationality("");
+      setSclass("");
+      setSSection("");
+      setRollNo("");
+      setBloodGroup("");
+      setAddress("");
+      setImage("");
+      setFather("");
+      setFatherOccupation("");
+      setPhone("");
+      setEmail("");
     });
   };
 
@@ -82,7 +145,7 @@ function AdmissionForm() {
     { key: "Select Cast", value: "" },
     { key: "SC/ST", value: "SC/ST" },
     { key: "OBC", value: "OBC" },
-    { key: "Gouda", value: "Gouda" },
+    { key: "Others", value: "Others" },
   ];
 
   const optionNationality = [
@@ -124,39 +187,6 @@ function AdmissionForm() {
     { key: "O-", value: "O-" },
   ];
 
-  const initialValues = {
-    admissionId: "1",
-    fullName: "",
-    gender: "",
-    dob: dob,
-    doj: doj,
-    religion: "",
-    cast: "",
-    nationality: "",
-    class: "",
-    section: "",
-    rollno: "",
-    bloodGroup: "",
-    address: "",
-    image: "",
-    father: "",
-    fatherOccupation: "",
-    phoneNo: "",
-    email: "",
-  };
-
-  const userValidation = Yup.object({
-    fullName: Yup.string().required("*This Field is Mandatory"),
-    address: Yup.string().required("*This Field is Mandatory"),
-    father: Yup.string().required("*This Field is Mandatory"),
-    fatherOccupation: Yup.string().required("*This Field is Mandatory"),
-    phoneNo: Yup.string().required("*This Field is Mandatory"),
-    gender: Yup.string().required("*This Field is Mandatory"),
-    dob: Yup.string().required("*This Field is Mandatory"),
-    class: Yup.string().required("*This Field is Mandatory"),
-    section: Yup.string().required("*This Field is Mandatory"),
-    nationality: Yup.string().required("*This Field is Mandatory"),
-  });
 
   return (
     <>
@@ -169,316 +199,323 @@ function AdmissionForm() {
                 <h3>Add New Students</h3>
               </div>
             </div>
-
-            <Formik
-              initialValues={formValues || initialValues}
-              onSubmit={onSubmit}
-              validationSchema={userValidation}
-              enableReinitialize
-            >
-              {(formik) => {
-                //console.log("Formik props", formik);
-                return (
-                  <Form className="new-added-form">
-                    <div className="row">
-                      <div className="col-sm-3   form-group">
-                        <label htmlFor="admissionId">Admission No</label>
-                        <Field
-                          type="text"
-                          placeholder="Adm .No"
-                          className="form-control"
-                          id="admissionId"
-                          name="admissionId"
-                          disabled
-                        />
-                      </div>
-                      <div className="col-sm-3 form-group">
-                        <label htmlFor="fullName">Full Name </label>
-                        <Field
-                          type="text"
-                          placeholder="Name"
-                          className="form-control"
-                          id="fullName"
-                          name="fullName"
-                        />
-                        <ErrorMessage name="fullName" component={TextError} />
-                      </div>
-                      <div className="col-md-3 form-group">
-                        <label htmlFor="gender">Gender</label>
-                        <Field
-                          as="select"
-                          id="gender"
-                          name="gender"
-                          className="form-control"
+            <form className="new-added-form" onSubmit={handleSubmit}>
+              <div className="row">
+                <div className="col-sm-3   form-group">
+                  <label htmlFor="admissionId">Admission No</label>
+                  <input
+                    type="text"
+                    placeholder="Adm .No"
+                    className="form-control"
+                    id="admissionId"
+                    name="admissionId"
+                    disabled
+                    value={admissionId}
+                    onChange={(e) => handleChange(e)}
+                  />
+                </div>
+                <div className="col-sm-3 form-group">
+                  <label htmlFor="fullName">Full Name </label>
+                  <input
+                    type="text"
+                    placeholder="Name"
+                    className="form-control"
+                    id="fullName"
+                    name="fullName"
+                    value={fullName}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </div>
+                <div className="col-md-3 form-group">
+                  <label htmlFor="gender">Gender</label>
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                    id="gender"
+                    name="gender"
+                    className="form-control"
+                    value={gender}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  >
+                    {optionGender.map((optionGender) => {
+                      return (
+                        <option
+                          key={optionGender.key}
+                          value={optionGender.value}
                         >
-                          {optionGender.map((optionGender) => {
-                            return (
-                              <option
-                                key={optionGender.key}
-                                value={optionGender.value}
-                              >
-                                {optionGender.key}
-                              </option>
-                            );
-                          })}
-                        </Field>
-                        <ErrorMessage name="gender" component={TextError} />
-                      </div>
+                          {optionGender.key}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
 
-                      <div className="col-xl-3 col-lg-6 col-12 form-group">
-                        <label>Date Of Birth</label>
-                        <DatePicker
-                          className="form-control air-datepicker"
-                          selected={dob}
-                          onChange={(date) => setDobDate(date)}
-                          placeholder="DD/MM/YYYY"
-                          dateFormat="dd-MM-yyyy"
-                        />
+                <div className="col-xl-3 col-lg-6 col-12 form-group">
+                  <label>Date Of Birth</label>
+                  <DatePicker
+                    className="form-control air-datepicker"
+                    selected={dob}
+                    onChange={(date) => setDobDate(date)}
+                    placeholder="DD/MM/YYYY"
+                    dateFormat="dd-MM-yyyy"
+                    required
+                  />
+                </div>
 
-                        <ErrorMessage name="dob" component={TextError} />
-                      </div>
-
-                      <div className="col-xl-3 col-lg-6 col-12 form-group">
-                        <label>Date Of Join</label>
-                        <DatePicker
-                          className="form-control air-datepicker"
-                          selected={doj}
-                          onChange={(date) => setDojDate(date)}
-                          placeholder="DD/MM/YYYY"
-                          dateFormat="dd-MM-yyyy"
-                          disabled
-                        />
-                      </div>
-                      <div className="col-xl-3 col-lg-6 col-12 form-group">
-                        <label htmlFor="gender">Relegion</label>
-                        <Field
-                          as="select"
-                          id="religion"
-                          name="religion"
-                          className="form-control"
+                <div className="col-xl-3 col-lg-6 col-12 form-group">
+                  <label>Date Of Join</label>
+                  <DatePicker
+                    className="form-control air-datepicker"
+                    selected={doj}
+                    onChange={(date) => setDojDate(date)}
+                    placeholder="DD/MM/YYYY"
+                    dateFormat="dd-MM-yyyy"
+                    disabled
+                  />
+                </div>
+                <div className="col-xl-3 col-lg-6 col-12 form-group">
+                  <label htmlFor="gender">Relegion</label>
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                    id="religion"
+                    name="religion"
+                    className="form-control"
+                    value={religion}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  >
+                    {optionReligion.map((optionReligion) => {
+                      return (
+                        <option
+                          key={optionReligion.key}
+                          value={optionReligion.value}
                         >
-                          {optionReligion.map((optionReligion) => {
-                            return (
-                              <option
-                                key={optionReligion.key}
-                                value={optionReligion.value}
-                              >
-                                {optionReligion.key}
-                              </option>
-                            );
-                          })}
-                        </Field>
-                      </div>
-                      <div className="col-xl-3 col-lg-6 col-12 form-group">
-                        <label htmlFor="cast">Cast</label>
-                        <Field
-                          as="select"
-                          id="cast"
-                          name="cast"
-                          className="form-control"
+                          {optionReligion.key}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <div className="col-xl-3 col-lg-6 col-12 form-group">
+                  <label htmlFor="cast">Cast</label>
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                    id="cast"
+                    name="cast"
+                    className="form-control"
+                    value={cast}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  >
+                    {optionCast.map((optionCast) => {
+                      return (
+                        <option key={optionCast.key} value={optionCast.value}>
+                          {optionCast.key}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <div className="col-xl-3 col-lg-6 col-12 form-group">
+                  <label htmlFor="nationality">Nationality</label>
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                    id="nationality"
+                    name="nationality"
+                    className="form-control"
+                    value={nationality}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  >
+                    {optionNationality.map((optionNationality) => {
+                      return (
+                        <option
+                          key={optionNationality.key}
+                          value={optionNationality.value}
                         >
-                          {optionCast.map((optionCast) => {
-                            return (
-                              <option
-                                key={optionCast.key}
-                                value={optionCast.value}
-                              >
-                                {optionCast.key}
-                              </option>
-                            );
-                          })}
-                        </Field>
-                      </div>
-                      <div className="col-xl-3 col-lg-6 col-12 form-group">
-                        <label htmlFor="nationality">Nationality</label>
-                        <Field
-                          as="select"
-                          id="nationality"
-                          name="nationality"
-                          className="form-control"
+                          {optionNationality.key}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+
+                <div className="col-sm-3   form-group">
+                  <label>Roll Number</label>
+                  <input
+                    type="text"
+                    placeholder=""
+                    className="form-control"
+                    id="rollno"
+                    name="rollno"
+                    value={rollno}
+                    onChange={(e) => handleChange(e)}
+                  />
+                </div>
+                <div className="col-xl-3 col-lg-6 col-12 form-group">
+                  <label htmlFor="class">Class</label>
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                    id="Sclass"
+                    name="Sclass"
+                    className="form-control"
+                    value={Sclass}
+                    onChange={(e) => handleChange(e)}
+                  >
+                    {optionClass.map((optionClass) => {
+                      return (
+                        <option key={optionClass.key} value={optionClass.value}>
+                          {optionClass.key}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+
+                <div className="col-xl-3 col-lg-6 col-12 form-group">
+                  <label htmlFor="Ssection">Section</label>
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                    id="Ssection"
+                    name="Ssection"
+                    className="form-control"
+                    value={Ssection}
+                    onChange={(e) => handleChange(e)}
+                  >
+                    {optionSection.map((optionSection) => {
+                      return (
+                        <option
+                          key={optionSection.key}
+                          value={optionSection.value}
                         >
-                          {optionNationality.map((optionNationality) => {
-                            return (
-                              <option
-                                key={optionNationality.key}
-                                value={optionNationality.value}
-                              >
-                                {optionNationality.key}
-                              </option>
-                            );
-                          })}
-                        </Field>
-                        <ErrorMessage
-                          name="nationality"
-                          component={TextError}
-                        />
-                      </div>
+                          {optionSection.key}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <div className="col-lg-3 col-12 form-group mg-t-30">
+                  <label className="text-dark-medium">
+                    Upload Student Photo
+                  </label>
+                  <input type="file" className="form-control-file" />
+                </div>
+                <div className="col-xl-3 col-lg-6 col-12 form-group">
+                  <label htmlFor="bloodgroup">bloodgroup</label>
+                  <select
+                    as="select"
+                    id="bloodGroup"
+                    name="bloodGroup"
+                    className="form-control"
+                    value={bloodGroup}
+                    onChange={(e) => handleChange(e)}
+                  >
+                    {optionBlood.map((optionBlood) => {
+                      return (
+                        <option key={optionBlood.key} value={optionBlood.value}>
+                          {optionBlood.key}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
 
-                      <div className="col-sm-3   form-group">
-                        <label>Roll Number</label>
-                        <Field
-                          type="text"
-                          placeholder=""
-                          className="form-control"
-                          id="rollno"
-                          name="rollno"
-                        />
-                      </div>
-                      <div className="col-xl-3 col-lg-6 col-12 form-group">
-                        <label htmlFor="class">Class</label>
-                        <Field
-                          as="select"
-                          id="class"
-                          name="class"
-                          className="form-control"
-                        >
-                          {optionClass.map((optionClass) => {
-                            return (
-                              <option
-                                key={optionClass.key}
-                                value={optionClass.value}
-                              >
-                                {optionClass.key}
-                              </option>
-                            );
-                          })}
-                        </Field>
-                        <ErrorMessage name="class" component={TextError} />
-                      </div>
+                <div
+                  className="col-lg-6 col-12 form-group"
+                  style={{ height: "100px" }}
+                >
+                  <label>Address</label>
+                  <input
+                    className="textarea form-control"
+                    as="textarea"
+                    name="address"
+                    id="address"
+                    cols="10"
+                    rows="3"
+                    value={address}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </div>
 
-                      <div className="col-xl-3 col-lg-6 col-12 form-group">
-                        <label htmlFor="section">Section</label>
-                        <Field
-                          type="text"
-                          placeholder="section"
-                          className="form-control"
-                          id="section"
-                          name="section"
-                        />
-                        <ErrorMessage name="section" component={TextError} />
-                      </div>
-                      <div className="col-lg-3 col-12 form-group mg-t-30">
-                        <label className="text-dark-medium">
-                          Upload Student Photo
-                        </label>
-                        <input type="file" className="form-control-file" />
-                      </div>
-                      <div className="col-xl-3 col-lg-6 col-12 form-group">
-                        <label htmlFor="bloodgroup">bloodgroup</label>
-                        <Field
-                          as="select"
-                          id="bloodGroup"
-                          name="bloodGroup"
-                          className="form-control"
-                        >
-                          {optionBlood.map((optionBlood) => {
-                            return (
-                              <option
-                                key={optionBlood.key}
-                                value={optionBlood.value}
-                              >
-                                {optionBlood.key}
-                              </option>
-                            );
-                          })}
-                        </Field>
-                      </div>
+                <hr style={{ width: "1028px" }} />
+                <div className="heading-layout1">
+                  <div className="item-title">
+                    <h3>Parents details</h3>
+                  </div>
+                </div>
+                <div className="col-sm-3 form-group">
+                  <label>Father/Gaurdian Name </label>
+                  <input
+                    type="text"
+                    placeholder=""
+                    className="form-control"
+                    name="father"
+                    id="father"
+                    value={father}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </div>
+                <div className="col-sm-3 form-group">
+                  <label>Father/Gaurdian Occupation </label>
+                  <input
+                    type="text"
+                    placeholder=""
+                    className="form-control"
+                    name="fatherOccupation"
+                    id="fatherOccupation"
+                    value={fatherOccupation}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </div>
 
-                      <div
-                        className="col-lg-6 col-12 form-group"
-                        style={{ height: "100px" }}
-                      >
-                        <label>Address</label>
-                        <Field
-                          className="textarea form-control"
-                          as="textarea"
-                          name="address"
-                          id="address"
-                          cols="10"
-                          rows="3"
-                        />
-                        <ErrorMessage name="address" component={TextError} />
-                      </div>
-
-                      <hr style={{ width: "1028px" }} />
-                      <div className="heading-layout1">
-                        <div className="item-title">
-                          <h3>Parents details</h3>
-                        </div>
-                      </div>
-                      <div className="col-sm-3 form-group">
-                        <label>Father/Gaurdian Name </label>
-                        <Field
-                          type="text"
-                          placeholder=""
-                          className="form-control"
-                          name="father"
-                          id="father"
-                        />
-                        <ErrorMessage name="father" component={TextError} />
-                      </div>
-                      <div className="col-sm-3 form-group">
-                        <label>Father/Gaurdian Occupation </label>
-                        <Field
-                          type="text"
-                          placeholder=""
-                          className="form-control"
-                          name="fatherOccupation"
-                          id="fatherOccupation"
-                        />
-                        <ErrorMessage
-                          name="fatherOccupation"
-                          component={TextError}
-                        />
-                      </div>
-
-                      <div className="col-xl-3 col-lg-6 col-12 form-group">
-                        <label>Phone No </label>
-                        <Field
-                          type="text"
-                          placeholder=""
-                          className="form-control"
-                          name="phoneNo"
-                          id="phoneNo"
-                        />
-                        <ErrorMessage name="phoneNo" component={TextError} />
-                      </div>
-                      <div className="col-xl-3 col-lg-6 col-12 form-group">
-                        <label>E-Mail ID</label>
-                        <Field
-                          type="text"
-                          placeholder=""
-                          className="form-control"
-                          name="email"
-                          id="email"
-                        />
-                      </div>
-                      <div className="col-12 form-group mg-t-8">
-                        <button
-                          type="submit"
-                          className="btn-fill-lg btn-gradient-yellow btn-hover-bluedark "
-                          disabled={
-                            !formik.isValid ||
-                            !formik.dirty ||
-                            formik.isSubmitting
-                          }
-                          onClick={() => {
-                            console.log(
-                              "Calling locally submit server dbaction ",
-                              dbAction
-                            );
-                            //setDbAction("Create");
-                            newForm(formik.values);
-                          }}
-                        >
-                          Submit
-                        </button>
-                      </div>
-                    </div>
-                  </Form>
-                );
-              }}
-            </Formik>
+                <div className="col-xl-3 col-lg-6 col-12 form-group">
+                  <label>Phone No </label>
+                  <input
+                    type="text"
+                    placeholder=""
+                    className="form-control"
+                    name="phoneNo"
+                    id="phoneNo"
+                    value={phoneNo}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </div>
+                <div className="col-xl-3 col-lg-6 col-12 form-group">
+                  <label>E-Mail ID</label>
+                  <input
+                    type="text"
+                    placeholder=""
+                    className="form-control"
+                    name="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => handleChange(e)}
+                  />
+                </div>
+                <div className="col-12 form-group mg-t-8">
+                  <button
+                    type="submit"
+                    className="btn-fill-lg btn-gradient-yellow btn-hover-bluedark "
+                    // onClick={() => {
+                    //   newForm();
+                    // }}
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </ScrollArea>

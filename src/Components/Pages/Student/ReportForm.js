@@ -1,18 +1,21 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import * as Yup from "yup";
+import Navbar from "../../../Components/Common/Navbar/Navbar";
 import DatePicker from "react-datepicker";
-// import TextError from "../../TextError";
+
 import "react-datepicker/dist/react-datepicker.css";
 import "./AdmissionForm.css";
+import { useHistory } from "react-router-dom";
 
 function ReportForm(props) {
+  const history = useHistory();
+
   let newId = "";
   newId = props.match.params.id;
 
   const [dob, setDob] = useState();
-  const [doj, setDojDate] = useState(new Date());
+  const [doj, setDojDate] = useState();
 
   const [initialValues, setInitialValues] = useState();
 
@@ -23,7 +26,7 @@ function ReportForm(props) {
   const [cast, setCast] = useState();
   const [nationality, setNationality] = useState();
   const [Sclass, setSclass] = useState();
-  const [section, setSection] = useState();
+  const [Ssection, setSSection] = useState();
   const [rollno, setRollNo] = useState();
   const [bloodGroup, setBloodGroup] = useState();
   const [address, setAddress] = useState();
@@ -34,38 +37,39 @@ function ReportForm(props) {
   const [email, setEmail] = useState();
 
   const handleChange = (e) => {
-    console.log(e.target.name);
+    console.log(e.target.value);
+
     const input = e.target.name;
     if (input === "fullName") {
-      setFullName(e.target.value)
-    }else if(input === "gender"){
-      setGender(e.target.value)
-    }else if(input === "religion"){
-      setGender(e.target.value)
-    }else if(input === "cast"){
-      setGender(e.target.value)
-    }else if(input === "nationality"){
-      setGender(e.target.value)
-    }else if(input === "Sclass"){
-      setGender(e.target.value)
-    }else if(input === "section"){
-      setGender(e.target.value)
-    }else if(input === "rollno"){
-      setGender(e.target.value)
-    }else if(input === "bloodGroup"){
-      setGender(e.target.value)
-    }else if(input === "address"){
-      setGender(e.target.value)
-    }else if(input === "image"){
-      setGender(e.target.value)
-    }else if(input === "father"){
-      setGender(e.target.value)
-    }else if(input === "fatherOccupation"){
-      setGender(e.target.value)
-    }else if(input === "phoneNo"){
-      setGender(e.target.value)
-    }else if(input === "email"){
-      setGender(e.target.value)
+      setFullName(e.target.value);
+    } else if (input === "gender") {
+      setGender(e.target.value);
+    } else if (input === "religion") {
+      setReligion(e.target.value);
+    } else if (input === "cast") {
+      setCast(e.target.value);
+    } else if (input === "nationality") {
+      setNationality(e.target.value);
+    } else if (input === "Sclass") {
+      setSclass(e.target.value);
+    } else if (input === "Ssection") {
+      setSSection(e.target.value);
+    } else if (input === "rollno") {
+      setRollNo(e.target.value);
+    } else if (input === "bloodGroup") {
+      setBloodGroup(e.target.value);
+    } else if (input === "address") {
+      setAddress(e.target.value);
+    } else if (input === "image") {
+      setImage(e.target.value);
+    } else if (input === "father") {
+      setFather(e.target.value);
+    } else if (input === "fatherOccupation") {
+      setFatherOccupation(e.target.value);
+    } else if (input === "phoneNo") {
+      setPhone(e.target.value);
+    } else if (input === "email") {
+      setEmail(e.target.value);
     }
   };
 
@@ -87,7 +91,7 @@ function ReportForm(props) {
 
   useEffect(() => {
     Axios.post("http://localhost:3004/getStudentAdBasedOnId", {
-      student_id: newId,      
+      student_id: newId,
     }).then((res) => {
       setTimeout(() => {
         // console.log("useEffect Action Value ", dbAction);
@@ -95,15 +99,15 @@ function ReportForm(props) {
       setAdmissionId(res.data[0].STUDENT_ID);
       setFullName(res.data[0].STD_NAME);
       setGender(res.data[0].STD_GENDER);
-      //setDob(res.data[0].STD_DOB);
-      //setDojDate(formatChange(res.data[0].STD_DOJ));
+      setDob(res.data[0].STD_DOB);
+      setDojDate(res.data[0].STD_DOJ);
       setReligion(res.data[0].STD_REL);
       setCast(res.data[0].STD_CAST);
       setNationality(res.data[0].STD_NATION);
       setSclass(res.data[0].STD_CLASS);
-      setSection(res.data[0].STD_SECTION);
+      setSSection(res.data[0].STD_SECTION);
       setRollNo(res.data[0].STD_ROLL_NO);
-      setBloodGroup(res.data[0].STD_BLD_GRP);
+      setBloodGroup(res.data[0].STD_BLD_GROUP);
       setAddress(res.data[0].STD_ADDRESS);
       setImage(res.data[0].STD_PHOTO);
       setFather(res.data[0].STD_PAR_GARD);
@@ -135,7 +139,7 @@ function ReportForm(props) {
     { key: "Select Cast", value: "" },
     { key: "SC/ST", value: "SC/ST" },
     { key: "OBC", value: "OBC" },
-    { key: "Gouda", value: "Gouda" },
+    { key: "Others", value: "Others" },
   ];
 
   const optionNationality = [
@@ -177,53 +181,34 @@ function ReportForm(props) {
     { key: "O-", value: "O-" },
   ];
 
-  const userValidation = Yup.object({
-    fullName: Yup.string().required("*This Field is Mandatory"),
-    address: Yup.string().required("*This Field is Mandatory"),
-    father: Yup.string().required("*This Field is Mandatory"),
-    fatherOccupation: Yup.string().required("*This Field is Mandatory"),
-    phoneNo: Yup.string().required("*This Field is Mandatory"),
-    gender: Yup.string().required("*This Field is Mandatory"),
-    dob: Yup.string().required("*This Field is Mandatory"),
-    class: Yup.string().required("*This Field is Mandatory"),
-    section: Yup.string().required("*This Field is Mandatory"),
-    nationality: Yup.string().required("*This Field is Mandatory"),
-  });
-
-  const newForm = (formData) => {
-    Axios.post("http://localhost:3004/update", {
-      stdname: formData.fullName,
-      stdgender: formData.gender,
-      stddob: formData.dob,
-      stddoj: formData.doj,
-      stdrel: formData.religion,
-      stdcast: formData.cast,
-      stdntn: formData.nationality,
-      stdclass: formData.class,
-      stdsec: formData.section,
-      stdroll: formData.rollno,
-      stdbg: formData.bloodGroup,
-      stdadd: formData.address,
-      stdphoto: formData.image,
-      stdpg: formData.father,
-      stdpo: formData.fatherOccupation,
-      stdph: formData.phoneNo,
-      stdemail: formData.email,
+  const handleSubmit = () => {    
+    Axios.post("http://localhost:3004/UpdateStudent", {
+      stdname: fullName,
+      stdgender: gender,
+      stddob: dob,
+      stddoj: doj,
+      stdrel: religion,
+      stdcast: cast,
+      stdntn: nationality,
+      stdclass: Sclass,
+      section: Ssection,
+      stdroll: rollno,
+      stdbg: bloodGroup,
+      stdadd: address,
+      stdphoto: image,
+      stdpg: father,
+      stdpo: fatherOccupation,
+      stdph: phoneNo,
+      stdemail: email,
     }).then(() => {
       console.log("Successfully Updated");
+      history.push('/AdmissionReport');
     });
-  };
-
-  const onSubmit = (value) => {
-    newForm(value);
-    console.log("Submitted Data : ", value);
-    //console.log("submit props : ", onSubmitProps);
-    // onSubmitProps.setSubmitting(false);
-    //onSubmitProps.resetForm();
   };
 
   return (
     <>
+      <Navbar />
       <div className="card height-auto">
         <div className="card-body">
           <div className="heading-layout1">
@@ -243,6 +228,7 @@ function ReportForm(props) {
                   name="admissionId"
                   disabled
                   value={admissionId}
+                  onChange={(e) => handleChange(e)}
                 />
               </div>
               <div className="col-sm-3 form-group">
@@ -265,6 +251,7 @@ function ReportForm(props) {
                   name="gender"
                   className="form-control"
                   value={gender}
+                  onChange={(e) => handleChange(e)}
                 >
                   {optionGender.map((optionGender) => {
                     return (
@@ -277,27 +264,27 @@ function ReportForm(props) {
               </div>
               <div className="col-xl-3 col-lg-6 col-12 form-group">
                 <label>Date Of Birth</label>
-                <DatePicker
+                <input
+                  type="text"
                   className="form-control air-datepicker"
-                  selected={dob}
-                  onChange={(date) => setDob(date)}
+                  //selected={dob}
                   placeholder="DD/MM/YYYY"
-                  dateFormat="dd/MM/yyyy"
-                  defaultValue={null}
-                  value={formatChange(dob)} 
+                  //dateFormat="dd-MM-yyyy"
+                  value={dob}
+                  onChange={(e) => setDob(e.target.value)}
                 />
               </div>
 
               <div className="col-xl-3 col-lg-6 col-12 form-group">
                 <label>Date Of Join</label>
-                <DatePicker
+                <input
+                  type="text"
                   className="form-control air-datepicker"
-                  selected={doj}
-                  onChange={(date) => setDojDate(date)}
+                  //selected={dob}
                   placeholder="DD/MM/YYYY"
-                  dateFormat="dd/MM/yyyy"
-                  disabled
+                  //dateFormat="dd-MM-yyyy"
                   value={doj}
+                  onChange={(e) => setDojDate(e.target.value)}
                 />
               </div>
               <div className="col-xl-3 col-lg-6 col-12 form-group">
@@ -309,6 +296,7 @@ function ReportForm(props) {
                   name="religion"
                   className="form-control"
                   value={religion}
+                  onChange={(e) => handleChange(e)}
                 >
                   {optionReligion.map((optionReligion) => {
                     return (
@@ -331,6 +319,7 @@ function ReportForm(props) {
                   name="cast"
                   className="form-control"
                   value={cast}
+                  onChange={(e) => handleChange(e)}
                 >
                   {optionCast.map((optionCast) => {
                     return (
@@ -350,6 +339,7 @@ function ReportForm(props) {
                   name="nationality"
                   className="form-control"
                   value={nationality}
+                  onChange={(e) => handleChange(e)}
                 >
                   {optionNationality.map((optionNationality) => {
                     return (
@@ -373,6 +363,7 @@ function ReportForm(props) {
                   id="rollno"
                   name="rollno"
                   value={rollno}
+                  onChange={(e) => handleChange(e)}
                 />
               </div>
               <div className="col-xl-3 col-lg-6 col-12 form-group">
@@ -384,6 +375,7 @@ function ReportForm(props) {
                   name="Sclass"
                   className="form-control"
                   value={Sclass}
+                  onChange={(e) => handleChange(e)}
                 >
                   {optionClass.map((optionClass) => {
                     return (
@@ -403,7 +395,8 @@ function ReportForm(props) {
                   id="section"
                   name="section"
                   className="form-control"
-                  value={section}
+                  value={Ssection}
+                  onChange={(e) => handleChange(e)}
                 >
                   {optionSection.map((optionSection) => {
                     return (
@@ -419,17 +412,22 @@ function ReportForm(props) {
               </div>
               <div className="col-lg-3 col-12 form-group mg-t-30">
                 <label className="text-dark-medium">Upload Student Photo</label>
-                <input type="file" className="form-control-file" />
+                <input
+                  type="file"
+                  className="form-control-file"
+                  onChange={(e) => handleChange(e)}
+                />
               </div>
               <div className="col-xl-3 col-lg-6 col-12 form-group">
-                <label htmlFor="bloodgroup">bloodgroup</label>
+                <label htmlFor="bloodGroup">bloodgroup</label>
                 <select
                   class="form-select"
                   aria-label="Default select example"
-                  id="gender"
-                  name="gender"
+                  id="bloodGroup"
+                  name="bloodGroup"
                   className="form-control"
                   value={bloodGroup}
+                  onChange={(e) => handleChange(e)}
                 >
                   {optionBlood.map((optionBlood) => {
                     return (
@@ -454,6 +452,7 @@ function ReportForm(props) {
                   cols="10"
                   rows="3"
                   value={address}
+                  onChange={(e) => handleChange(e)}
                 />
               </div>
 
@@ -472,6 +471,7 @@ function ReportForm(props) {
                   name="father"
                   id="father"
                   value={father}
+                  onChange={(e) => handleChange(e)}
                 />
               </div>
               <div className="col-sm-3 form-group">
@@ -483,6 +483,7 @@ function ReportForm(props) {
                   name="fatherOccupation"
                   id="fatherOccupation"
                   value={fatherOccupation}
+                  onChange={(e) => handleChange(e)}
                 />
               </div>
 
@@ -495,6 +496,7 @@ function ReportForm(props) {
                   name="phoneNo"
                   id="phoneNo"
                   value={phoneNo}
+                  onChange={(e) => handleChange(e)}
                 />
               </div>
               <div className="col-xl-3 col-lg-6 col-12 form-group">
@@ -506,12 +508,14 @@ function ReportForm(props) {
                   name="email"
                   id="email"
                   value={email}
+                  onChange={(e) => handleChange(e)}
                 />
               </div>
               <div className="col-12 form-group mg-t-8">
                 <button
-                  type="submit"
+                  type="button"
                   className="btn-fill-lg btn-gradient-yellow btn-hover-bluedark "
+                  onClick={() => handleSubmit()}
                 >
                   Submit
                 </button>
