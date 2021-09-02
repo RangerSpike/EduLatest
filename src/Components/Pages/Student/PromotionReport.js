@@ -2,31 +2,48 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-const-assign */
 import React, { useEffect, useState } from "react";
-import Navbar from "../../Common/Navbar/Navbar";
 import "./PromotionReport.css";
+import Axios from "axios";
 
 function PromotionReport() {
   const [std, setStd] = useState("");
   const [sec, setSec] = useState("");
 
+  let NformValues = {
+    select: false,
+    studentId: "",
+    name: "",
+    CurClass: "",
+  };
+
+  let rows = [];
   const [formValues, setFormValues] = useState([]);
 
-  useEffect(() => {
-    let formValues = [
-      { studentId: "B101", name: "Mohammed", CurClass: "5" },
-      { studentId: "B102", name: "Shoaib", CurClass: "6" },
-      { studentId: "B103", name: "Mazhar", CurClass: "3" },
-      { studentId: "B104", name: "Shan", CurClass: "10" },
-    ];
-    formValues.map((d) => {
-      return {
-        select: false,
-        studentId: d.studentId,
-        name: d.name,
-        CurClass: d.CurClass,
-      };
+  const getData = () => {
+    Axios.get("http://localhost:3004/getStudentDetails", {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
+    }).then((res) => {
+      for (let i = 0; i < res.data.length; i++) {
+        rows.push(NformValues);
+
+        rows[i] = {
+          select: false,
+          studentId: res.data[i].STUDENT_ID,
+          name: res.data[i].STD_NAME,
+          CurClass: res.data[i].STD_CLASS,
+        };
+      }
+      setFormValues(rows);
+      console.log("result set in effect: ", rows);
     });
-    setFormValues(formValues);
+  };
+
+  useEffect(() => {
+    getData();
+    console.log("BAIGAN", formValues);
   }, []);
 
   const optionClass = [
@@ -57,24 +74,28 @@ function PromotionReport() {
     console.log(std);
     console.log(sec);
   };
-
+  let x;
+  
   const onsubmitHandler = () => {
     alert("Submited Array");
     console.log(Vresult);
-    setVresult([]);
-    formValues.map((d)=>{
-      d.select=false;
-    })
+    Vresult.map((data) => {
+      if (data.select === true) {
+        
+        x = x + "," + data.studentId;
+        console.log("SAMAMN", x);
+      }
+    });
+    x = "";
   };
 
-  const [Vresult, setVresult] = useState([""]);
+  const [Vresult, setVresult] = useState([]);
 
   const updateRecordsAfterFilter = (val) => {
     setVresult((Vresult) => [...Vresult, val]);
   };
   return (
     <>
-    <Navbar/>
       <div className="card height-auto">
         <div className="card-body">
           <div className="heading-layout1">
