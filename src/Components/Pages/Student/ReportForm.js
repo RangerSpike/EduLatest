@@ -392,8 +392,8 @@ function ReportForm(props) {
                 <select
                   class="form-select"
                   aria-label="Default select example"
-                  id="section"
-                  name="section"
+                  id="Ssection"
+                  name="Ssection"
                   className="form-control"
                   value={Ssection}
                   onChange={(e) => handleChange(e)}

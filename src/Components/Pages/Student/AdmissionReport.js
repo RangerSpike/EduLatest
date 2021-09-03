@@ -33,7 +33,7 @@ function AdmissionReport() {
       student_name: stdName,
     }).then((res) => {
       setData(res.data);
-      //console.log("result set in effect: ", res.data);
+      console.log("result set in effect: ", res.data);
     });
   };
 

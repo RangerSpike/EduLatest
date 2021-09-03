@@ -6,7 +6,6 @@ import "./PromotionReport.css";
 import Axios from "axios";
 import Navbar from "../../../Components/Common/Navbar/Navbar";
 
-
 function PromotionReport() {
   const [std, setStd] = useState("");
   const [sec, setSec] = useState("");
@@ -21,13 +20,12 @@ function PromotionReport() {
   let rows = [];
   const [formValues, setFormValues] = useState([]);
 
-  const getData = () => {
-    Axios.get("http://localhost:3004/getStudentDetails", {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-      },
+  const updateRecords = () => {
+    Axios.post("http://localhost:3004/getStudentPermisiionList", {
+      stdClass: std,
     }).then((res) => {
+      //setData(res.data);
+      //console.log("FILTER ", res.data);
       for (let i = 0; i < res.data.length; i++) {
         rows.push(NformValues);
 
@@ -39,14 +37,8 @@ function PromotionReport() {
         };
       }
       setFormValues(rows);
-      console.log("result set in effect: ", rows);
     });
   };
-
-  useEffect(() => {
-    getData();
-    console.log("BAIGAN", formValues);
-  }, []);
 
   const optionClass = [
     { key: "Select Class", value: "" },
@@ -72,27 +64,30 @@ function PromotionReport() {
   ];
 
   const onSearch = () => {
-    alert("im on");
-    console.log(std);
-    console.log(sec);
+    updateRecords();
   };
-  let x = "";
+  const [prData, setprData] = useState([]);
+  let x = [];
+
+  const updatPr = () => {
+    for (let i = 0; i < formValues.length; i++) {
+      if (formValues[i].select) {
+        console.log(formValues[i].studentId);
+        x.push(formValues[i].studentId);
+      }
+    }
+    setprData(x);
+  };
 
   const onsubmitHandler = () => {
-    alert("Submited Array");
-    //console.log(Vresult);
-    formValues.map((data) => {
-      if (data.select === true) {
-        if (x === "") {
-          x = `"` + data.studentId;
-        } else {
-          x = x + "," + data.studentId;
-        }
-      }
+    //console.log("BAIGAN KA PR DATA", prData);
+    Axios.post("http://localhost:3004/promoteStudentBasedOnId", {
+      stdList: prData,
+    }).then(() => {
+      updateRecords();
+      //setprData([]);
+      //setFormValues(rows);
     });
-    
-    console.log("SAMAMN", x+`"`);
-    //x = "";
   };
 
   const [Vresult, setVresult] = useState([]);
@@ -103,7 +98,7 @@ function PromotionReport() {
   };
   return (
     <>
-    <Navbar />
+      <Navbar />
       <div className="card height-auto">
         <div className="card-body">
           <div className="heading-layout1">
@@ -129,30 +124,6 @@ function PromotionReport() {
                     return (
                       <option key={optionClass.key} value={optionClass.value}>
                         {optionClass.key}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
-
-              <div className="col-xl-3 col-lg-6 col-12 form-group">
-                <label>Promotion From Section</label>
-                <select
-                  as="select"
-                  id="sec"
-                  name="sec"
-                  className="form-control"
-                  onChange={(e) => {
-                    setSec(e.target.value);
-                  }}
-                >
-                  {optionSection.map((optionSection) => {
-                    return (
-                      <option
-                        key={optionSection.key}
-                        value={optionSection.value}
-                      >
-                        {optionSection.key}
                       </option>
                     );
                   })}
@@ -256,6 +227,7 @@ function PromotionReport() {
                                       let value = data.studentId;
                                       let x = value.toString();
                                       updateRecordsAfterFilter(x);
+                                      updatPr();
                                     }
                                   }
                                   return data;
