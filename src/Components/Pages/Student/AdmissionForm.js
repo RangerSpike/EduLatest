@@ -5,7 +5,6 @@ import Navbar from "../../../Components/Common/Navbar/Navbar";
 import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import ScrollArea from "react-scrollbar";
-import TextError from "../../../TextError";
 import "react-datepicker/dist/react-datepicker.css";
 
 import "./AdmissionForm.css";
@@ -68,29 +67,64 @@ function AdmissionForm() {
     }
   };
 
-  const formatChange = (date) => {
-    let newdate = new Date(date);
+  // const formatChange = (date) => {
+  //   let newdate = new Date(date);
 
-    let crtDay = newdate.getDate();
-    let crtMonth = newdate.getMonth() + 1;
-    let crtYear = newdate.getFullYear();
+  //   let crtDay = newdate.getDate();
+  //   let crtMonth = newdate.getMonth() + 1;
+  //   let crtYear = newdate.getFullYear();
 
-    if (crtMonth in [1, 2, 3, 4, 5, 6, 7, 8, 9]) {
-      newdate = crtDay + "-0" + crtMonth + "-" + crtYear;
+  //   if (crtMonth in [1, 2, 3, 4, 5, 6, 7, 8, 9]) {
+  //     newdate = crtDay + "-0" + crtMonth + "-" + crtYear;
+  //   } else {
+  //     newdate = crtDay + "-" + crtMonth + "-" + crtYear;
+  //   }
+  //   console.log(newdate);
+  //   return newdate;
+  // };
+
+  const setDateFormat = (value) => {
+    let currentDate;
+    if (value) {
+      currentDate = new Date(value);
     } else {
-      newdate = crtDay + "-" + crtMonth + "-" + crtYear;
+      currentDate = new Date();
     }
-    console.log(newdate);
-    return newdate;
+
+    let currentYear = new Intl.DateTimeFormat("en", { year: "numeric" }).format(
+      currentDate
+    );
+    let currentMonth = new Intl.DateTimeFormat("en", {
+      month: "numeric",
+    }).format(currentDate);
+    let currentDay = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(
+      currentDate
+    );
+
+    // let formatedDate = currentDay + "-0" + currentMonth + "-" + currentYear;
+
+    let formatedDate;
+
+    if (currentMonth in [1, 2, 3, 4, 5, 6, 7, 8, 9]) {
+      formatedDate = currentDay + "-0" + currentMonth + "-" + currentYear;
+    } else {
+      formatedDate = currentDay + "-" + currentMonth + "-" + currentYear;
+    }
+
+    return formatedDate;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     Axios.post("http://localhost:3004/createStudent", {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
       stdname: fullName,
       stdgender: gender,
-      stddob: formatChange(dob),
-      stddoj: formatChange(doj),
+      stddob: setDateFormat(dob),
+      stddoj: setDateFormat(doj),
       stdrel: religion,
       stdcast: cast,
       stdntn: nationality,
@@ -109,7 +143,7 @@ function AdmissionForm() {
       setAdmissionId("");
       setFullName("");
       setGender("");
-      setDobDate("");      
+      setDobDate("");
       setReligion("");
       setCast("");
       setNationality("");
@@ -186,7 +220,6 @@ function AdmissionForm() {
     { key: "O+", value: "O+" },
     { key: "O-", value: "O-" },
   ];
-
 
   return (
     <>

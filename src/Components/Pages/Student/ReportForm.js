@@ -73,24 +73,28 @@ function ReportForm(props) {
     }
   };
 
-  const formatChange = (date) => {
-    let newdate = new Date(date);
+  // const formatChange = (date) => {
+  //   let newdate = new Date(date);
 
-    let crtDay = newdate.getDate();
-    let crtMonth = newdate.getMonth() + 1;
-    let crtYear = newdate.getFullYear();
+  //   let crtDay = newdate.getDate();
+  //   let crtMonth = newdate.getMonth() + 1;
+  //   let crtYear = newdate.getFullYear();
 
-    if (crtMonth in [1, 2, 3, 4, 5, 6, 7, 8, 9]) {
-      newdate = crtDay + "-0" + crtMonth + "-" + crtYear;
-    } else {
-      newdate = crtDay + "-" + crtMonth + "-" + crtYear;
-    }
-    console.log(newdate);
-    return newdate;
-  };
+  //   if (crtMonth in [1, 2, 3, 4, 5, 6, 7, 8, 9]) {
+  //     newdate = crtDay + "-0" + crtMonth + "-" + crtYear;
+  //   } else {
+  //     newdate = crtDay + "-" + crtMonth + "-" + crtYear;
+  //   }
+  //   console.log(newdate);
+  //   return newdate;
+  // };
 
   useEffect(() => {
     Axios.post("http://localhost:3004/getStudentAdBasedOnId", {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
       student_id: newId,
     }).then((res) => {
       setTimeout(() => {
@@ -183,6 +187,10 @@ function ReportForm(props) {
 
   const handleSubmit = () => {    
     Axios.post("http://localhost:3004/UpdateStudent", {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
       stdname: fullName,
       stdgender: gender,
       stddob: dob,

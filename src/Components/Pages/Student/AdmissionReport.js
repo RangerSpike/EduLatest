@@ -21,14 +21,30 @@ function AdmissionReport() {
     }).then((res) => {
       setData(res.data);
       //   setDupData(res.data);
-      console.log("Success in effect", data);
-      console.log("result set in effect: ", res.data);
+      //console.log("Success in effect", data);
+      //console.log("result set in effect: ", res.data);
+    });
+
+    Axios.get("http://localhost:3004/getUserDetails", {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
+    }).then((res) => {
+      //setData(res.data);
+      //   setDupData(res.data);
+      console.log("USER", res.data.password);
+      //console.log("result set in effect: ", res.data);
     });
   };
 
   const updateRecordsAfterFilter = () => {
     console.log("updateDuplicateVar called : ");
     Axios.post("http://localhost:3004/getStudentAdReport", {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
       student_id: stdID,
       student_name: stdName,
     }).then((res) => {

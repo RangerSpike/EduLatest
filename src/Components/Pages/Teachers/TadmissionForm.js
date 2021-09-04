@@ -1,20 +1,23 @@
 /*eslint-disable*/
 import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 
 import Axios from "axios";
-
-import TextError from "../../../TextError";
 import "react-datepicker/dist/react-datepicker.css";
 import Navbar from "../../Common/Navbar/Navbar";
 
-function TadmissionForm() {
-  const [dob, setDobDate] = useState(new Date());
+function Tadmissionform() {
+  const [dob, setDobDate] = useState();
   const [doj, setDojDate] = useState(new Date());
-
-  const [dbAction, setDbAction] = useState("Create");
+  const [teacherId, setTeacherId] = useState();
+  const [name, setName] = useState();
+  const [gender, setGender] = useState();
+  const [address, setAddress] = useState();
+  const [img, setImage] = useState();
+  const [phoneNo, setPhoneNo] = useState();
+  const [Yoe, setYoe] = useState();
+  const [prevSchool, setPrevSchool] = useState();
+  const [email, setEmail] = useState();
 
   const optionGender = [
     { key: "Select Gender", value: "" },
@@ -23,261 +26,269 @@ function TadmissionForm() {
     { key: "Other", value: "Other" },
   ];
 
-  const initialValues = {
-    teacherId: "",
-    name: "",
-    gender: "",
-    dob: dob,
-    doj: doj,
-    address: "",
-    image: "",
-    phoneNo: "",
-    YOE: "",
-    prevSchool: "",
-    email: "abc@gmail.com",
+  const onSubmit = () => {
+    Axios.post("http://localhost:3004/createTeacher", {
+      tch_name: name,
+      tch_gender: gender,
+      tch_dob: formatChange(dob),
+      tch_doj: formatChange(doj),
+      tch_phone: phoneNo,
+      tch_exp: Yoe,
+      tch_photo: img,
+      tch_address: address,
+      tch_pus: prevSchool,
+      tch_email: email,
+    }).then(() => {
+      setDobDate("");
+      setDobDate("");      
+      setTeacherId("");
+      setName("");
+      setGender("");
+      setAddress("");
+      setImage("");
+      setPhoneNo("");
+      setYoe("");
+      setPrevSchool("");
+      setEmail("");
+    });
   };
 
-  const savedValues = {
-    teacherId: "121",
-    name: "hello",
-    gender: "Male",
-    dob: dob,
-    doj: doj,
-    address: "new",
-    image: "",
-    phoneNo: "815089213",
-    YOE: "3",
-    prevSchool: "hello school",
-  };
+  const handleChange = (e) => {
+    console.log(e.target.value);
 
-  const userValidation = Yup.object({
-    teacherId: Yup.string().required("*This Field is Mandatory"),
-    name: Yup.string().required("*This Field is Mandatory"),
-    address: Yup.string().required("*This Field is Mandatory"),
-    gender: Yup.string().required("*This Field is Mandatory"),
-    phoneNo: Yup.string().required("*This Field is Mandatory"),
-    dob: Yup.string().required("*This Field is Mandatory"),
-    YOE: Yup.string().required("*This Field is Mandatory"),
-    prevSchool: Yup.string().required("*This Field is Mandatory"),
-  });
-
-  const onSubmit = (value, onSubmitProps) => {
-    console.log("Submitted Data : ", value);
-    //console.log("submit props : ", onSubmitProps);
-    onSubmitProps.setSubmitting(false);
-    setDobDate("");
-    onSubmitProps.resetForm();
-  };
-
-  const newForm = (formData) => {
-    if (dbAction === "Create") {
-      Axios.post("http://localhost:3004/createTeacher", {
-        tch_name: formData.name,
-        tch_gender: formData.gender,
-        tch_dob: formData.dob,
-        tch_doj: formData.doj,
-        tch_phone: formData.phoneNo,
-        tch_exp: formData.YOE,
-        tch_photo: formData.image,
-        tch_address: formData.address,
-        tch_pus: formData.prevSchool,
-        tch_email: formData.email,
-      }).then(() => {
-        console.log("Successfully Created");
-      });
+    const input = e.target.name;
+    if (input === "name") {
+      setName(e.target.value);
+    } else if (input === "gender") {
+      setGender(e.target.value);
+    } else if (input === "address") {
+      setAddress(e.target.value);
+    } else if (input === "img") {
+      setImage(e.target.value);
+    } else if (input === "phoneNo") {
+      setPhoneNo(e.target.value);
+    } else if (input === "Yoe") {
+      setYoe(e.target.value);
+    } else if (input === "prevSchool") {
+      setPrevSchool(e.target.value);
+    } else if (input === "email") {
+      setEmail(e.target.value);
+    } else if (input === "teacherId") {
+      setTeacherId(e.target.value);
     }
+  };
+
+  const formatChange = (date) => {
+    let newdate = new Date(date);
+
+    let crtDay = newdate.getDate();
+    let crtMonth = newdate.getMonth() + 1;
+    let crtYear = newdate.getFullYear();
+
+    if (crtMonth in [1, 2, 3, 4, 5, 6, 7, 8, 9]) {
+      newdate = crtDay + "-0" + crtMonth + "-" + crtYear;
+    } else {
+      newdate = crtDay + "-" + crtMonth + "-" + crtYear;
+    }
+    console.log(newdate);
+    return newdate;
   };
 
   return (
     <>
-    <Navbar/>
+      <Navbar />
       <div className="card height-auto">
         <div className="card-body">
           <div className="heading-layout1">
             <div className="item-title">
-              <h3 style={{ padding: "50px" }}>Teacher Admission Form </h3>
+              <h3 style={{ padding: "50px" }}>Teacher Admission form </h3>
             </div>
           </div>
+          <form className="new-added-form">
+            <div className="row">
+              <div className="col-sm-3 form-group">
+                <label>Teacher ID</label>
+                <input
+                  type="text"
+                  placeholder="Teacher ID"
+                  className="form-control"
+                  id="teacherId"
+                  name="teacherId"
+                  value={teacherId}
+                  onChange={(e) => handleChange(e)}
+                  disabled
+                />
+              </div>
+              <div className="col-sm-3 form-group">
+                <label>Name</label>
+                <input
+                  type="text"
+                  placeholder="Full Name"
+                  className="form-control"
+                  id="name"
+                  name="name"
+                  value={name}
+                  onChange={(e) => handleChange(e)}
+                  required
+                />
+              </div>
+              <div className="col-md-3  form-group">
+                <label htmlFor="gender">Gender</label>
+                <select
+                  class="form-select"
+                  aria-label="Default select example"
+                  id="gender"
+                  name="gender"
+                  className="form-control"
+                  value={gender}
+                  onChange={(e) => handleChange(e)}
+                  required
+                >
+                  {optionGender.map((optionGender) => {
+                    return (
+                      <option key={optionGender.key} value={optionGender.value}>
+                        {optionGender.key}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <div className="col-xl-3 col-lg-6 col-12 form-group">
+                <label htmlFor="dob">Date Of Birth</label>
+                <DatePicker
+                  className="form-control air-datepicker"
+                  placeholder="DD/MM/YYYY"
+                  dateformat="dd-MM-yyyy"
+                  selected={dob}
+                  onChange={(date) => {
+                    setDobDate(date);
+                  }}
+                  required
+                />
+              </div>
+              <div className="col-xl-3 col-lg-6 col-12 form-group">
+                <label>Phone Number</label>
+                <input
+                  type="text"
+                  placeholder="Ph. Number"
+                  className="form-control"
+                  id="phoneNo"
+                  name="phoneNo"
+                  value={phoneNo}
+                  onChange={(e) => handleChange(e)}
+                  required
+                />
+              </div>
+              <div className="col-lg-3 col-12 form-group mg-t-30">
+                <label className="text-dark-medium">Upload Student Photo</label>
+                <input
+                  type="file"
+                  className="form-control-file"
+                  value={img}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+              <div
+                className="col-lg-6 col-12 form-group"
+                style={{ height: "100px" }}
+              >
+                <label>Address</label>
+                <input
+                  className="textarea form-control"
+                  type="textarea"
+                  name="address"
+                  id="address"
+                  cols="10"
+                  rows="3"
+                  value={address}
+                  onChange={(e) => handleChange(e)}
+                  required
+                />
+              </div>
 
-          <Formik
-            initialValues={initialValues}
-            onSubmit={onSubmit}
-            validationSchema={userValidation}
-            enableReinitialize
-          >
-            {(formik) => {
-              console.log("Formik props", formik);
-              return (
-                <Form className="new-added-form">
-                  <div className="row">
-                    <div className="col-sm-3   form-group">
-                      <label>Teacher ID</label>
-                      <Field
-                        type="text"
-                        placeholder="Teacher ID"
-                        className="form-control"
-                        id="teacherId"
-                        name="teacherId"
-                      />
-                      <ErrorMessage name="teacherId" component={TextError} />
-                    </div>
-                    <div className="col-sm-3 form-group">
-                      <label>Name</label>
-                      <Field
-                        type="text"
-                        placeholder="Full Name"
-                        className="form-control"
-                        id="name"
-                        name="name"
-                      />
-                      <ErrorMessage name="name" component={TextError} />
-                    </div>
-                    <div className="col-md-3  form-group">
-                      <label htmlFor="gender">Gender</label>
-                      <Field
-                        as="select"
-                        id="gender"
-                        name="gender"
-                        className="form-control"
-                      >
-                        {optionGender.map((optionGender) => {
-                          return (
-                            <option
-                              key={optionGender.key}
-                              value={optionGender.value}
-                            >
-                              {optionGender.key}
-                            </option>
-                          );
-                        })}
-                      </Field>
-                      <ErrorMessage name="gender" component={TextError} />
-                    </div>
-                    <div className="col-xl-3 col-lg-6 col-12 form-group">
-                      <label htmlFor="dob">Date Of Birth</label>
-                      <DatePicker
-                        className="form-control air-datepicker"
-                        placeholder="DD/MM/YYYY"
-                        selected={dob}
-                        onChange={(date) => {
-                          setDobDate(date);
-                        }}
-                        dateFormat="dd-MM-yyyy"
-                      />
+              <hr style={{ width: "1028px" }} />
+              <div className="heading-layout1">
+                <div className="item-title">
+                  <h3 style={{ padding: "50px" }}>Education Details</h3>
+                </div>
+              </div>
 
-                      <ErrorMessage name="dob" component={TextError} />
-                    </div>
-                    <div className="col-xl-3 col-lg-6 col-12 form-group">
-                      <label>Phone Number</label>
-                      <Field
-                        type="text"
-                        placeholder="Ph. Number"
-                        className="form-control"
-                        id="phoneNo"
-                        name="phoneNo"
-                      />
-                      <ErrorMessage name="phoneNo" component={TextError} />
-                    </div>
-                    <div className="col-lg-3 col-12 form-group mg-t-30">
-                      <label className="text-dark-medium">
-                        Upload Student Photo
-                      </label>
-                      <input type="file" className="form-control-file" />
-                    </div>
-                    <div
-                      className="col-lg-6 col-12 form-group"
-                      style={{ height: "100px" }}
-                    >
-                      <label>Address</label>
-                      <Field
-                        className="textarea form-control"
-                        as="textarea"
-                        name="address"
-                        id="address"
-                        cols="10"
-                        rows="3"
-                      />
-                      <ErrorMessage name="address" component={TextError} />
-                    </div>
+              <div className="col-xl-3 col-lg-6 col-12 form-group">
+                <label htmlFor="dob">Date Of join</label>
 
-                    <hr style={{ width: "1028px" }} />
-                    <div className="heading-layout1">
-                      <div className="item-title">
-                        <h3 style={{ padding: "50px" }}>Education Details</h3>
-                      </div>
-                    </div>
+                <DatePicker
+                  className="form-control air-datepicker"
+                  selected={doj}
+                  onChange={(date) => setDojDate(date)}
+                  placeholder="DD/MM/YYYY"
+                  dateformat="dd-MM-yyyy"
+                  onChange={(e) => handleChange(e)}
+                  disabled
+                />
+              </div>
 
-                    <div className="col-xl-3 col-lg-6 col-12 form-group">
-                      <label htmlFor="dob">Date Of join</label>
+              <div className="col-xl-3 col-lg-6 col-12 form-group">
+                <label>Years Of Exp</label>
+                <input
+                  type="number"
+                  placeholder="Years Of Exp."
+                  className="form-control"
+                  id="Yoe"
+                  name="Yoe"
+                  value={Yoe}
+                  onChange={(e) => handleChange(e)}
+                  required
+                />
+              </div>
+              <div className="col-xl-3 col-lg-6 col-12 form-group">
+                <label>Email</label>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  className="form-control"
+                  id="email"
+                  name="email"
+                  value={email}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+            </div>
 
-                      <DatePicker
-                        className="form-control air-datepicker"
-                        selected={doj}
-                        onChange={(date) => setDojDate(date)}
-                        placeholder="DD/MM/YYYY"
-                        dateFormat="dd-MM-yyyy"
-                        disabled
-                      />
-
-                      <ErrorMessage name="doj" component={TextError} />
-                    </div>
-
-                    <div className="col-xl-3 col-lg-6 col-12 form-group">
-                      <label>Years Of Exp</label>
-                      <Field
-                        type="number"
-                        placeholder="Years Of Exp."
-                        className="form-control"
-                        id="YOE"
-                        name="YOE"
-                      />
-                      <ErrorMessage name="YOE" component={TextError} />
-                    </div>
-                  </div>
-
-                  <div
-                    className="col-lg-6 col-12 form-group"
-                    style={{ height: "100px" }}
-                  >
-                    <label>Previous University/School</label>
-                    <Field
-                      className="textarea form-control"
-                      as="textarea"
-                      name="prevSchool"
-                      id="prevSchool"
-                      cols="10"
-                      rows="3"
-                    />
-                    <ErrorMessage name="prevSchool" component={TextError} />
-                  </div>
-                  <div className="col-12 form-group mg-t-8">
-                    <button
-                      type="submit"
-                      className="btn-fill-lg btn-gradient-yellow btn-hover-bluedark"
-                      style={{ marginTop: "40px" }}
-                      disabled={
-                        !formik.isValid || !formik.dirty || formik.isSubmitting
-                      }
-                      onClick={() => {
-                        console.log(
-                          "Calling locally submit server dbaction ",
-                          dbAction
-                        );
-                        //setDbAction("Create");
-                        newForm(formik.values);
-                      }}
-                    >
-                      Submit
-                    </button>
-                  </div>
-                </Form>
-              );
-            }}
-          </Formik>
+            <div
+              className="col-lg-6 col-12 form-group"
+              style={{ height: "100px" }}
+            >
+              <div className="heading-layout1">
+                <div className="item-title">
+                  <h3>Previous University/School</h3>
+                </div>
+              </div>
+              <input
+                className="textarea form-control"
+                type="textarea"
+                name="prevSchool"
+                id="prevSchool"
+                cols="10"
+                rows="3"
+                value={prevSchool}
+                onChange={(e) => handleChange(e)}
+              />
+            </div>
+            <div className="col-12 form-group mg-t-8">
+              <button
+                type="submit"
+                className="btn-fill-lg btn-gradient-yellow btn-hover-bluedark"
+                style={{ marginTop: "40px" }}
+                onClick={() => onSubmit()}
+              >
+                Submit
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </>
   );
 }
 
-export default TadmissionForm;
+export default Tadmissionform;

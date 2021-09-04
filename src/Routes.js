@@ -23,6 +23,7 @@ import StdERep from './Components/Pages/Exit/StudentExitReport';
 import Teacher from './Components/Pages/Exit/Teacher';
 import TeachERep from './Components/Pages/Exit/TeachersExitReport';
 
+import Users from './Components/Pages/Users/Users'
 
 function Routes() {
   return (
@@ -35,7 +36,7 @@ function Routes() {
           <Route exact path="/AddmissionForm"  component={AddmissionForm} />
           <Route exact path="/AdmissionReport"  component={AdmissionReport} />
           <Route exact path="/PromotionReport"  component={PromotionReport} />
-          <Route path='/ReportForm/:id' exact component={ReportForm} /> 
+          <Route path='/ReportForm/:id' exact component={ReportForm} />
 
           <Route exact path="/TAdmissionForm"  component={TAdmissionForm} />
           <Route exact path="/TAdmissionReport"  component={TAdmissionReport} />
@@ -51,6 +52,8 @@ function Routes() {
           <Route exact path="/StdERep"  component={StdERep} />
           <Route exact path="/Teacher"  component={Teacher} />
           <Route exact path="/TeachERep"  component={TeachERep} />
+
+          <Route exact path="/Users"  component={Users} />
 
         </Switch>
       </Router>
