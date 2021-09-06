@@ -97,27 +97,27 @@ function ReportForm(props) {
       },
       student_id: newId,
     }).then((res) => {
-      setTimeout(() => {
-        // console.log("useEffect Action Value ", dbAction);
-      });
-      setAdmissionId(res.data[0].STUDENT_ID);
-      setFullName(res.data[0].STD_NAME);
-      setGender(res.data[0].STD_GENDER);
-      setDob(res.data[0].STD_DOB);
-      setDojDate(res.data[0].STD_DOJ);
-      setReligion(res.data[0].STD_REL);
-      setCast(res.data[0].STD_CAST);
-      setNationality(res.data[0].STD_NATION);
-      setSclass(res.data[0].STD_CLASS);
-      setSSection(res.data[0].STD_SECTION);
-      setRollNo(res.data[0].STD_ROLL_NO);
-      setBloodGroup(res.data[0].STD_BLD_GROUP);
-      setAddress(res.data[0].STD_ADDRESS);
-      setImage(res.data[0].STD_PHOTO);
-      setFather(res.data[0].STD_PAR_GARD);
-      setFatherOccupation(res.data[0].STD_PAR_OCC);
-      setPhone(res.data[0].STD_PHONE);
-      setEmail(res.data[0].STD_EMAIL);
+      if (res.data.length > 0) {
+        setAdmissionId(res.data[0].STUDENT_ID);
+        setFullName(res.data[0].STD_NAME);
+        setGender(res.data[0].STD_GENDER);
+        setDob(res.data[0].STD_DOB);
+        setDojDate(res.data[0].STD_DOJ);
+        setReligion(res.data[0].STD_REL);
+        setCast(res.data[0].STD_CAST);
+        setNationality(res.data[0].STD_NATION);
+        setSclass(res.data[0].STD_CLASS);
+        setSSection(res.data[0].STD_SECTION);
+        setRollNo(res.data[0].STD_ROLL_NO);
+        setBloodGroup(res.data[0].STD_BLD_GROUP);
+        setAddress(res.data[0].STD_ADDRESS);
+        setImage(res.data[0].STD_PHOTO);
+        setFather(res.data[0].STD_PAR_GARD);
+        setFatherOccupation(res.data[0].STD_PAR_OCC);
+        setPhone(res.data[0].STD_PHONE);
+        setEmail(res.data[0].STD_EMAIL);
+      }
+
       // setNewDate(new Date(res.data[0].STD_DOJ));
       // console.log("doj : "+ newDate);
       console.log("TEST FROM FORMFORMFORM ", initialValues);
@@ -185,7 +185,7 @@ function ReportForm(props) {
     { key: "O-", value: "O-" },
   ];
 
-  const handleSubmit = () => {    
+  const handleSubmit = () => {
     Axios.post("http://localhost:3004/UpdateStudent", {
       headers: {
         "Access-Control-Allow-Origin": "*",
@@ -210,7 +210,7 @@ function ReportForm(props) {
       stdemail: email,
     }).then(() => {
       console.log("Successfully Updated");
-      history.push('/AdmissionReport');
+      history.push("/AdmissionReport");
     });
   };
 

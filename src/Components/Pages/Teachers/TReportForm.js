@@ -1,14 +1,14 @@
 /*eslint-disable*/
-import React, { useState } from "react";
-import DatePicker from "react-datepicker";
-
+import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import Navbar from "../../Common/Navbar/Navbar";
 
-function Tadmissionform() {
+function TReportform(props) {
+  let id = props.match.params.id;
+
   const [dob, setDobDate] = useState();
-  const [doj, setDojDate] = useState(new Date());
+  const [doj, setDojDate] = useState();
   const [teacherId, setTeacherId] = useState();
   const [name, setName] = useState();
   const [gender, setGender] = useState();
@@ -26,60 +26,30 @@ function Tadmissionform() {
     { key: "Other", value: "Other" },
   ];
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    
-    Axios.post("http://localhost:3004/createTeacher", {
-      tch_name: name,
-      tch_gender: gender,
-      tch_dob: setDateFormat(dob),
-      tch_doj: setDateFormat(doj),
-      tch_phone: phoneNo,
-      tch_exp: Yoe,
-      tch_photo: img,
-      tch_address: address,
-      tch_pus: prevSchool,
-      tch_email: email,
-    }).then(() => {
-      setDobDate("");
-      setDobDate("");      
-      setTeacherId("");
-      setName("");
-      setGender("");
-      setAddress("");
-      setImage("");
-      setPhoneNo("");
-      setYoe("");
-      setPrevSchool("");
-      setEmail("");
-      window.scrollTo(0, 0);
+  useEffect(() => {
+    Axios.post("http://localhost:3004/getTeacherAdBasedOnId", {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
+      teacherId: id,
+    }).then((res) => {
+      console.log(res.data);
+      if (res.data.length) {
+        setTeacherId(res.data[0].TEACHERS_ID);
+        setName(res.data[0].TCH_NAME);
+        setDobDate(res.data[0].TCH_DOB);
+        setGender(res.data[0].TCH_GENDER);
+        setDojDate(res.data[0].TCH_DOJ);
+        setAddress(res.data[0].TCH_ADDRESS);
+        setImage(res.data[0].TCH_PHOTO);
+        setPhoneNo(res.data[0].TCH_PHONE);
+        setYoe(res.data[0].TCH_EXP);
+        setPrevSchool(res.data[0].TCH_PUS);
+        setEmail(res.data[0].TCH_EMAIL);
+      }      
     });
-  };
-
-  const handleChange = (e) => {
-    console.log(e.target.value);
-
-    const input = e.target.name;
-    if (input === "name") {
-      setName(e.target.value);
-    } else if (input === "gender") {
-      setGender(e.target.value);
-    } else if (input === "address") {
-      setAddress(e.target.value);
-    } else if (input === "img") {
-      setImage(e.target.value);
-    } else if (input === "phoneNo") {
-      setPhoneNo(e.target.value);
-    } else if (input === "Yoe") {
-      setYoe(e.target.value);
-    } else if (input === "prevSchool") {
-      setPrevSchool(e.target.value);
-    } else if (input === "email") {
-      setEmail(e.target.value);
-    } else if (input === "teacherId") {
-      setTeacherId(e.target.value);
-    }
-  };
+  }, []);
 
   const setDateFormat = (value) => {
     let currentDate;
@@ -110,6 +80,66 @@ function Tadmissionform() {
     }
 
     return formatedDate;
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    Axios.post("http://localhost:3004/updateTeacher", {
+      tch_id: id,
+      tch_name: name,
+      tch_gender: gender,
+      tch_dob: dob,
+      tch_phone: phoneNo,
+      tch_exp: Yoe,
+      tch_photo: img,
+      tch_address: address,
+      tch_pus: prevSchool,
+      tch_email: email,
+    }).then(() => {
+      setDobDate("");
+      setDobDate("");
+      setTeacherId("");
+      setName("");
+      setGender("");
+      setAddress("");
+      setImage("");
+      setPhoneNo("");
+      setYoe("");
+      setPrevSchool("");
+      setEmail("");
+      id = null;
+      window.scrollTo(0, 0);
+    });
+  };
+
+  const handleChange = (e) => {
+    console.log(e.target.value);
+
+    const input = e.target.name;
+    if (input === "name") {
+      setName(e.target.value);
+    } else if (input === "gender") {
+      setGender(e.target.value);
+    } else if (input === "address") {
+      setAddress(e.target.value);
+    } else if (input === "img") {
+      setImage(e.target.value);
+    } else if (input === "phoneNo") {
+      setPhoneNo(e.target.value);
+    } else if (input === "Yoe") {
+      setYoe(e.target.value);
+    } else if (input === "prevSchool") {
+      setPrevSchool(e.target.value);
+    } else if (input === "email") {
+      setEmail(e.target.value);
+    } else if (input === "teacherId") {
+      setTeacherId(e.target.value);
+    } else if (input === "dob") {
+      setDobDate(e.target.value);
+    } else if (input === "doj") {
+      setDojDate(e.target.value);
+    }
   };
 
   return (
@@ -173,14 +203,15 @@ function Tadmissionform() {
               </div>
               <div className="col-xl-3 col-lg-6 col-12 form-group">
                 <label htmlFor="dob">Date Of Birth</label>
-                <DatePicker
+                <input
+                  type="text"
                   className="form-control air-datepicker"
                   placeholder="DD/MM/YYYY"
                   dateformat="dd-MM-yyyy"
-                  selected={dob}
-                  onChange={(date) => {
-                    setDobDate(date);
-                  }}
+                  id="dob"
+                  name="dob"
+                  value={dob}
+                  onChange={(e) => handleChange(e)}
                   required
                 />
               </div>
@@ -234,12 +265,13 @@ function Tadmissionform() {
               <div className="col-xl-3 col-lg-6 col-12 form-group">
                 <label htmlFor="dob">Date Of join</label>
 
-                <DatePicker
+                <input
+                  type="text"
                   className="form-control air-datepicker"
-                  selected={doj}
                   onChange={(date) => setDojDate(date)}
                   placeholder="DD/MM/YYYY"
                   dateformat="dd-MM-yyyy"
+                  value={doj}
                   onChange={(e) => handleChange(e)}
                   disabled
                 />
@@ -296,7 +328,7 @@ function Tadmissionform() {
               <button
                 type="submit"
                 className="btn-fill-lg btn-gradient-yellow btn-hover-bluedark"
-                style={{ marginTop: "40px" }}                
+                style={{ marginTop: "40px" }}
               >
                 Submit
               </button>
@@ -308,4 +340,4 @@ function Tadmissionform() {
   );
 }
 
-export default Tadmissionform;
+export default TReportform;

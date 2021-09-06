@@ -6,7 +6,7 @@ const ResponseMultirow = (props) => {
       standardName = `standardName-${idx}`,
       gradeName = `gradeName-${idx}`,
       timings = `timings-${idx}`;
-      
+       
     return (
       <tr key={val.index}>
         <td>

@@ -48,7 +48,7 @@ function Users() {
   const [phone, setPhone] = useState();
   const [cfmPassword, setcfmPassword] = useState();
   const [actDate, setActDate] = useState();
-  const [deActDate, setDeActDate] = useState();
+  const [deActDate, setDActDate] = useState();
 
   const handleChange = (e) => {
     console.log(e.target.value);
@@ -65,7 +65,7 @@ function Users() {
     } else if (input === "actDate") {
       setActDate(e.target.value);
     } else if (input === "deActDate") {
-      setDeActDate(e.target.value);
+      setDActDate(e.target.value);
     } else if (input === "role") {
       setRole(e.target.value);
     } else if (input === "phone") {
@@ -78,6 +78,7 @@ function Users() {
     
     if (password === cfmPassword) {
         console.log("hii");
+
       Axios.post("http://localhost:3004/createUser", {
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -92,16 +93,15 @@ function Users() {
         deActDate: setDateFormat(deActDate)
       }).then(() => {
         console.log("Successfully Created");
-        setFullName("");
-        setUserName("");
-        setPassword("");
-        setRole("");
-        setPhone("");
-        setcfmPassword("");
-        setActDate("");
-        setDeActDate("");
+        // setFullName("");
+        // setUserName("");
+        // setPassword("");
+        // setRole("");
+        // setPhone("");
+        // setcfmPassword("");
+        // setActDate("");
+        // setDeActDate("");
       });
-
     } else {
       alert("Password Do Not Match");
     }
@@ -210,7 +210,7 @@ function Users() {
                   name="actDate"
                   className="form-control"
                   select={actDate}
-                  value={actDate}
+                 // value={actDate}
                   onChange={(e) => handleChange(e)}
                 />
               </div>
@@ -226,13 +226,13 @@ function Users() {
                   select={deActDate}
                   name="deActDate"
                   className="form-control"
-                  value={deActDate}
+                  //value={deActDate}
                   onChange={(e) => handleChange(e)}
                 />
               </div>
 
               <div className="col-md-3 form-group">
-                <label htmlFor="gender">Role</label>
+                <label htmlFor="role">Role</label>
                 <select
                   class="form-select"
                   aria-label="Default select example"

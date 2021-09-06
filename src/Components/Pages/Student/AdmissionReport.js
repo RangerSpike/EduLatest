@@ -24,33 +24,25 @@ function AdmissionReport() {
       //console.log("Success in effect", data);
       //console.log("result set in effect: ", res.data);
     });
-
-    Axios.get("http://localhost:3004/getUserDetails", {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-      },
-    }).then((res) => {
-      //setData(res.data);
-      //   setDupData(res.data);
-      console.log("USER", res.data.password);
-      //console.log("result set in effect: ", res.data);
-    });
   };
 
   const updateRecordsAfterFilter = () => {
     console.log("updateDuplicateVar called : ");
-    Axios.post("http://localhost:3004/getStudentAdReport", {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-      },
-      student_id: stdID,
-      student_name: stdName,
-    }).then((res) => {
-      setData(res.data);
-      console.log("result set in effect: ", res.data);
-    });
+    if (stdID || stdName) {
+      Axios.post("http://localhost:3004/getStudentAdReport", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+        student_id: stdID ? stdID : `"` + `"`,
+        student_name: stdName ? stdName : `"` + `"`,
+      }).then((res) => {
+        setData(res.data);
+        console.log("result set in effect: ", res.data);
+      });
+    }else{
+      getData();
+    }
   };
 
   useEffect(() => {
@@ -220,7 +212,10 @@ function AdmissionReport() {
                 <tbody className="text-center">
                   {data.map((item) => (
                     <tr key={item.STUDENT_ID} role="row" className="odd ">
-                      <td onClick={() => openAdForm(item.STUDENT_ID)} style={{cursor:"pointer"}}>
+                      <td
+                        onClick={() => openAdForm(item.STUDENT_ID)}
+                        style={{ cursor: "pointer" }}
+                      >
                         {item.STUDENT_ID}
                       </td>
                       {/* <td style={styleback}>{item.stich_name}</td> */}

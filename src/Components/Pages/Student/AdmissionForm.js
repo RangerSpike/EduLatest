@@ -157,6 +157,7 @@ function AdmissionForm() {
       setFatherOccupation("");
       setPhone("");
       setEmail("");
+      window.scrollTo(0, 0)
     });
   };
 

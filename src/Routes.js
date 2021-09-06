@@ -11,6 +11,7 @@ import ReportForm from './Components/Pages/Student/ReportForm';
 import TAdmissionForm from './Components/Pages/Teachers/TadmissionForm';
 import TAdmissionReport from './Components/Pages/Teachers/TadmissionReport';
 import ResponsiblityForm from './Components/Pages/Teachers/ResponsiblityForm';
+import TReportform from './Components/Pages/Teachers/TReportForm';
 
 import Notice from './Components/Pages/Notice/Notice';
 import Message from './Components/Pages/Notice/Message';
@@ -41,6 +42,7 @@ function Routes() {
           <Route exact path="/TAdmissionForm"  component={TAdmissionForm} />
           <Route exact path="/TAdmissionReport"  component={TAdmissionReport} />
           <Route exact path="/ResponsiblityForm"  component={ResponsiblityForm} />
+          <Route path='/TReportform/:id' exact component={TReportform} />
 
           <Route exact path="/Notice"  component={Notice} />
           <Route exact path="/Message"  component={Message} />
