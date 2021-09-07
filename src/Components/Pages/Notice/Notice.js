@@ -1,8 +1,46 @@
-import React from 'react'
+import React, { useState } from "react";
 import { NavLink} from 'react-router-dom';
 import Navbar from '../../Common/Navbar/Navbar';
 import './Notice.css'
+
+
+
+
 function Notice() {
+
+
+ const [title,setTitle] = useState();
+  const [details,setDetails] = useState();
+  const [postedto,setPostedto] = useState();
+  const [date,setDate] = useState();
+
+  const handleChange = (e) => {
+    console.log(e.target.value);
+
+  const input = e.target.name;
+  if (input === "title") {
+    setTitle(e.target.value);
+  } else if (input === "details") {
+    setDetails(e.target.value);
+  } else if (input === "postedto") {
+    setPostedto(e.target.value);
+  } else if (input === "date") {
+    setDate(e.target.value);
+  };
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
     return (  <>
         <Navbar/>       
         <div className="row">
@@ -20,20 +58,53 @@ function Notice() {
                         <div className="row">
                             <div className="col-10-xxxl col-lg-5 col-12 form-group">
                                 <label>Title</label>
-                                <input type="text" placeholder="" className="form-control"/>
+                                <input type="text" placeholder="" className="form-control"
+                                 type="text"
+                                 placeholder="Title"
+                                 className="form-control"
+                                 id="title"
+                                 name="title"
+                                 value={title}
+                                 onChange={(e) => handleChange(e)}
+                                />
                             </div>
                             <div className="col-12-xxxl col-lg-5 col-12 form-group">
                                 <label>Details</label>
-                                <input type="text" placeholder="" className="form-control"/>
+                                <input type="text" placeholder="" className="form-control"
+                                  type="text"
+                                  placeholder="Details"
+                                  className="form-control"
+                                  id="detail"
+                                  name="details"
+                                  value={details}
+                                  onChange={(e) => handleChange(e)}
+                                />
                             </div>
                             <div className="col-12-xxxl col-lg-5 col-12 form-group">
                                 <label>Posted To </label>
-                                <input type="text" placeholder="" className="form-control"/>
+                                <input type="text" placeholder="" className="form-control"
+                                  type="text"
+                                  placeholder="posted to"
+                                  className="form-control"
+                                  id="postedto"
+                                  name="postedto"
+                                  value={postedto}
+                                  onChange={(e) => handleChange(e)}
+                                />
                                
                             </div>
                             <div className="col-12-xxxl col-lg-5 col-12 form-group">
                                 <label>Date</label>
-                                <input type="text" placeholder="" className="form-control air-datepicker"/>
+                                
+                                <input type="text" placeholder="" className="form-control air-datepicker"
+                                  type="text"
+                                  placeholder="Date"
+                                  className="form-control"
+                                  id="date"
+                                  name="date"
+                                  value={date}
+                                  onChange={(e) => handleChange(e)}
+                                />
                               
                             </div>
                             <div className="col-12 form-group mg-t-8">

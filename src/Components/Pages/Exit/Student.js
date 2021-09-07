@@ -1,10 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import {  Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 import Axios from "axios";
-import TextError from "../../../TextError";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import Navbar from "../../Common/Navbar/Navbar";
@@ -12,6 +11,31 @@ import Navbar from "../../Common/Navbar/Navbar";
 function Student() {
   const [doj, setDojDate] = useState(new Date());
   const [doe, setDoeDate] = useState(new Date());
+  const [id,setId] = useState();
+  const [name,setName] = useState();
+  const [cci,setCci] = useState();
+  const [reason,setReason] = useState();
+  const [Class,setCLass] = useState();
+
+  const handleChange = (e) => {
+    console.log(e.target.value);
+
+  const input = e.target.name;
+  if (input === "doj") {
+    setDojDate(e.target.value);
+  } else if (input === "doe") {
+    setDoeDate(e.target.value);
+  } else if (input === "id") {
+    setId(e.target.value);
+  } else if (input === "name") {
+    setName(e.target.value);
+  } else if (input === "cci") {
+    setCci(e.target.value);
+  } else if (input === "reason") {
+    setReason(e.target.value);
+  } else if (input === "Class") {
+    setCLass(e.target.value);};
+  };
 
   const [dbAction, setDbAction] = useState("Create");
   const [formValues, setFormValues] = useState(null);
@@ -29,21 +53,14 @@ function Student() {
     { key: "9", value: "9" },
     { key: "10", value: "10" },
   ];
+
   const optionCCI = [
     { key: "Select Class", value: "" },
     { key: "Positive", value: "Positive" },
     { key: "Negetive", value: "Negetive" },
   ];
 
-  const initialValues = {
-    id: "",
-    name: "",
-    class: "",
-    doe: doe,
-    doj: doj,
-    CCI: "",
-    Reason: "",
-  };
+ 
   const newForm = (formData) => {
     if (dbAction === "Create") {
       Axios.post("http://localhost:3004/createStdExit", {
@@ -59,31 +76,16 @@ function Student() {
     }
   };
 
-  const savedValues = {
-    id: "",
-    name: "",
-    class: "",
-    doe: "",
-    doj: "",
-    CCI: "",
-    Reason: "",
-  };
+ 
 
   const onSubmit = (value, onSubmitProps) => {
     console.log("Submitted Data : ", value);
-    //console.log("submit props : ", onSubmitProps);
-    onSubmitProps.setSubmitting(false);
-    onSubmitProps.resetForm();
+    console.log("submit props : ", onSubmitProps);
+    //nSubmitProps.setSubmitting(false);
+    //onSubmitProps.resetForm();
   };
-  const userValidation = Yup.object({
-    id: Yup.string().required("*This Field is Mandatory"),
-    name: Yup.string().required("*This Field is Mandatory"),
-    class: Yup.string().required("*This Field is Mandatory"),
-    doe: Yup.string().required("*This Field is Mandatory"),
-    doj: Yup.string().required("*This Field is Mandatory"),
-    CCI: Yup.string().required("*This Field is Mandatory"),
-    Reason: Yup.string().required("*This Field is Mandatory"),
-  });
+
+  
 
   return (
     <>
@@ -96,45 +98,42 @@ function Student() {
             </div>
           </div>
 
-          <Formik
-            initialValues={initialValues || savedValues}
-            validationSchema={userValidation}
-            onSubmit={onSubmit}
-            enableReinitialize
-          >
-            {(formik) => {
-              return (
-                <Form className="new-added-form">
+         
+                <form className="new-added-form">
                   <div className="row">
                     <div className="col-sm-3   form-group">
                       <label>Std ID</label>
-                      <Field
+                      <input
                         type="text"
                         placeholder="ID"
                         className="form-control"
                         id="id"
                         name="id"
+                        value={id}
+                        onChange={(e) => handleChange(e)}
                       />
-                      <ErrorMessage name="id" component={TextError} />
                     </div>
                     <div className="col-sm-3 form-group">
                       <label> Name </label>
-                      <Field
+                      <input
                         type="text"
                         placeholder="Name"
                         className="form-control"
                         id="name"
                         name="name"
+                        value={name}
+                        onChange={(e) => handleChange(e)}
                       />
-                      <ErrorMessage name="name" component={TextError} />
                     </div>
                     <div className="col-xl-3 col-lg-6 col-12 form-group">
                       <label htmlFor="gender">Class</label>
-                      <Field
+                      <select
                         as="select"
                         id="class"
                         name="class"
                         className="form-control"
+                       
+                        onChange={(e) => handleChange(e)}
                       >
                         {optionClass.map((optionClass) => {
                           return (
@@ -146,8 +145,7 @@ function Student() {
                             </option>
                           );
                         })}
-                      </Field>
-                      <ErrorMessage name="class" component={TextError} />
+                      </select>
                     </div>
                     <div className="col-xl-3 col-lg-6 col-12 form-group">
                       <label>Date Of Exit</label>
@@ -159,8 +157,9 @@ function Student() {
                         dateFormat="dd-MM -yyyy"
                         id="doe"
                         name="doe"
+                        value={doe}
+                        onChange={(e) => handleChange(e)}
                       />
-                      <ErrorMessage name="doe" component={TextError} />
                     </div>
                     <div className="col-xl-3 col-lg-6 col-12 form-group">
                       <label>Date Of Join</label>
@@ -172,8 +171,9 @@ function Student() {
                         dateFormat="dd-MM -yyyy"
                         id="doj"
                         name="doj"
+                        value={doj}
+                        onChange={(e) => handleChange(e)}
                       />
-                      <ErrorMessage name="doj" component={TextError} />
                     </div>
                   </div>
                   <div className="row">
@@ -181,11 +181,12 @@ function Student() {
                       <label htmlFor="gender">
                         Charecter Certificate Issued
                       </label>
-                      <Field
+                      <select
                         as="select"
                         id="CCi"
                         name="CCI"
                         className="form-control"
+                        onChange={(e) => handleChange(e)}
                       >
                         {optionCCI.map((optionCCI) => {
                           return (
@@ -194,8 +195,7 @@ function Student() {
                             </option>
                           );
                         })}
-                      </Field>
-                      <ErrorMessage name="class" component={TextError} />
+                      </select>
                     </div>
                     <div
                       className="col-lg-6 col-12 form-group"
@@ -203,15 +203,16 @@ function Student() {
                     >
                       <label>Reason For Leaving</label>
 
-                      <Field
+                      <input
                         className="textarea form-control"
                         as="textarea"
                         name="Reason"
                         id="Reason"
                         cols="10"
                         rows="3"
+                        value={reason}
+                        onChange={(e) => handleChange(e)}
                       />
-                      <ErrorMessage name="Reason" component={TextError} />
                     </div>
                   </div>
                   <div className="col-12 form-group mg-t-8">
@@ -219,27 +220,19 @@ function Student() {
                       type="submit"
                       className="btn-fill-lg btn-gradient-yellow btn-hover-bluedark"
                       style={{ marginTop: "40px" }}
-                      disabled={
-                        !formik.isValid ||
-                        !formik.dirty ||
-                        formik.isSubmitting
-                      }
+                     
                       onClick={() => {
                         console.log(
                           "Calling locally submit server dbaction ",
                           dbAction
                         );
                         //setDbAction("Create");
-                        newForm(formik.values);
                       }}
                     >
                       Submit
                     </button>
                   </div>
-                </Form>
-              );
-            }}
-          </Formik>
+                </form>
         </div>
       </div>
     </>

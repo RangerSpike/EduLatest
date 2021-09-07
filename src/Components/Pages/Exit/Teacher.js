@@ -9,6 +9,32 @@ import Navbar from "../../Common/Navbar/Navbar";
 function Teacher() {
   const [doj, setDojDate] = useState(new Date());
   const [doe, setDoeDate] = useState(new Date());
+  const [id,setId] = useState();
+  const [name,setName] = useState();
+  const [cci,setCci] = useState();
+  const [reason,setReason] = useState();
+  const [Class,setCLass] = useState();
+
+  const handleChange = (e) => {
+    console.log(e.target.value);
+
+  const input = e.target.name;
+  if (input === "doj") {
+    setDojDate(e.target.value);
+  } else if (input === "doe") {
+    setDoeDate(e.target.value);
+  } else if (input === "id") {
+    setId(e.target.value);
+  } else if (input === "name") {
+    setName(e.target.value);
+  } else if (input === "cci") {
+    setCci(e.target.value);
+  } else if (input === "reason") {
+    setReason(e.target.value);
+  } else if (input === "Class") {
+    setCLass(e.target.value);};
+  };
+
 
   const initialValues = {
     id: "1",
@@ -49,35 +75,32 @@ function Teacher() {
               <h3 style={{ padding: "50px" }}>Exit From </h3>
             </div>
           </div>
-          <Formik
-            initialValues={initialValues || savedValues}
-            validationSchema={userValidation}
-            enableReinitialize
-            onSubmit={onsubmit}
-          >
-            <Form className="new-added-form">
+          
+            <form className="new-added-form">
               <div className="row">
                 <div className="col-sm-3   form-group">
                   <label> ID</label>
-                  <Field
+                  <input
                     type="text"
                     placeholder="Teacher ID"
                     className="form-control"
                     id="id"
                     name="id"
+                    value={id}
+                     onChange={(e) => handleChange(e)}
                   />
-                  <ErrorMessage name="id" component={TextError} />
                 </div>
                 <div className="col-sm-3 form-group">
                   <label> Name </label>
-                  <Field
+                  <input
                     type="text"
                     placeholder="Name"
                     className="form-control"
                     id="name"
                     name="name"
+                    value={name}
+                    onChange={(e) => handleChange(e)}
                   />
-                  <ErrorMessage name="name" component={TextError} />
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>Date Of Exit</label>
@@ -90,7 +113,6 @@ function Teacher() {
                     id="doe"
                     name="doe"
                   />
-                  <ErrorMessage name="doe" component={TextError} />
                 </div>
 
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
@@ -104,22 +126,22 @@ function Teacher() {
                     id="doj"
                     name="doj"
                   />
-                  <ErrorMessage name="doj" component={TextError} />
                 </div>
                 <div
                   className="col-lg-6 col-12 form-group"
                   style={{ height: "100px" }}
                 >
                   <label>Reason For Leaving</label>
-                  <Field
+                  <input
                     className="textarea form-control"
                     as="textarea"
                     name="Reason"
                     id="Reason"
                     cols="10"
                     rows="3"
+                    value={reason}
+                    onChange={(e) => handleChange(e)}
                   />
-                  <ErrorMessage name="Reason" component={TextError} />
                 </div>
                 <div className="col-12 form-group mg-t-8">
                   <button
@@ -131,8 +153,7 @@ function Teacher() {
                   </button>
                 </div>
               </div>
-            </Form>
-          </Formik>
+            </form>
         </div>
       </div>
     </>

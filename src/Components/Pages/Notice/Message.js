@@ -1,6 +1,30 @@
-import React from 'react'
+import React, { useState } from "react";
 import Navbar from '../../Common/Navbar/Navbar';
 function Message() {
+
+    const [title,setTitle] = useState();
+    const [recipient,setRecipient] = useState();
+    const [message,setMessage] = useState();
+  
+    const handleChange = (e) => {
+      console.log(e.target.value);
+  
+    const input = e.target.name;
+    if (input === "title") {
+      setTitle(e.target.value);
+    } else if (input === "recipient") {
+        setRecipient(e.target.value);
+    } else if (input === "message") {
+        setMessage(e.target.value);
+    } 
+    };
+
+
+
+
+
+
+
     return (
         <>
         <Navbar/>
@@ -52,15 +76,42 @@ function Message() {
                     </div>
                             <div className="col-10 form-group" style={{paddingTop:"50px"}}>
                                 <label>Title</label>
-                                <input type="text" placeholder="" className="form-control"/>
+                                <input type="text" placeholder="" className="form-control"
+                                 type="text"
+                                 placeholder="Title"
+                                 className="form-control"
+                                 id="title"
+                                 name="title"
+                                 value={title}
+                                 onChange={(e) => handleChange(e)}
+                                />
                             </div>
                             <div className="col-10 form-group">
                                 <label>Recipient</label>
-                                <input type="text" placeholder="" className="form-control"/>
+                                <input type="text" placeholder="" className="form-control"
+                                 type="text"
+                                 placeholder="recipient"
+                                 className="form-control"
+                                 id="recipient"
+                                 name="recipient"
+                                 value={recipient}
+                                 onChange={(e) => handleChange(e)}
+                                />
                             </div>
                             <div className="col-10 form-group">
                                 <label>Message</label>
-                                <textarea className="textarea form-control" name="message" id="form-message" cols="10" rows="9"></textarea>
+                                <textarea className="textarea form-control" name="message" id="form-message" cols="10" rows="9"
+                                 type="text"
+                                 placeholder="type a message"
+                                 className="form-control"
+                                 id="message"
+                                 name="message"
+                                 value={message}
+                                 onChange={(e) => handleChange(e)}
+                                >
+                                
+
+                                </textarea>
                             </div>
                             <div className="col-12 form-group mg-t-8">
                                 <button type="submit" className="btn-fill-lg btn-gradient-yellow btn-hover-bluedark" style={{marginLeft:'356px'}}>Send</button>

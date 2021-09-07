@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import "../Student/AdmissionReport.css";
 import Navbar from "../../Common/Navbar/Navbar";
+
+
+
+
+
 function StudentExitReport() {
+
+
+  
+
+
+
+
   const formValues = {
     studentId: "101",
     name: "Mohammed",
@@ -68,6 +80,7 @@ function StudentExitReport() {
                       colspan="1"
                       aria-label="Admission iD: activate to sort column ascending"
                       style={{ width: "42.6667px" }}
+                     
                     >
                       ID
                     </th>
