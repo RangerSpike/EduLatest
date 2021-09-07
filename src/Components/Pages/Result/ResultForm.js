@@ -6,8 +6,15 @@ function ResultForm() {
   const [RegNo, setRegNo] = useState();
   const [fullName, setFullName] = useState();
   const [Sclass, setSclass] = useState();
+  const [id, setStdId] = useState();
   const [CalulatedFor, SetCalulatedFor] = useState(600);
   const [SubsLov, setSubsLov] = useState([]);
+
+  const [iaResult, setIaResult] = useState(0);
+  const [extResult, setExtResult] = useState(0);
+  const [finalResult, setFinalResult] = useState(0);
+  const [percentage, setPercentage] = useState(0);
+  const [result, setResult] = useState('Pass');
 
   const list = {
     subject: "",
@@ -18,6 +25,7 @@ function ResultForm() {
   const [resultList, setResultList] = useState([]);
 
   const getStdData = () => {
+    console.log("hi");
     axios
       .post("http://localhost:3004/getStudentBasedOnRegno", {
         headers: {
@@ -27,7 +35,9 @@ function ResultForm() {
         stdRollNo: RegNo,
       })
       .then((res) => {
-        if (res.data.fullName > 0) {
+        if (res.data.length > 0) {
+          console.log(res.data);
+          setStdId(res.data[0].STUDENT_ID);
           setFullName(res.data[0].STD_NAME);
           setSclass(res.data[0].STD_CLASS);
         }
@@ -57,7 +67,6 @@ function ResultForm() {
   };
 
   const removeRow = (index) => {
-    //console.log("index value :", index);
     const filteredList = [...resultList];
     filteredList.splice(index, 1);
 
@@ -132,12 +141,12 @@ function ResultForm() {
                 <button
                   type="button"
                   className="fw-btn-fill btn-gradient-yellow"
+                  onClick={() => getStdData()}
                   style={{
                     width: "100px",
                     marginTop: "36px",
                     marginLeft: "150px",
                   }}
-                  onClick={() => getStdData()}
                 >
                   SEARCH
                 </button>
@@ -292,7 +301,7 @@ function ResultForm() {
                 </thead>
                 <tbody className="text-center">
                   {resultList.map((item, i) => (
-                    <tr role="row" className="odd ">
+                    <tr role="row" className="odd " key={i}>
                       <td>
                         <select
                           className="select2"
