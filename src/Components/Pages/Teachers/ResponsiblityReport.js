@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
+import Navbar from "../../Common/Navbar/Navbar";
 
 function ResponsiblityReport() {
-    return (
-        <div>
-            ggggggggggggggggggg
-        </div>
-    )
+  return (
+    <div>
+      <Navbar />
+      ggggggggggggggggggg
+    </div>
+  );
 }
 
-export default ResponsiblityReport
+export default ResponsiblityReport;

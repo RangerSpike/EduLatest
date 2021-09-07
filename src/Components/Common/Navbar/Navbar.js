@@ -1,9 +1,9 @@
 /*eslint-disable*/
-import React, { useState } from 'react';
-import { IoMdArrowDropdown } from 'react-icons/io';
-import { Link } from 'react-router-dom';
-import './Navbar.css';
-import Dropdown from './Dropdown';
+import React, { useState } from "react";
+import { IoMdArrowDropdown } from "react-icons/io";
+import { Link } from "react-router-dom";
+import "./Navbar.css";
+import Dropdown from "./Dropdown";
 
 function Navbar() {
   const [click, setClick] = useState(false);
@@ -12,82 +12,83 @@ function Navbar() {
   const [studentDropdown, setStudentDropdown] = useState(false);
   const [mediaDropdown, setMediaDropdown] = useState(false);
   const [contactDropdown, setContactDropdown] = useState(false);
+  const [userDropDown, setUserDropDown] = useState(false);
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
   const onMouseEnter = (menuType) => {
-
-    if (menuType == "DIS") {
+    if (menuType == "USE") {
+      if (window.innerWidth < 960) {
+        setUserDropDown(false);
+      } else {
+        setUserDropDown(true);
+      }
+    } else if (menuType == "DIS") {
       if (window.innerWidth < 960) {
         setDiscoverDropDown(false);
       } else {
         setDiscoverDropDown(true);
       }
-    }
-    else if (menuType == "ADM") {
+    } else if (menuType == "ADM") {
       if (window.innerWidth < 960) {
         setAdmissionDropdown(false);
       } else {
         setAdmissionDropdown(true);
       }
-    }
-    else if (menuType == "STD") {
+    } else if (menuType == "STD") {
       if (window.innerWidth < 960) {
         setStudentDropdown(false);
       } else {
         setStudentDropdown(true);
       }
-    }
-    else if (menuType == "MED") {
+    } else if (menuType == "MED") {
       if (window.innerWidth < 960) {
         setMediaDropdown(false);
       } else {
         setMediaDropdown(true);
       }
-    }
-    else if (menuType == "CON") {
+    } else if (menuType == "CON") {
       if (window.innerWidth < 960) {
         setContactDropdown(false);
       } else {
         setContactDropdown(true);
       }
     }
-
-
   };
 
   const onMouseLeave = (menuType) => {
-
-    if (menuType == "DIS") {
+    if (menuType == "USE") {
+      if (window.innerWidth < 960) {
+        setUserDropDown(false);
+      } else {
+        setUserDropDown(false);
+      }
+    } else if (menuType == "DIS") {
       if (window.innerWidth < 960) {
         setDiscoverDropDown(false);
       } else {
         setDiscoverDropDown(false);
       }
-    }
-    else if (menuType == "ADM") {
+    } else if (menuType == "ADM") {
       if (window.innerWidth < 960) {
         setAdmissionDropdown(false);
       } else {
         setAdmissionDropdown(false);
       }
-    }
-    else if (menuType == "STD") {
+    } else if (menuType == "STD") {
       if (window.innerWidth < 960) {
         setStudentDropdown(false);
       } else {
         setStudentDropdown(false);
       }
-    }
-    else if (menuType == "MED") {
+    } else if (menuType == "MED") {
       if (window.innerWidth < 960) {
         setMediaDropdown(false);
       } else {
         setMediaDropdown(false);
       }
-    }
-    else if (menuType == "CON") {
+    } else if (menuType == "CON") {
       if (window.innerWidth < 960) {
         setContactDropdown(false);
       } else {
@@ -97,90 +98,110 @@ function Navbar() {
   };
 
   return (
-
-    <nav className='rabbit'>
-      <Link to='/' className='rabbit-logo' onClick={closeMobileMenu}>
-        <img src="madcaplogot.png" alt="logo img" width="100" height="100" className="d-inline-block align-top" />
-
+    <nav className="rabbit">
+      <Link to="/" className="rabbit-logo" onClick={closeMobileMenu}>
+        <img
+          src="madcaplogot.png"
+          alt="logo img"
+          width="100"
+          height="100"
+          className="d-inline-block align-top"
+        />
       </Link>
-      <div className='menu-icon' onClick={handleClick}>
-        <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
+      <div className="menu-icon" onClick={handleClick}>
+        <i className={click ? "fas fa-times" : "fas fa-bars"} />
       </div>
-      <ul className={click ? 'nav-menu active' : 'nav-menu'}>
+      <ul className={click ? "nav-menu active" : "nav-menu"}>
         <li
-          className='nav-item'
-          onMouseEnter={() => { onMouseEnter("DIS") }}
-          onMouseLeave={() => { onMouseLeave("DIS") }}
+          className="nav-item"
+          onMouseEnter={() => {
+            onMouseEnter("USE");
+          }}
+          onMouseLeave={() => {
+            onMouseLeave("USE");
+          }}
         >
-          <Link
-            className='nav-links'
-            onClick={closeMobileMenu}
-          >
+          <Link className="nav-links" onClick={closeMobileMenu}>
+            Users <IoMdArrowDropdown />
+          </Link>
+          {userDropDown && <Dropdown Menutype="USE" />}
+        </li>
+        <li
+          className="nav-item"
+          onMouseEnter={() => {
+            onMouseEnter("DIS");
+          }}
+          onMouseLeave={() => {
+            onMouseLeave("DIS");
+          }}
+        >
+          <Link className="nav-links" onClick={closeMobileMenu}>
             Students <IoMdArrowDropdown />
           </Link>
           {discoverDropDown && <Dropdown Menutype="DIS" />}
         </li>
         <li
-          className='nav-item'
-          onMouseEnter={() => { onMouseEnter("ADM") }}
-          onMouseLeave={() => { onMouseLeave("ADM") }}
+          className="nav-item"
+          onMouseEnter={() => {
+            onMouseEnter("ADM");
+          }}
+          onMouseLeave={() => {
+            onMouseLeave("ADM");
+          }}
         >
-          <Link
-
-            className='nav-links'
-            onClick={closeMobileMenu}
-          >
+          <Link className="nav-links" onClick={closeMobileMenu}>
             Teachers <IoMdArrowDropdown />
           </Link>
           {admissionDropdown && <Dropdown Menutype="ADM" />}
         </li>
         <li
-          className='nav-item'
-          onMouseEnter={() => { onMouseEnter("STD") }}
-          onMouseLeave={() => { onMouseLeave("STD") }}
+          className="nav-item"
+          onMouseEnter={() => {
+            onMouseEnter("STD");
+          }}
+          onMouseLeave={() => {
+            onMouseLeave("STD");
+          }}
         >
-          <Link
-
-            className='nav-links'
-            onClick={closeMobileMenu}
-          >
-            Notice<IoMdArrowDropdown />
+          <Link className="nav-links" onClick={closeMobileMenu}>
+            Notice
+            <IoMdArrowDropdown />
           </Link>
           {studentDropdown && <Dropdown Menutype="STD" />}
         </li>
         <li
-          className='nav-item'
-          onMouseEnter={() => { onMouseEnter("MED") }}
-          onMouseLeave={() => { onMouseLeave("MED") }}
+          className="nav-item"
+          onMouseEnter={() => {
+            onMouseEnter("MED");
+          }}
+          onMouseLeave={() => {
+            onMouseLeave("MED");
+          }}
         >
-          <Link
-
-            className='nav-links'
-            onClick={closeMobileMenu}
-          >
-            Result<IoMdArrowDropdown />
+          <Link className="nav-links" onClick={closeMobileMenu}>
+            Result
+            <IoMdArrowDropdown />
           </Link>
           {mediaDropdown && <Dropdown Menutype="MED" />}
         </li>
 
-
         <li
-          className='nav-item'
-          onMouseEnter={() => { onMouseEnter("CON") }}
-          onMouseLeave={() => { onMouseLeave("CON") }}
+          className="nav-item"
+          onMouseEnter={() => {
+            onMouseEnter("CON");
+          }}
+          onMouseLeave={() => {
+            onMouseLeave("CON");
+          }}
         >
-          <Link
-            className='nav-links'
-            onClick={closeMobileMenu}>
+          <Link className="nav-links" onClick={closeMobileMenu}>
             Exit Form
             <IoMdArrowDropdown />
           </Link>
           {contactDropdown && <Dropdown Menutype="CON" />}
         </li>
       </ul>
-
     </nav>
-
   );
 }
 
