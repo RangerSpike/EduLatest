@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "../Student/AdmissionReport.css";
 import Navbar from "../../Common/Navbar/Navbar";
 import Axios from "axios";
-import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
 
 function TadmissionReport() {

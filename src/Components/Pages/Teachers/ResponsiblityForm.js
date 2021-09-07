@@ -1,229 +1,318 @@
 /*eslint-disable*/
-import React, { useState } from "react";
-import { NotificationContainer,NotificationManager } from "react-notifications";
-import 'react-notifications/lib/notifications.css';
-import ResponseMultirow from "./ResponseMultirow";
-import Axios from "axios";
-import { Redirect } from "react-router-dom";
-import TadmissionForm from './TadmissionForm';
+import React, { useEffect } from "react";
+import { useState } from "react";
+import { BsFillPlusSquareFill } from "react-icons/bs";
+import "react-notifications/lib/notifications.css";
+import axios from "axios";
 import Navbar from "../../Common/Navbar/Navbar";
 
-class ResponsiblityForm extends React.Component {
+function ResponsiblityForm() {
+  const [Year, setYear] = useState("");
+  const [YearLov, setYearLov] = useState([]);
+  const [Teachers, setTeacher] = useState("");
+  const [TeachersLov, setTeacherLov] = useState([]);
+  const [SubsLov, setSubsLov] = useState([]);
 
-  state = {
-    taskList: [
-      {
-        index: Math.random(),
-        subjectName: "",
-        standardName: "",
-        gradeName: "",
-        timings: "",
+  const list = {
+    year: Year,
+    teachers: Teachers,
+    subjectName: "",
+    standardName: "",
+    gradeName: "",
+    timings: "",
+  };
+
+  const [taskList, setTaskList] = useState([]);
+
+  const handleChange = (e, index) => {
+    const updatedTaskList = taskList.map((item, i) =>
+      index === i
+        ? Object.assign(item, { [e.target.name]: e.target.value })
+        : item
+    );
+    //let test = updatedUsers.length - 1;
+
+    setTaskList(updatedTaskList);
+  };
+
+  const getLov = () => {
+    axios.get("http://localhost:3004/getYearLov", {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
       },
-    ],
-    year: "",
-    teachers: "",
-    respId: "",
-  };
-
-
-  handleChange = (e) => {
-    if (
-      ["subjectName", "standardName", "gradeName", "timings"].includes(
-        e.target.name
-      )
-    ) {
-      let taskList = [...this.state.taskList];
-      taskList[e.target.dataset.id][e.target.name] = e.target.value;
-    } else {
-      this.setState({ [e.target.name]: e.target.value });
-    }
-  };
-
-  addNewRow = () => {
-    this.setState((prevState) => ({
-      taskList: [
-        ...prevState.taskList,
-        {
-          index: Math.random(),
-          subjectName: "",
-          standardName: "",
-          gradeName: "",
-          timings: "",
-        },
-      ],
-    }));
-  };
-
-  deteteRow = (index) => {
-    this.setState({
-      taskList: this.state.taskList.filter((s, sindex) => index !== sindex),
+    }).then((res) => {
+      setYearLov(res.data);
+      //console.log("result set in effect: ", res.data);
     });
-    // const taskList1 = [...this.state.taskList];
-    // taskList1.splice(index, 1);
-    // this.setState({ taskList: taskList1 });
   };
 
-  handleSubmit = (e) => {
+  const getSubsLov = () => {
+    axios.get("http://localhost:3004/getSubsLov", {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
+    }).then((res) => {
+      setSubsLov(res.data);
+      //console.log("result set in effect: ", res.data);
+    });
+  };
+
+  const getTchLov = () => {
+    axios.get("http://localhost:3004/getTeacherList", {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
+    }).then((res) => {
+      setTeacherLov(res.data);
+      //console.log("result set in effect: ", res.data);
+    });
+  };
+
+  useEffect(() => {
+    getLov();
+    getTchLov();
+    getSubsLov();
+  }, []);
+
+  const addRow = () => {
+    setTaskList([...taskList, list]);
+  };
+
+  const removeRow = (index) => {
+    //console.log("index value :", index);
+    const filteredList = [...taskList];
+    filteredList.splice(index, 1);
+
+    setTaskList(filteredList);
+  };
+
+  const handleSubmit = (e) => {
+    console.log("Submit Started",taskList);
     e.preventDefault();
 
-    if (this.state.year === "" || this.state.teachers === "") {
-      NotificationManager.warning("Please Fill up Required Field . Please check Year and Teachers Field");
-      return false;
-    }
-    for (var i = 0; i < this.state.taskList.length; i++) {
-      if (
-        this.state.taskList[i].subjectName === "" ||
-        this.state.taskList[i].gradeName === ""
-      ) {
-        NotificationManager.warning("Please Fill up Required Field.Please Check Subject name And Grade Details");
-        return false;
-      }
-    }
-
-    let data = { formData: this.state };
-
-    Axios.get("http://localhost:3004/getSequenceRespId").then((res) => {
-      console.log("response id : ", res.data[0].RESPID);
-      this.setState({
-        respId: res.data[0].RESPID,
-      });
-      console.log("state : ", this.state);
-      this.moveDataToDb(
-        data.formData,
-        data.formData.taskList.length,
-        res.data[0].RESPID
-      );
-
-      if (res.data[0].RESPID){
-        NotificationManager.success('Successfully updated Responsibilities');
-        
-        setTimeout(() => {
-          this.props.history.push('/');
-        }, 1000);
-      }
-       
+    axios.post("http://localhost:3004/insertRespForm", {      
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
+      formData: taskList,
+      testLenth:taskList.length
+    }).then(() => {      
+      setTaskList([]);
+      setYear("");
+      setYearLov([]);
+      setTeacher("");
+      setTeacherLov([]);
+      console.log("Values Submitted");
     });
-
-    this.clearForm(data.formData.taskList.length);
-  
-    return true;
   };
 
-  clickOnDelete(record) {
-    this.setState({
-      taskList: this.state.taskList.filter((r) => r !== record),
-    });
-  }
+  return (
+    <div>
+      <Navbar />
+      <div className="card height-auto">
+        <div className="card-body">
+          <div className="heading-layout1">
+            <div className="item-title">
+              <h3 style={{ padding: "50px" }}>Responsiblity</h3>
+            </div>
+          </div>
+          <form
+            id="test-form"
+            className="new-added-form-1"
+            onSubmit={handleSubmit}
+            onChange={handleChange}
+          >
+            <div className="row">
+              <div className="col-xl-3 col-lg-6 col-12 form-group-1">
+                <label>Year</label>
+                <select
+                  className="select3 select2-hidden-accessible"
+                  name="Year"
+                  id="Year"
+                  value={Year}
+                  onChange={(e) => {
+                    setYear(e.target.value);
+                    console.log(e.target.value);
+                  }}
+                >
+                  <option value="" data-select2-id="9">
+                    Select Year
+                  </option>
+                  {YearLov.map((data) => (
+                    <option key={data.ID} value={data.YEAR}>
+                      {data.ID}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-  clearForm = (row) => { 
-    
-    // for (var i=0; i = row; i++){
-    //   this.deteteRow(i);
-    // }
-
-    document.getElementById("test-form").reset();
-
-}
-
-  render() {
-    let { taskList } = this.state; //let { notes, date, description, taskList } = this.state
-    return (
-      <>
-      <Navbar/>
-        <div className="card height-auto">
-          <div className="card-body">
-            <div className="heading-layout1">
-              <div className="item-title">
-                <h3 style={{ padding: "50px" }}>Responsiblity</h3>
+              <div className="col-xl-3 col-lg-6 col-12 form-group-1">
+                <label>Teachers</label>
+                <select
+                  className="select3 select2-hidden-accessible"
+                  name="Teachers"
+                  id="Teachers"
+                  value={Teachers}
+                  onChange={(e) => {
+                    setTeacher(e.target.value);
+                    console.log(e.target.value);
+                  }}
+                >
+                  <option value="" data-select2-id="9">
+                    Select Teacher
+                  </option>
+                  {TeachersLov.map((data) => (
+                    <option key={data.TEACHERS_ID} value={data.TEACHERS_ID}>
+                      {data.TCH_NAME}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
-            <form
-            id="test-form"
-              className="new-added-form-1"
-              onSubmit={this.handleSubmit}
-              onChange={this.handleChange}
-            >
-              <div className="row">
-                <div className="col-xl-3 col-lg-6 col-12 form-group-1">
-                  <label>Year</label>
-                  <select
-                    className="select3 select2-hidden-accessible"
-                    name="year"
-                    id="year"
-                  >
-                    <option value="" data-select2-id="3">
-                      Select
-                    </option>
-                    <option value="1">2021 </option>
-                    <option value="2">2020</option>
-                    <option value="3">2019</option>
-                    <option value="4">2018</option>
-                  </select>
-                </div>
-
-                <div className="col-xl-3 col-lg-6 col-12 form-group-1">
-                  <label>Teachers</label>
-                  <select
-                    className="select3 select2-hidden-accessible"
-                    name="teachers"
-                    id="teachers"
-                  >
-                    <option value="" data-select2-id="9">
-                      Select
-                    </option>
-                    <option value="1">zeeshan ulla baig</option>
-                    <option value="2">Mohammad mazhar</option>
-                    <option value="3">syed tousif</option>
-                    <option value="4">Bilal</option>
-                    <option value="5">shoaib</option>
-                  </select>
-                </div>
-              </div>
-              <br />
-              <br />
-              <div>
-                <table
-                  className="table display data-table text-nowrap dataTable no-footer"
-                  id="DataTables_Table_test"
-                  role="grid"
-                  style={{ backgroundColor: "#a8x0ff" }}
-                >
-                  <thead>
-                    <tr>
-                      <th>Subject Name</th>
-                      <th>Class</th>
-                      <th>Grade</th>
-                      <th>Timings</th>
-                      <th></th>
+            <br />
+            <br />
+            <div>
+              <table
+                className="table display data-table text-nowrap dataTable no-footer"
+                id="DataTables_Table_test"
+                role="grid"
+                style={{ backgroundColor: "#a8x0ff" }}
+              >
+                <thead>
+                  <tr>
+                    <th>Subject Name</th>
+                    <th>Class</th>
+                    <th>Grade</th>
+                    <th>Timings</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {taskList.map((item, i) => (
+                    <tr key={i}>
+                      <td>
+                        {/* <input type="text"  name="projectName" data-id={idx} id={projectName} className="form-control " /> */}
+                        <div
+                          className="col-xl-3 col-lg-6 col-12 form-group"
+                          data-select2-id="12"
+                        >
+                          <select
+                            className="select2"
+                            name="subjectName"
+                            id="subjectName"
+                            value={item.subjectName}
+                            onChange={(e) => handleChange(e, i)}
+                          >
+                            <option value="" data-select2-id="12">
+                              Select
+                            </option>
+                            {SubsLov.map((data) => (
+                              <option
+                                key={data.SUBJECT_ID}
+                                value={data.SUBJECT_NAME}
+                              >
+                                {data.SUBJECT_NAME}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                        {/* <input type="text"  name="task" id={task} data-id={idx} className="form-control " /> */}
+                        <div className="col-xl-3 col-lg-6 col-12 form-group">
+                          <select
+                            className="select2"
+                            name="standardName"
+                            id="standardName"
+                            value={item.standardName}
+                            onChange={(e) => handleChange(e, i)}
+                          >
+                            <option value="" data-select2-id="12">
+                              Select
+                            </option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                        {/* <textarea  name="taskNotes" id={taskNotes} data-id={idx} className="form-control"></textarea> */}
+                        <div className="col-xl-3 col-lg-6 col-12 form-group">
+                          <select
+                            className="select2"
+                            name="gradeName"
+                            id="gradeName"
+                            value={item.gradeName}
+                            onChange={(e) => handleChange(e, i)}
+                          >
+                            <option value="" data-select2-id="12">
+                              Select{" "}
+                            </option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          name="timings"
+                          id="timings"
+                          className="form-control"
+                          value={item.timings}
+                          onChange={(e) => handleChange(e, i)}
+                        />
+                      </td>
+                      <td>
+                        <button
+                          type="button"
+                          className="btn btn-danger"
+                          onClick={() => removeRow(i)}
+                        >
+                          <i className="fa fa-minus" aria-hidden="true"></i>
+                        </button>
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    <ResponseMultirow
-                      add={this.addNewRow}
-                      delete={this.clickOnDelete.bind(this)}
-                      taskList={taskList}
-                    />
-                  </tbody>
-                </table>
-                <div className="card-footer text-center">
-                  {" "}
-                  <button
-                    type="submit"
-                    className="btn btn-primary text-center float-right"
-                  >
-                    Submit
-                  </button>
-                </div>
+                  ))}
+                </tbody>
+              </table>
+              {Year && Teachers ? (
+                <BsFillPlusSquareFill onClick={() => addRow()} type="button">
+                  <i className="fa fa-plus-circle" aria-hidden="true"></i>
+                </BsFillPlusSquareFill>
+              ) : null}
+              <div className="card-footer text-center">
+                {" "}
+                <button
+                  type="submit"
+                  className="btn btn-primary text-center float-right"
+                >
+                  Submit
+                </button>
               </div>
-            </form>
+            </div>
+          </form>
 
-            {/* <button type="button" onClick={() => {this.test("STANDARD_NAME")}}>TEST</button> */}
-          </div>
+          {/* <button type="button" onClick={() => {this.test("STANDARD_NAME")}}>TEST</button> */}
         </div>
-        <NotificationContainer/>
-      </>
-    );
-  }
+      </div>
+    </div>
+  );
 }
 
 export default ResponsiblityForm;
