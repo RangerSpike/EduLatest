@@ -8,54 +8,69 @@ import { useHistory } from "react-router-dom";
 function ResponsibilityReport() {
   const history = useHistory();
   const [Year, setYear] = useState("");
+  const [id, setId] = useState();
   const [YearLov, setYearLov] = useState([]);
-  const [data, setData] = useState([]);
-  const [tchId, setTchId] = useState([]);
-  const [tchName, setTchName] = useState([]);
-  const [Teachers, setTeacher] = useState("");
-  const [TeachersLov, setTeacherLov] = useState([]);
 
-  const getData = () => {
+  const [data, setData] = useState([]);
+
+  const [Teachers, setTeacher] = useState("");
+  const [TeachersLov, setTeacherLov] = useState([]);  
+
+  const updateRecordsAfterFilter = () => {
+    console.log("updateDuplicateVar called : ");
+    if (Year && Teachers) {
+      Axios.post("http://localhost:3004/getTeacherRespReport", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+        year: Year ? Year : `"` + `"`,
+        tacherId: Teachers ? Teachers : `"` + `"`,
+      }).then((res) => {
+        setData(res.data);        
+        // setTchName("")
+        console.log("result set in effect: ", res.data);
+      });
+    } else {
+      //getData();
+    }
+  };
+
+  const openUpdateForm = () => {
+    //console.log("result set in DATABASED ON STUDENT  : ", id);
+    history.push(`/ResponsiblityUpdateForm/${Teachers}/${Year}`);
+  };
+
+  const getLov = () => {
+    Axios.get("http://localhost:3004/getYearLov", {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
+    }).then((res) => {
+      setYearLov(res.data);
+      //console.log("result set in effect: ", res.data);
+    });
+  };
+
+  const getTchLov = () => {
     Axios.get("http://localhost:3004/getTeacherList", {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
       },
     }).then((res) => {
-      setData(res.data);
-      console.log("result set in effect: ", res.data);
+      setTeacherLov(res.data);
+      //console.log("result set in effect: ", res.data);
     });
   };
 
-  const updateRecordsAfterFilter = () => {
-    console.log("updateDuplicateVar called : ");
-    if (tchId || tchName) {
-      Axios.post("http://localhost:3004/getTeacherAdReport", {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        },
-        teacherId: tchId ? tchId : `"` + `"`,
-        teacherName: tchName ? tchName : `"` + `"`,
-      }).then((res) => {
-        setData(res.data);
-        // setTchId("")
-        // setTchName("")
-        console.log("result set in effect: ", res.data);
-      });
-    } else {
-      getData();
-    }
-  };
-
-  const openAdForm = (id) => {
-    //console.log("result set in DATABASED ON STUDENT  : ", id);
-    history.push(`/TReportform/${id}`);
-  };
-
   useEffect(() => {
-    getData();
+    //getData();
+    getTchLov()
+    getLov()
   }, []);
+
   return (
     <>
       <Navbar />
@@ -69,33 +84,58 @@ function ResponsibilityReport() {
           </div>
           <form className="mg-b-20">
             <div className="row gutters-8">
-              <div className="col-lg-4  col-12 form-group">
-                <input
-                  type="text"
-                  placeholder="Search by Teachers ID ..."
-                  className="form-control"
-                  id="tchId"
-                  name="tchId"
-                  value={tchId}
-                  onChange={(e) => setTchId(e.target.value)}
-                />
-              </div>
-              <div className="col-lg-4 col-12 form-group">
-                <input
-                  type="text"
-                  placeholder="Search by Teachers Name ..."
-                  className="form-control"
-                  id="tchName"
-                  name="tchName"
-                  value={tchName}
-                  onChange={(e) => setTchName(e.target.value)}
-                />
+              <div className="row">
+                <div className="col-xl-3 col-lg-6 col-12 form-group-122">
+                  <label>Year</label>
+                  <select
+                    className="select3 select2-hidden-accessible"
+                    name="Year"
+                    id="Year"
+                    value={Year}
+                    onChange={(e) => {
+                      setYear(e.target.value);
+                      console.log(e.target.value);
+                    }}
+                  >
+                    <option value="" data-select2-id="9">
+                      Select Year
+                    </option>
+                    {YearLov.map((data) => (
+                      <option key={data.ID} value={data.YEAR}>
+                        {data.ID}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="col-xl-3 col-lg-6 col-12 form-group-1">
+                  <label>Teachers</label>
+                  <select
+                    className="select3 select2-hidden-accessible"
+                    name="Teachers"
+                    id="Teachers"
+                    value={Teachers}
+                    onChange={(e) => {
+                      setTeacher(e.target.value);
+                      console.log(e.target.value);
+                    }}
+                  >
+                    <option value="" data-select2-id="9">
+                      Select Teacher
+                    </option>
+                    {TeachersLov.map((data) => (
+                      <option key={data.TEACHERS_ID} value={data.TEACHERS_ID}>
+                        {data.TCH_NAME}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
               <div className="col-lg-2 col-12 form-group">
                 <button
                   type="button"
                   className="fw-btn-fill btn-gradient-yellow"
-                  style={{ width: "100px" }}
+                  style={{ width: "100px" ,marginTop:"10px"}}
                   onClick={() => updateRecordsAfterFilter()}
                 >
                   SEARCH
@@ -103,55 +143,7 @@ function ResponsibilityReport() {
               </div>
             </div>
           </form>
-          <div style={{ marginBottom: "40px" }}>
-            <div className="row">
-              <div className="col-xl-3 col-lg-6 col-12 form-group-122">
-                <label>Year</label>
-                <select
-                  className="select3 select2-hidden-accessible"
-                  name="Year"
-                  id="Year"
-                  value={Year}
-                  onChange={(e) => {
-                    setYear(e.target.value);
-                    console.log(e.target.value);
-                  }}
-                >
-                  <option value="" data-select2-id="9">
-                    Select Year
-                  </option>
-                  {YearLov.map((data) => (
-                    <option key={data.ID} value={data.YEAR}>
-                      {data.ID}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="col-xl-3 col-lg-6 col-12 form-group-1">
-                <label>Teachers</label>
-                <select
-                  className="select3 select2-hidden-accessible"
-                  name="Teachers"
-                  id="Teachers"
-                  value={Teachers}
-                  onChange={(e) => {
-                    setTeacher(e.target.value);
-                    console.log(e.target.value);
-                  }}
-                >
-                  <option value="" data-select2-id="9">
-                    Select Teacher
-                  </option>
-                  {TeachersLov.map((data) => (
-                    <option key={data.TEACHERS_ID} value={data.TEACHERS_ID}>
-                      {data.TCH_NAME}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </div>
+          <div style={{ marginBottom: "40px" }}></div>
           <div className="table-responsive">
             <div
               id="DataTables_Table_0_wrapper"
@@ -164,6 +156,17 @@ function ResponsibilityReport() {
               >
                 <thead>
                   <tr role="row">
+                  <th
+                      className="sorting"
+                      tabIndex="0"
+                      aria-controls="DataTables_Table_0"
+                      rowSpan="1"
+                      colSpan="1"
+                      aria-label="Admission iD: activate to sort column ascending"
+                      style={{ width: "42.6667px" }}
+                    >
+                      ID
+                    </th>
                     <th
                       className="sorting"
                       tabIndex="0"
@@ -212,20 +215,19 @@ function ResponsibilityReport() {
                 </thead>
                 <tbody className="text-center">
                   {data.map((item) => (
-                    <tr key={item.TEACHERS_ID} role="row" className="odd ">
+                    <tr key={item.RESPID} role="row" className="odd ">
                       <td
-                        onClick={() => openAdForm(item.TEACHERS_ID)}
+                        onClick={() => openUpdateForm(item.TEACHERS_ID)}
                         style={{ cursor: "pointer" }}
                       >
-                        {item.TEACHERS_ID}
+                        {item.RESPID}
                       </td>
                       {/* <td style={styleback}>{item.stich_name}</td> */}
 
-                      <td>{item.TCH_NAME}</td>
-                      <td>{item.TCH_GENDER}</td>
-                      <td>{item.TCH_PHONE}</td>
-                      <td>{item.TCH_ADDRESS}</td>
-                      <td>{item.TCH_DOJ}</td>
+                      <td>{item.SUBJECT_NAME}</td>
+                      <td>{item.CLASS}</td>
+                      <td>{item.GRADE}</td>
+                      <td>{item.TIMINGS}</td>                      
                     </tr>
                   ))}
                 </tbody>

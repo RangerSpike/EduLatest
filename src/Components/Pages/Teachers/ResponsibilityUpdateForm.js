@@ -6,12 +6,22 @@ import "react-notifications/lib/notifications.css";
 import axios from "axios";
 import Navbar from "../../Common/Navbar/Navbar";
 
-function ResponsiblityForm() {
+function ResponsiblityUpdateForm(props) {
+  let newId = "";
+  newId = props.match.params.id;
+
+  let PropYear = "";
+  PropYear = props.match.params.year;
+
   const [Year, setYear] = useState("");
   const [YearLov, setYearLov] = useState([]);
+
   const [Teachers, setTeacher] = useState("");
   const [TeachersLov, setTeacherLov] = useState([]);
+
   const [SubsLov, setSubsLov] = useState([]);
+
+  const [data, setData] = useState([]);
 
   const list = {
     year: Year,
@@ -35,47 +45,93 @@ function ResponsiblityForm() {
     setTaskList(updatedTaskList);
   };
 
+
   const getLov = () => {
-    axios.get("http://localhost:3004/getYearLov", {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-      },
-    }).then((res) => {
-      setYearLov(res.data);
-      //console.log("result set in effect: ", res.data);
-    });
+    axios
+      .get("http://localhost:3004/getYearLov", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+      })
+      .then((res) => {
+        setYearLov(res.data);
+        setYear(PropYear);
+        //console.log("result set in effect: ", res.data);
+      });
   };
 
   const getSubsLov = () => {
-    axios.get("http://localhost:3004/getSubsLov", {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-      },
-    }).then((res) => {
-      setSubsLov(res.data);
-      //console.log("result set in effect: ", res.data);
-    });
+    axios
+      .get("http://localhost:3004/getSubsLov", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+      })
+      .then((res) => {
+        setSubsLov(res.data);
+        //console.log("result set in effect: ", res.data);
+      });
   };
 
-  const getTchLov = () => {    
-    axios.get("http://localhost:3004/getTeacherList", {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-      },
-    }).then((res) => {
-      setTeacherLov(res.data);
-      //console.log("result set in effect: ", res.data);
-    });
+  const getTchLov = () => {
+    axios
+      .get("http://localhost:3004/getTeacherList", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+      })
+      .then((res) => {
+        setTeacherLov(res.data);
+        setTeacher(newId);
+        //console.log("result set in effect: ", res.data);
+      });
+  };
+
+  const getRecordsAfterFilter = () => {
+    console.log("updateDuplicateVar called : ");
+    if (Year && Teachers) {
+      axios
+        .post("http://localhost:3004/getTeacherRespReport", {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          },
+          year: Year ? Year : `"` + `"`,
+          tacherId: Teachers ? Teachers : `"` + `"`,
+        })
+        .then((res) => {
+          // setData(res.data);
+          // setTchName("")
+          let rows = [];
+          for (let i = 0; i < res.data.length; i++) {
+            rows.push(list);
+            rows[i] = {
+                year: res.data[i].YEAR,
+                teachers: res.data[i].TEACHERS_ID,
+                subjectName: res.data[i].SUBJECT_NAME,
+                standardName: res.data[i].CLASS,
+                gradeName: res.data[i].GRADE,
+                timings: res.data[i].TIMINGS,
+              };
+
+          }
+          setTaskList(rows);
+          //console.log("result set in: ", rows);
+        });
+    } else {
+      //getData();
+    }
   };
 
   useEffect(() => {
     getLov();
     getTchLov();
     getSubsLov();
-  }, []);
+    getRecordsAfterFilter();
+  }, [Year, Teachers]);
 
   const addRow = () => {
     setTaskList([...taskList, list]);
@@ -90,24 +146,28 @@ function ResponsiblityForm() {
   };
 
   const handleSubmit = (e) => {
-    console.log("Submit Started",taskList);
+    console.log("Submit Started", taskList);
     e.preventDefault();
- 
-    axios.post("http://localhost:3004/insertRespForm", {      
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-      },
-      formData: taskList,
-      testLenth:taskList.length
-    }).then(() => {      
-      setTaskList([]);
-      setYear("");
-      setYearLov([]);
-      setTeacher("");
-      setTeacherLov([]);
-      console.log("Values Submitted");
-    });
+
+    axios
+      .post("http://localhost:3004/updateRespForm", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+        formData: taskList,
+        testLenth: taskList.length,
+        year:Year,
+        teacherId:Teachers
+      })
+      .then(() => {
+        setTaskList([]);
+        setYear("");
+        setYearLov([]);
+        setTeacher("");
+        setTeacherLov([]);
+        console.log("Values Updated");
+      });
   };
 
   return (
@@ -117,7 +177,7 @@ function ResponsiblityForm() {
         <div className="card-body">
           <div className="heading-layout1">
             <div className="item-title">
-              <h3 style={{ padding: "50px" }}>Responsiblity Form</h3>
+              <h3 style={{ padding: "50px" }}>Responsiblity Update Form</h3>
             </div>
           </div>
           <form
@@ -302,7 +362,7 @@ function ResponsiblityForm() {
                   type="submit"
                   className="btn btn-primary text-center float-right"
                 >
-                  Submit
+                  Update
                 </button>
               </div>
             </div>
@@ -315,4 +375,4 @@ function ResponsiblityForm() {
   );
 }
 
-export default ResponsiblityForm;
+export default ResponsiblityUpdateForm;

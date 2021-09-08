@@ -26,32 +26,32 @@ const LoginFrom = () => {
   const Login = (details) => {
     console.log(details);
 
-    Axios.post("http://localhost:3004/validateUserDetails", {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-      },
-      userName: details.userName,
-    }).then((res) => {
-      //console.log("Successfully Send For Validation");
-      console.log("Validate", res.data);
-      window.localStorage.setItem('Role', res.data.role);
-      window.localStorage.setItem('UserName', res.data.userName);
+    // Axios.post("http://localhost:3004/validateUserDetails", {
+    //   headers: {
+    //     "Access-Control-Allow-Origin": "*",
+    //     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+    //   },
+    //   userName: details.userName,
+    // }).then((res) => {
+    //   //console.log("Successfully Send For Validation");
+    //   console.log("Validate", res.data);
+    //   window.localStorage.setItem('Role', res.data.role);
+    //   window.localStorage.setItem('UserName', res.data.userName);
 
-      if (
-      details.userName == res.data.userName &&
-      details.password == res.data.password
-    ) {
-      //console.log("Logged in");
-      history.push("/Dashboard");
-      setUser({
-        userName: details.userName,
-      });
-    } else {
-      //console.log("Details do not match!");
-      setError("Details do not match!");
-    }
-    });
+    //   if (
+    //   details.userName == res.data.userName &&
+    //   details.password == res.data.password
+    // ) {
+    //   //console.log("Logged in");
+    //   history.push("/Dashboard");
+    //   setUser({
+    //     userName: details.userName,
+    //   });
+    // } else {
+    //   //console.log("Details do not match!");
+    //   setError("Details do not match!");
+    // }
+    // });
     history.push("/Dashboard");
   };
   return (
