@@ -199,7 +199,7 @@ function ReportForm(props) {
       stdcast: cast,
       stdntn: nationality,
       stdclass: Sclass,
-      section: Ssection,
+      stdsec: Ssection,
       stdroll: rollno,
       stdbg: bloodGroup,
       stdadd: address,

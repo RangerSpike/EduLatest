@@ -117,7 +117,7 @@ function ResponsiblityForm() {
         <div className="card-body">
           <div className="heading-layout1">
             <div className="item-title">
-              <h3 style={{ padding: "50px" }}>Responsiblity</h3>
+              <h3 style={{ padding: "50px" }}>Responsiblity Form</h3>
             </div>
           </div>
           <form

@@ -46,7 +46,7 @@ function AdmissionForm() {
       setNationality(e.target.value);
     } else if (input === "Sclass") {
       setSclass(e.target.value);
-    } else if (input === "Ssection") {
+    } else if (input === "Ssection") {      
       setSSection(e.target.value);
     } else if (input === "rollno") {
       setRollNo(e.target.value);
@@ -129,7 +129,7 @@ function AdmissionForm() {
       stdcast: cast,
       stdntn: nationality,
       stdclass: Sclass,
-      section: Ssection,
+      stdsec: Ssection,
       stdroll: rollno,
       stdbg: bloodGroup,
       stdadd: address,
