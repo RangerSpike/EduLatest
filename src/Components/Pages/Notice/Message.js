@@ -5,7 +5,6 @@ import axios from "axios";
 
 function Message() {
   const [title, setTitle] = useState();
-  const [recipient, setRecipient] = useState();
   const [message, setMessage] = useState();
 
   const [sendTo, setSendTo] = useState();
@@ -19,34 +18,9 @@ function Message() {
 
   const [Contacts, setContacts] = useState();
 
-  const getStdSecDetails = (sec) => {
-   console.log("getStdSecDetails is Called");
-
-    axios
-      .post("http://localhost:3004/getFilterdStudentData", {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        },
-        stdClass: Standard,
-        stdsec: sec,
-      })
-      .then((res) => {
-        //console.log(res.data);
-        let x = "";
-        for (let i = 0; i < res.data.length; i++) {
-          if (x === "") {
-            if (res.data[i].STD_PHONE !== null) x = res.data[i].STD_PHONE;
-          } else {
-            if (res.data[i].STD_PHONE !== null)
-              x = x + "," + res.data[i].STD_PHONE;
-          }
-        }
-        setContacts(x);
-        //console.log(x);
-      });
-  };
-
+  useEffect(() => {
+    getStdSecDetails();
+  }, [Section, Standard]);
 
   const getTchDetails = () => {
     //console.log("getStdSecDetails is Called");
@@ -56,7 +30,7 @@ function Message() {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        }        
+        },
       })
       .then((res) => {
         //console.log(res.data);
@@ -70,8 +44,39 @@ function Message() {
           }
         }
         setContacts(x);
-        console.log(x);
+        //console.log(x);
       });
+  };
+
+  const getStdSecDetails = () => {
+    //console.log("Section", Section);
+    //console.log("Standard", Standard);
+
+    axios
+      .post("http://localhost:3004/getFilterdStudentContactData", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+        stdClass: Standard,
+        stdsec: Section,
+      })
+      .then((res) => {
+        //console.log("RES AK DATA", res.data);
+        let x = "";
+        for (let i = 0; i < res.data.length; i++) {
+          if (x === "") {
+            if (res.data[i].STD_PHONE !== null) x = res.data[i].STD_PHONE;
+          } else {
+            if (res.data[i].STD_PHONE !== null)
+              x = x + "," + res.data[i].STD_PHONE;
+          }
+        }
+        setContacts(x);
+        //console.log(x);
+      });
+
+    //console.log("niche ka ");
   };
 
   const handleChange = (e) => {
@@ -80,18 +85,17 @@ function Message() {
     const input = e.target.name;
     if (input === "title") {
       setTitle(e.target.value);
-    } else if (input === "recipient") {
-      setRecipient(e.target.value);
     } else if (input === "message") {
       setMessage(e.target.value);
     } else if (input === "sendTo") {
+      setContacts("");
       setSendTo(e.target.value);
       checkSendTo(e.target.value);
     } else if (input === "Standard") {
       setStandard(e.target.value);
     } else if (input === "Section") {
       setSection(e.target.value);
-      getStdSecDetails(e.target.value);
+      getStdSecDetails();
     }
   };
 
@@ -101,7 +105,7 @@ function Message() {
       setIsTeacher(true);
       getTchDetails();
     } else {
-      setIsTeacher(false);      
+      setIsTeacher(false);
     }
   };
 
@@ -118,22 +122,21 @@ function Message() {
     setCurrentUser(localStorage.getItem("Role"));
   }, []);
 
-  // const onBlurCheck = (e) => {
-  //   console.log(e.target.value);
-  //   if (currentUser === "Teacher") {
-  //     if (e.target.value === "Teacher") {
-  //       setSendTo("");
-  //       setStandard("");
-  //       alert("Teaches Cannot Send Message/Notice To Teachers");
-  //     }
-  //     else{
-  //       setSendTo("Student")
-  //     }
-  //   }
-  // };
-
   const handleSumit = (e) => {
     e.preventDefault();
+    axios
+      .post("http://localhost:3004/getMessage", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+        message:
+          "Title : " + title + `\nDetails : ${message}` + `\nRegards : EduSoft`,
+        numbers: Contacts,
+      })
+      .then(() => {
+        console.log("SMS SENT");
+      });
     //console.log("HANDLE SUB");
   };
   return (
@@ -145,7 +148,7 @@ function Message() {
             <div className="card-body">
               <div className="heading-layout1">
                 <div className="item-title">
-                  <h3>Write New Message</h3>                  
+                  <h3>Write New Message</h3>
                 </div>
               </div>
               <form
@@ -187,7 +190,7 @@ function Message() {
                             id="Standard"
                             name="Standard"
                             value={Standard}
-                            onChange={(e) => handleChange(e)}                            
+                            onChange={(e) => handleChange(e)}
                           >
                             <option value="" data-select2-id="3">
                               Select
@@ -214,7 +217,7 @@ function Message() {
                             id="Section"
                             name="Section"
                             value={Section}
-                            onChange={(e) => handleChange(e)}                            
+                            onChange={(e) => handleChange(e)}
                           >
                             <option value="" data-select2-id="3">
                               Select
@@ -242,18 +245,6 @@ function Message() {
                     id="title"
                     name="title"
                     value={title}
-                    onChange={(e) => handleChange(e)}
-                  />
-                </div>
-                <div className="col-10 form-group">
-                  <label>Recipient</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="recipient"
-                    id="recipient"
-                    name="recipient"
-                    value={recipient}
                     onChange={(e) => handleChange(e)}
                   />
                 </div>
