@@ -1,14 +1,53 @@
 /*eslint-disable*/
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../Common/Navbar/Navbar";
 import axios from "axios";
+import { useHistory } from "react-router";
 
-function Users() {
+function UserUpdateForm(props) {
+  let id = props.match.params.id;
+
+  const history = useHistory();
+  const [fullName, setFullName] = useState();
+  const [userName, setUserName] = useState();
+  const [password, setPassword] = useState();
+  const [role, setRole] = useState();
+  const [phone, setPhone] = useState();
+  const [cfmPassword, setcfmPassword] = useState();
+  const [actDate, setActDate] = useState();
+  const [deActDate, setDActDate] = useState();
+
   const optionRole = [
     { key: "Select Role", onChange: "" },
     { key: "Admin", onChange: "Admin" },
     { key: "Teacher", onChange: "Teacher" },
   ];
+
+  const getData = () => {
+    axios
+      .post("http://localhost:3004/getUserDetailsBasedOnId", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+        userId: id,
+      })
+      .then((res) => {
+        console.log(res.data);
+        setFullName(res.data[0].FULL_NAME);
+        setUserName(res.data[0].USERNAME);
+        setPassword(res.data[0].PASSWORD);
+        setcfmPassword(res.data[0].PASSWORD);
+        setRole(res.data[0].ROLE);
+        setPhone(res.data[0].PHONE);        
+        setActDate(res.data[0].USER_ACT_DATE);
+        setDActDate(res.data[0].USER_DACT_DATE);
+      });
+  };
+
+  useEffect(() => {
+    getData();
+  }, [id]);
 
   const setDateFormat = (onChange) => {
     let currentDate;
@@ -41,17 +80,8 @@ function Users() {
     return formatedDate;
   };
 
-  const [fullName, setFullName] = useState();
-  const [userName, setUserName] = useState();
-  const [password, setPassword] = useState();
-  const [role, setRole] = useState();
-  const [phone, setPhone] = useState();
-  const [cfmPassword, setcfmPassword] = useState();
-  const [actDate, setActDate] = useState();
-  const [deActDate, setDActDate] = useState();
-
   const handleChange = (e) => {
-    console.log(e.target.value);
+    //console.log(e.target.value);
 
     const input = e.target.name;
     if (input === "fullName") {
@@ -94,29 +124,23 @@ function Users() {
     // );
 
     axios
-      .post("http://localhost:3004/createUser", {
+      .post("http://localhost:3004/updateUser", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
         },
+        userId:id,
         fullName: fullName,
         userName: userName,
         password: password,
         role: role,
         phone: phone,
-        actDate: setDateFormat(actDate),
-        deActDate: setDateFormat(deActDate),
+        actDate: actDate,
+        deActDate: deActDate ? setDateFormat(deActDate): null,
       })
       .then(() => {
-        console.log("Successfully Created");
-        setFullName("");
-        setUserName("");
-        setPassword("");
-        setRole("");
-        setPhone("");
-        setcfmPassword("");
-        setActDate("");
-        setDeActDate("");
+        //console.log("Successfully Created");
+        history.push('/UsersReport')
       });
   };
 
@@ -128,7 +152,7 @@ function Users() {
           <div className="card-body">
             <div className="heading-layout1">
               <div className="item-title">
-                <h3>CREATE USER</h3>
+                <h3>UPDATE USER</h3>
               </div>
             </div>
             <form className="new-added-form" onSubmit={handleSubmit}>
@@ -217,12 +241,13 @@ function Users() {
               >
                 <label>ACTIVATION DATE</label>
                 <input
-                  type="date"
+                  type="text"
                   placeholder="DD/MM/YYYY"
                   id="actDate"
                   name="actDate"
                   className="form-control"
-                  select={actDate}
+                  //select={actDate}
+                  value={actDate}
                   onChange={(e) => handleChange(e)}
                 />
               </div>
@@ -273,7 +298,7 @@ function Users() {
                   className="btn-fill-lg btn-gradient-yellow btn-hover-bluedark"
                   style={{ marginLeft: "356px" }}
                 >
-                  Submit
+                  Update
                 </button>
               </div>
             </form>
@@ -284,4 +309,4 @@ function Users() {
   );
 }
 
-export default Users;
+export default UserUpdateForm;

@@ -12,42 +12,43 @@ function UsersReport() {
   const [userId, setUserId] = useState([]);
   const [userName, setUserName] = useState([]);
 
-
   const getData = () => {
-    Axios.get("http://localhost:3004/getUsersList", {
+    setData([]);
+    Axios.get("http://localhost:3004/getUserDetails", {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
       },
     }).then((res) => {
+      console.log(res.data);
       setData(res.data);
     });
   };
 
   const updateRecordsAfterFilter = () => {
-    console.log("updateDuplicateVar called : ");
-    if (userId || userId) {
+    setData([]);
+    //console.log("updateDuplicateVar called : ");
+    if (userId === "" && !userName === "") {
+      getData();
+    } else {
       Axios.post("http://localhost:3004/getUsersFilterList", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
         },
         userId: userId ? userId : `"` + `"`,
-        userName: userId ? userId : `"` + `"`,
+        userName: userName ? userName : `"` + `"`,
       }).then((res) => {
         setData(res.data);
         // setTchId("")
         // setTchName("")
-        console.log("result set in effect: ", res.data);
+        console.log("result set in FILter: ", res.data);
       });
-    } else {
-      getData();
     }
   };
 
   const openAdForm = (id) => {
-    //console.log("result set in DATABASED ON STUDENT  : ", id);
-    history.push(`/TReportform/${id}`);
+    history.push(`/UserUpdate/${id}`);
   };
 
   useEffect(() => {
@@ -74,7 +75,7 @@ function UsersReport() {
                   id="userId"
                   name="userId"
                   value={userId}
-                  onChange={(e) => setUserName(e.target.value)}
+                  onChange={(e) => setUserId(e.target.value)}
                 />
               </div>
               <div className="col-lg-4 col-12 form-group">
@@ -82,8 +83,8 @@ function UsersReport() {
                   type="text"
                   placeholder="Search by Users Name ..."
                   className="form-control"
-                  id="userNmae"
-                  name="userNmae"
+                  id="userName"
+                  name="userName"
                   value={userName}
                   onChange={(e) => setUserName(e.target.value)}
                 />
@@ -122,7 +123,18 @@ function UsersReport() {
                       aria-label="Admission iD: activate to sort column ascending"
                       style={{ width: "42.6667px" }}
                     >
-                      fullName
+                      USER ID
+                    </th>
+                    <th
+                      className="sorting"
+                      tabIndex="0"
+                      aria-controls="DataTables_Table_0"
+                      rowSpan="1"
+                      colSpan="1"
+                      aria-label="Admission iD: activate to sort column ascending"
+                      style={{ width: "42.6667px" }}
+                    >
+                      FULL NAME
                     </th>
                     <th
                       className="sorting"
@@ -177,7 +189,7 @@ function UsersReport() {
                       aria-label="Section: activate to sort column ascending"
                       style={{ width: "54.6667px" }}
                     >
-                      Deactivation Date
+                      Role
                     </th>
                     <th
                       className="sorting"
@@ -188,26 +200,28 @@ function UsersReport() {
                       aria-label="Section: activate to sort column ascending"
                       style={{ width: "54.6667px" }}
                     >
-                      User Roles
+                      Deactivation Date
                     </th>
                   </tr>
                 </thead>
                 <tbody className="text-center">
                   {data.map((item) => (
-                    <tr key={item.TEACHERS_ID} role="row" className="odd ">
+                    <tr key={item.USER_ID} role="row" className="odd ">
                       <td
-                        onClick={() => openAdForm(item.TEACHERS_ID)}
+                        onClick={() => openAdForm(item.USER_ID)}
                         style={{ cursor: "pointer" }}
                       >
-                        {item.TEACHERS_ID}
+                        {item.USER_ID}
                       </td>
                       {/* <td style={styleback}>{item.stich_name}</td> */}
 
-                      <td>{item.TCH_NAME}</td>
-                      <td>{item.TCH_GENDER}</td>
-                      <td>{item.TCH_PHONE}</td>
-                      <td>{item.TCH_ADDRESS}</td>
-                      <td>{item.TCH_DOJ}</td>
+                      <td>{item.FULL_NAME}</td>
+                      <td>{item.USERNAME}</td>
+                      <td>{item.PASSWORD}</td>
+                      <td>{item.PHONE}</td>
+                      <td>{item.USER_ACT_DATE}</td>
+                      <td>{item.ROLE}</td>
+                      <td>{item.USER_DEACT_DATE}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -220,4 +234,4 @@ function UsersReport() {
   );
 }
 
-export default UsersReport
+export default UsersReport;

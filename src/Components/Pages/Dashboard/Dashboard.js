@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import React from 'react'
 import Navbar from '../../Common/Navbar/Navbar'
 function Dashboard() {

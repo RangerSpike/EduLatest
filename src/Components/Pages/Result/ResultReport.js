@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import React from "react";
 import Navbar from "../../Common/Navbar/Navbar";
 function ResultReport() {
@@ -10,7 +11,7 @@ function ResultReport() {
   };
   return (
     <>
-    <Navbar/>
+      <Navbar />
       <div className="card height-auto">
         <div className="card-body">
           <div className="heading-layout1">
@@ -60,10 +61,10 @@ function ResultReport() {
                   <tr role="row">
                     <th
                       className="sorting"
-                      tabindex="0"
+                      tabIndex="0"
                       aria-controls="DataTables_Table_0"
-                      rowspan="1"
-                      colspan="1"
+                      rowSpan="1"
+                      colSpan="1"
                       aria-label="Admission iD: activate to sort column ascending"
                       style={{ width: "42.6667px" }}
                     >
@@ -71,10 +72,10 @@ function ResultReport() {
                     </th>
                     <th
                       className="sorting"
-                      tabindex="0"
+                      tabIndex="0"
                       aria-controls="DataTables_Table_0"
-                      rowspan="1"
-                      colspan="1"
+                      rowSpan="1"
+                      colSpan="1"
                       aria-label="photo: activate to sort column ascending"
                       style={{ width: "42.6667px" }}
                     >
@@ -83,10 +84,10 @@ function ResultReport() {
 
                     <th
                       className="sorting"
-                      tabindex="0"
+                      tabIndex="0"
                       aria-controls="DataTables_Table_0"
-                      rowspan="1"
-                      colspan="1"
+                      rowSpan="1"
+                      colSpan="1"
                       aria-label="Name: activate to sort column ascending"
                       style={{ width: "81.3333px" }}
                     >
@@ -94,10 +95,10 @@ function ResultReport() {
                     </th>
                     <th
                       className="sorting"
-                      tabindex="0"
+                      tabIndex="0"
                       aria-controls="DataTables_Table_0"
-                      rowspan="1"
-                      colspan="1"
+                      rowSpan="1"
+                      colSpan="1"
                       aria-label="Gender: activate to sort column ascending"
                       style={{ width: "52px" }}
                     >
@@ -105,10 +106,10 @@ function ResultReport() {
                     </th>
                     <th
                       className="sorting"
-                      tabindex="0"
+                      tabIndex="0"
                       aria-controls="DataTables_Table_0"
-                      rowspan="1"
-                      colspan="1"
+                      rowSpan="1"
+                      colSpan="1"
                       aria-label="className: activate to sort column ascending"
                       style={{ width: "40px" }}
                     >
@@ -119,7 +120,7 @@ function ResultReport() {
                 <tbody className="text-center">
                   <tr role="row" className="odd ">
                     <td>{formValues.studentId}</td>
-                    <td> {formValues.name}</td>
+                    <td>{formValues.name}</td>
                     <td>{formValues.tot}</td>
                     <td>{formValues.per}</td>
                     <td>{formValues.res}</td>

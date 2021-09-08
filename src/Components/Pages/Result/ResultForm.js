@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import React, { useState, useEffect } from "react";
 import Navbar from "../../Common/Navbar/Navbar";
 import axios from "axios";
@@ -14,7 +15,7 @@ function ResultForm() {
   const [extResult, setExtResult] = useState(0);
   const [finalResult, setFinalResult] = useState(0);
   const [percentage, setPercentage] = useState(0);
-  const [result, setResult] = useState('Pass');
+  const [result, setResult] = useState("Pass");
 
   const list = {
     subject: "",
@@ -84,6 +85,23 @@ function ResultForm() {
     setResultList(updatedTaskList);
   };
 
+  const handleChangeLast = (e) => {
+    //console.log(e.target.value);
+
+    const input = e.target.name;
+    if (input === "iaResult") {
+      setIaResult(e.target.value);
+    } else if (input === "extResult") {
+      setExtResult(e.target.value);
+    } else if (input === "finalResult") {
+      setFinalResult(e.target.value);
+    } else if (input === "percentage") {
+      setPercentage(e.target.value);
+    } else if (input === "result") {
+      setResult(e.target.value);
+    }
+  };
+
   const handleSubmit = (e) => {
     console.log(
       "Submit Started" + "-" + CalulatedFor + "-" + RegNo,
@@ -110,6 +128,9 @@ function ResultForm() {
     // });
   };
 
+  const handleCalculation = (e,i)=>{
+    console.log(resultList)
+  }
   return (
     <>
       <Navbar />
@@ -218,19 +239,7 @@ function ResultForm() {
                   fontWeight: "500",
                   marginTop: "30px",
                 }}
-              >
-                <div className="col-xs-3  form-group">
-                  {fullName ? (
-                    <button
-                      onClick={() => addRow()}
-                      type="button"
-                      className="btn btn-primary text-center"
-                    >
-                      <i className="fa fa-plus-circle" aria-hidden="true"></i>
-                    </button>
-                  ) : null}
-                </div>
-              </div>
+              ></div>
             </div>
 
             <div>
@@ -309,6 +318,7 @@ function ResultForm() {
                           id="subjectName"
                           value={item.subjectName}
                           onChange={(e) => handleChange(e, i)}
+                          onBlur={handleCalculation}
                         >
                           <option value="" data-select2-id="12">
                             Select
@@ -333,6 +343,7 @@ function ResultForm() {
                           name="IAmarks"
                           id="IAmarks"
                           value={item.IAmarks}
+                          onBlur={handleCalculation}
                           onChange={(e) => handleChange(e, i)}
                         />
                       </td>
@@ -345,6 +356,7 @@ function ResultForm() {
                           name="extMarks"
                           id="extMarks"
                           value={item.extMarks}
+                          onBlur={handleCalculation}
                           onChange={(e) => handleChange(e, i)}
                         />
                       </td>
@@ -361,6 +373,17 @@ function ResultForm() {
                   ))}
                 </tbody>
               </table>
+              <div className="col-xs-3  form-group">
+                {fullName ? (
+                  <button
+                    onClick={() => addRow()}
+                    type="button"
+                    className="btn btn-primary text-center"
+                  >
+                    <i className="fa fa-plus-circle" aria-hidden="true"></i>
+                  </button>
+                ) : null}
+              </div>
               <div className="row">
                 <div className="heading-layout1">
                   <div className="item-title">
@@ -377,6 +400,8 @@ function ResultForm() {
                       className="form-control"
                       id="iaResult"
                       name="iaResult"
+                      value={iaResult}
+                      onChange={(e)=>handleChangeLast(e)}                      
                       disabled
                     />
                   </div>
@@ -391,7 +416,8 @@ function ResultForm() {
                       className="form-control"
                       id="extResult"
                       name="extResult"
-                      onChange
+                      value={extResult}
+                      onChange={(e)=>handleChangeLast(e)}
                       disabled
                     />
                   </div>
@@ -411,6 +437,8 @@ function ResultForm() {
                     className="form-control"
                     id="finalResult"
                     name="finalResult"
+                    value={finalResult}
+                    onChange={(e)=>handleChangeLast(e)}
                     disabled
                   />
                 </div>
@@ -430,6 +458,8 @@ function ResultForm() {
                       className="form-control"
                       id="percentage"
                       name="percentage"
+                      value={percentage}
+                      onChange={(e)=>handleChangeLast(e)}
                       disabled
                     />
                   </div>
@@ -448,6 +478,8 @@ function ResultForm() {
                       className="form-control"
                       id="result"
                       name="result"
+                      value={result}
+                      onChange={(e)=>handleChangeLast(e)}
                       disabled
                     />
                   </div>

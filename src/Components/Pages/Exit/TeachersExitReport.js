@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import React from "react";
 import "../Student/AdmissionReport.css";
 import Navbar from "../../Common/Navbar/Navbar";

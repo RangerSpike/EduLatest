@@ -28,6 +28,7 @@ import TeachERep from "./Components/Pages/Exit/TeachersExitReport";
 
 import Users from "./Components/Pages/Users/Users";
 import UsersReport from "./Components/Pages/Users/UsersReport";
+import UserUpdateForm from "./Components/Pages/Users/UserUpdateForm";
 
 function Routes() {
   return (
@@ -73,6 +74,7 @@ function Routes() {
 
           <Route exact path="/Users" component={Users} />
           <Route exact path="/UsersReport" component={UsersReport} />
+          <Route exact path="/UserUpdate/:id" component={UserUpdateForm} />
         </Switch>
       </Router>
     </>
