@@ -1,18 +1,54 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // eslint-disable-next-line
 import "../Student/AdmissionReport.css";
 import Navbar from "../../Common/Navbar/Navbar";
+import axios from "axios";
 
 function StudentExitReport() {
-  const formValues = {
-    studentId: "101",
-    name: "Mohammed",
-    doj: "20/05/2018",
-    doe: "01/05/2018",
-    cci: "Positve",
-    resForLeaving: "Positve Positve Positve",
+  const [data, setData] = useState([]);
+  const [stdId, setId] = useState();
+  const [stdName, setName] = useState();
+
+  const getData = () => {
+    axios
+      .get("http://localhost:3004/getStudentExit", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+      })
+      .then((res) => {
+        if (res.data.length > 0) {
+          console.log(res.data);
+          setData(res.data);
+        }
+      });
   };
 
+  const updateRecordsAfterFilter = () => {
+    console.log("updateDuplicateVar called : ");
+    if (stdId || stdName) {
+      axios
+        .post("http://localhost:3004/getStudentExitFilter", {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          },
+          student_id: stdId ? stdId : `"` + `"`,
+          student_name: stdName ? stdName : `"` + `"`,
+        })
+        .then((res) => {
+          setData(res.data);
+          console.log("result set in effect: ", res.data);
+        });
+    } else {
+      getData();
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <>
       <Navbar />
@@ -30,6 +66,10 @@ function StudentExitReport() {
                   type="text"
                   placeholder="Search by Student ID ..."
                   className="form-control"
+                  id="stdId"
+                  name="stdId"
+                  value={stdId}
+                  onChange={(e) => setId(e.target.value)}
                 />
               </div>
               <div className="col-lg-4 col-12 form-group">
@@ -37,13 +77,18 @@ function StudentExitReport() {
                   type="text"
                   placeholder="Search by Studend Name ..."
                   className="form-control"
+                  id="stdName"
+                  name="stdName"
+                  value={stdName}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
               <div className="col-lg-2 col-12 form-group">
                 <button
-                  type="submit"
+                  type="button"
                   className="fw-btn-fill btn-gradient-yellow"
                   style={{ width: "100px" }}
+                  onClick={() => updateRecordsAfterFilter()}
                 >
                   SEARCH
                 </button>
@@ -71,7 +116,7 @@ function StudentExitReport() {
                       aria-label="Admission iD: activate to sort column ascending"
                       style={{ width: "42.6667px" }}
                     >
-                      ID
+                      STUDENT ID
                     </th>
 
                     <th
@@ -132,14 +177,24 @@ function StudentExitReport() {
                   </tr>
                 </thead>
                 <tbody className="text-center">
-                  <tr role="row" className="odd ">
-                    <td>{formValues.studentId}</td>
-                    <td>{formValues.name}</td>
-                    <td>{formValues.doj}</td>
-                    <td>{formValues.doe}</td>
-                    <td>{formValues.cci}</td>
-                    <td>{formValues.resForLeaving}</td>
-                  </tr>
+                  {data.map((item) => (
+                    <tr key={item.STUDENTS_ID} role="row" className="odd ">
+                      <td
+                        //onClick={() => openAdForm(item.STUDENT_ID)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {item.STUDENTS_ID}
+                      </td>
+                      {/* <td style={styleback}>{item.stich_name}</td> */}
+
+                      <td>{item.STD_NAME}</td>
+
+                      <td>{item.STD_DOJ}</td>
+                      <td>{item.STD_DOE}</td>
+                      <td>{item.STD_CHR_CERT}</td>
+                      <td>{item.STD_REASON}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
