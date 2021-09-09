@@ -31,7 +31,7 @@ function ResultForm() {
       .post("http://localhost:3004/getStudentBasedOnRegno", {
         headers: {
           "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS,UPDATE",
         },
         stdRollNo: RegNo,
       })

@@ -86,7 +86,7 @@ function Teacher() {
         .post("http://localhost:3004/insertTeacherExit", {
           headers: {
             "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
           },
           tchId: id,
           tchName: name,
@@ -113,7 +113,7 @@ function Teacher() {
         <div className="card-body">
           <div className="heading-layout1">
             <div className="item-title">
-              <h3 style={{ padding: "50px" }}>Exit From </h3>
+              <h3 style={{ padding: "50px" }}>Teacher Exit From </h3>
             </div>
           </div>
 

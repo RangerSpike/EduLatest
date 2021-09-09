@@ -50,7 +50,7 @@ function Student() {
       })
       .then((res) => {
         if (res.data.length > 0) {
-          console.log(res.data);
+          //console.log(res.data);
           setStdId(res.data[0].STUDENT_ID);
           setName(res.data[0].STD_NAME);
           setSClass(res.data[0].STD_CLASS);
@@ -58,6 +58,7 @@ function Student() {
         }
       });
   };
+
   const optionClass = [
     { key: "Select Class", value: "" },
     { key: "1", value: "1" },
@@ -111,11 +112,11 @@ function Student() {
   const onSubmit = (e) => {
     e.preventDefault();
     if (stdId && SClass && name) {
-      Axios.post("http://localhost:3004/insertStudentExit", {
+      Axios.post("http://localhost:3004/insertStudentExit", {   
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        },
+        },     
         studentId: stdId,
         stdName: name,
         stdClass: SClass,
