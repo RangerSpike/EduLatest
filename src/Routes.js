@@ -36,7 +36,7 @@ function Routes() {
     <>
       <Router>
         <Switch>
-        <Route exact path="/Main" component={Main} />
+        <Route exact path="/EduMeet" component={Main} />
           <Route exact path="/Dashboard" component={Dashboard} />
 
           <Route exact path="/AddmissionForm" component={AddmissionForm} />
