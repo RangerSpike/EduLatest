@@ -10,7 +10,7 @@ export default function Dashboard() {
         <div className="main__title">
           <img src={hello} alt="hello" />
           <div className="main__greeting">
-            <h1>Hello Admin</h1>
+            <h1>Hello {localStorage.getItem('UserName')}</h1>
             <p>Welcome to the dashboard</p>
           </div>
         </div>

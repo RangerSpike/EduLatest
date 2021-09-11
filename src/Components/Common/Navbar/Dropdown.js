@@ -6,6 +6,7 @@ import { MenuItems2 } from "./MenuItems/MenuItems2";
 import { MenuItems3 } from "./MenuItems/MenuItems3";
 import { MenuItems4 } from "./MenuItems/MenuItems4";
 import { MenuItems5 } from "./MenuItems/MenuItems5";
+import { MenuItems6 } from "./MenuItems/MenuItems6";
 
 import "./Dropdown.css";
 import { Link } from "react-router-dom";
@@ -28,6 +29,8 @@ function Dropdown(props) {
     Menulist = MenuItems4;
   } else if (props.Menutype == "USE") {
     Menulist = MenuItems5;
+  } else if (props.Menutype == "VID") {
+    Menulist = MenuItems6;
   }
 
   const [click, setClick] = useState(false);

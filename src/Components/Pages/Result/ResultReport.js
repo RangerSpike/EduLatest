@@ -1,14 +1,38 @@
 // eslint-disable-next-line
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../Common/Navbar/Navbar";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+
 function ResultReport() {
-  const formValues = {
-    studentId: "101",
-    name: "Mohammed",
-    tot: "490",
-    per: "85%",
-    res: "pass",
+  const [data, setData] = useState([]);
+  const history = useHistory();
+  
+  const openAdForm = (id) => {
+    //console.log("result set in DATABASED ON STUDENT  : ", id);
+    history.push(`/ResultUpdateForm/${id}`);
   };
+
+  const getData = () => {
+    axios
+      .get("http://localhost:3004/getReslutData", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+      })
+      .then((res) => {
+        if (res.data.length > 0) {
+          //console.log(res.data);
+          setData(res.data);
+        }
+      });
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -18,34 +42,7 @@ function ResultReport() {
             <div className="item-title">
               <h3 style={{ padding: "50px" }}>Result Report</h3>
             </div>
-          </div>
-          <form className="mg-b-20">
-            <div className="row gutters-8">
-              <div className="col-lg-4  col-12 form-group">
-                <input
-                  type="text"
-                  placeholder="Search by Student ID ..."
-                  className="form-control"
-                />
-              </div>
-              <div className="col-lg-4 col-12 form-group">
-                <input
-                  type="text"
-                  placeholder="Search by Studend Name ..."
-                  className="form-control"
-                />
-              </div>
-              <div className="col-lg-2 col-12 form-group">
-                <button
-                  type="submit"
-                  className="fw-btn-fill btn-gradient-yellow"
-                  style={{ width: "100px" }}
-                >
-                  SEARCH
-                </button>
-              </div>
-            </div>
-          </form>
+          </div>         
 
           <div className="table-responsive">
             <div
@@ -118,13 +115,23 @@ function ResultReport() {
                   </tr>
                 </thead>
                 <tbody className="text-center">
-                  <tr role="row" className="odd ">
-                    <td>{formValues.studentId}</td>
-                    <td>{formValues.name}</td>
-                    <td>{formValues.tot}</td>
-                    <td>{formValues.per}</td>
-                    <td>{formValues.res}</td>
-                  </tr>
+                  {data.map((item) => (
+                    <tr key={item.RESULT_ID} role="row" className="odd ">
+                      <td
+                        onClick={() => openAdForm(item.RESULT_ID)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {item.RESULT_ID}
+                      </td>
+                      {/* <td style={styleback}>{item.stich_name}</td> */}
+
+                      <td>{item.STD_NAME}</td>
+
+                      <td>{item.STD_TOTAL}</td>
+                      <td>{item.PERCENATGE}</td>
+                      <td>{item.STD_RESULT2}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>

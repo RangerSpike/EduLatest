@@ -3,7 +3,9 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../../Common/Navbar/Navbar";
 import axios from "axios";
 
-function ResultUpdateForm() {
+function ResultUpdateForm(props) {
+  const newId = props.match.params.id;
+
   const [RegNo, setRegNo] = useState();
   const [fullName, setFullName] = useState();
   const [Sclass, setSclass] = useState();
@@ -15,7 +17,7 @@ function ResultUpdateForm() {
   const [extResult, setExtResult] = useState(0);
   const [finalResult, setFinalResult] = useState(0);
   const [percentage, setPercentage] = useState(0);
-  const [result, setResult] = useState("Pass");
+  const [result, setResult] = useState();
 
   const list = {
     stdId: id,
@@ -26,6 +28,49 @@ function ResultUpdateForm() {
 
   const [resultList, setResultList] = useState([]);
 
+  const getDataBasedOnId = () => {
+    axios
+      .post("http://localhost:3004/getReslutDataBasedOnId", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods":
+            "GET,PUT,POST,DELETE,PATCH,OPTIONS,UPDATE",
+        },
+        stdId: newId,
+      })
+      .then((res) => {
+        if (res.data.length > 0) {
+          console.log("SAMAN :" + res.data);
+        }
+      });
+
+    axios
+      .post("http://localhost:3004/getReslutMULBasedOnId", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods":
+            "GET,PUT,POST,DELETE,PATCH,OPTIONS,UPDATE",
+        },
+        stdId: newId,
+      })
+      .then((res) => {
+        if (res.data.length > 0) {
+          console.log("SAMAN :" + res.data);
+          let rows = [];
+          for (let i = 0; i < res.data.length; i++) {
+            rows.push(list);
+            rows[i] = {
+              stdId: res.data[i].STD_ID,
+              subject: res.data[i].STD_SUBJECT,
+              iAMarks: res.data[i].STD_IA_MARKS,
+              extMarks: res.data[i].STD_EA_MARKS,
+            };
+          }
+          setResultList(rows);
+        }
+      });
+  };
+  
   const getStdData = () => {
     console.log("hi");
     axios
@@ -35,7 +80,7 @@ function ResultUpdateForm() {
           "Access-Control-Allow-Methods":
             "GET,PUT,POST,DELETE,PATCH,OPTIONS,UPDATE",
         },
-        stdRollNo: RegNo,
+        stdRollNo: newId,
       })
       .then((res) => {
         if (res.data.length > 0) {
@@ -43,10 +88,15 @@ function ResultUpdateForm() {
           setStdId(res.data[0].STUDENT_ID);
           setFullName(res.data[0].STD_NAME);
           setSclass(res.data[0].STD_CLASS);
+          setPercentage(res.data[0].PERCENATGE);
+          //setFinalResult(res.data[0].PERCENATGE)
         }
       });
   };
-
+  useEffect(() => {
+    getDataBasedOnId();
+    getDataBasedOnId();
+  }, []);
   const getSubsLov = () => {
     axios
       .get("http://localhost:3004/getSubsLov", {
@@ -57,7 +107,7 @@ function ResultUpdateForm() {
       })
       .then((res) => {
         setSubsLov(res.data);
-        //console.log("result set in effect: ", res.data);
+        //console.log("result set in: ", rows);
       });
   };
 
@@ -114,23 +164,35 @@ function ResultUpdateForm() {
 
     for (let i = 0; i < resultList.length; i++) {
       if (iA === 0) {
-        iA = (resultList[i].IAmarks).parseFloat();
+        iA = parseInt(resultList[i].IAmarks);
       } else {
-        iA = (iA).parseInt() + resultList[i].IAmarks.parseInt();
+        iA = parseInt(iA) + parseInt(resultList[i].IAmarks);
       }
-      // if (ext === 0) {
-      //   ext = resultList[i].extMarks;
-      // } else {
-      //   ext = ext + resultList[i].extMarks;
-      // }
+
+      if (ext === 0) {
+        ext = resultList[i].extMarks;
+      } else {
+        ext = ext + resultList[i].extMarks;
+      }
     }
-    final = iA + ext;
+    final = iA.parseInt() + ext.parseInt();
     percentage = (final / CalulatedFor) * 100;
     if (percentage < 35) {
       Result = "Fail";
     } else {
       Result = "Pass";
     }
+    setIaResult(iA);
+    setExtResult(ext);
+    setPercentage(percentage);
+    setFinalResult(final);
+
+    if (percentage > 35) {
+      setResult(Result);
+    } else {
+      setResult(Result);
+    }
+
     console.log("Ia:", iA);
   };
 

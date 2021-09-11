@@ -15,7 +15,7 @@ function ResultForm() {
   const [extResult, setExtResult] = useState(0);
   const [finalResult, setFinalResult] = useState(0);
   const [percentage, setPercentage] = useState(0);
-  const [result, setResult] = useState("Pass");
+  const [result, setResult] = useState();
 
   const list = {
     stdId: id,
@@ -114,15 +114,15 @@ function ResultForm() {
 
     for (let i = 0; i < resultList.length; i++) {
       if (iA === 0) {
-        iA = (resultList[i].IAmarks).parseFloat();
+        iA = resultList[i].IAmarks;
       } else {
-        iA = (iA).parseInt() + resultList[i].IAmarks.parseInt();
+        iA = iA + resultList[i].IAmarks;
       }
-      // if (ext === 0) {
-      //   ext = resultList[i].extMarks;
-      // } else {
-      //   ext = ext + resultList[i].extMarks;
-      // }
+      if (ext === 0) {
+        ext = resultList[i].extMarks;
+      } else {
+        ext = ext + resultList[i].extMarks;
+      }
     }
     final = iA + ext;
     percentage = (final / CalulatedFor) * 100;
@@ -131,6 +131,16 @@ function ResultForm() {
     } else {
       Result = "Pass";
     }
+    setIaResult(iA);
+    setExtResult(ext);
+   setFinalResult(final);
+
+    if (percentage > 35) {
+      setResult(Result);
+    } else {
+      setResult(Result);
+    }
+
     console.log("Ia:", iA);
   };
 
@@ -150,6 +160,7 @@ function ResultForm() {
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
         },
         RegNo: RegNo,
+        result: result,
         fullName: fullName,
         stdID: id,
         Sclass: Sclass,
@@ -518,7 +529,7 @@ function ResultForm() {
                   >
                     <input
                       type="text"
-                      placeholder="Number"
+                      placeholder="Result"
                       className="form-control"
                       id="result"
                       name="result"

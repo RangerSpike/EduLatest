@@ -7,6 +7,7 @@ import Dropdown from "./Dropdown";
 
 function Navbar() {
   const [click, setClick] = useState(false);
+  const [video, setVideo] = useState(false);
   const [discoverDropDown, setDiscoverDropDown] = useState(false);
   const [admissionDropdown, setAdmissionDropdown] = useState(false);
   const [studentDropdown, setStudentDropdown] = useState(false);
@@ -54,6 +55,12 @@ function Navbar() {
       } else {
         setContactDropdown(true);
       }
+    } else if (menuType == "VID") {
+      if (window.innerWidth < 960) {
+        setVideo(false);
+      } else {
+        setVideo(true);
+      }
     }
   };
 
@@ -93,6 +100,12 @@ function Navbar() {
         setContactDropdown(false);
       } else {
         setContactDropdown(false);
+      }
+    } else if (menuType == "VID") {
+      if (window.innerWidth < 960) {
+        setVideo(false);
+      } else {
+        setVideo(false);
       }
     }
   };
@@ -199,6 +212,21 @@ function Navbar() {
             <IoMdArrowDropdown />
           </Link>
           {contactDropdown && <Dropdown Menutype="CON" />}
+        </li>
+        <li
+          className="nav-item"
+          onMouseEnter={() => {
+            onMouseEnter("VID");
+          }}
+          onMouseLeave={() => {
+            onMouseLeave("VID");
+          }}
+        >
+          <Link className="nav-links" onClick={closeMobileMenu}>
+            Discover
+            <IoMdArrowDropdown />
+          </Link>
+          {video && <Dropdown Menutype="VID" />}
         </li>
       </ul>
     </nav>

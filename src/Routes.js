@@ -21,6 +21,7 @@ import Message from "./Components/Pages/Notice/Message";
 
 import ResultForm from "./Components/Pages/Result/ResultForm";
 import ResultReport from "./Components/Pages/Result/ResultReport";
+import ResultUpdateForm from "./Components/Pages/Result/ResultUpdateForm";
 
 import Student from "./Components/Pages/Exit/Student";
 import StdERep from "./Components/Pages/Exit/StudentExitReport";
@@ -68,6 +69,7 @@ function Routes() {
 
           <Route exact path="/ResultForm" component={ResultForm} />
           <Route exact path="/ResultReport" component={ResultReport} />
+          <Route exact path="/ResultUpdateForm/:id" component={ResultUpdateForm} />
 
           <Route exact path="/Student" component={Student} />
           <Route exact path="/StdERep" component={StdERep} />
