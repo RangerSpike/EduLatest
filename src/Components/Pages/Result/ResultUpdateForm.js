@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../../Common/Navbar/Navbar";
 import axios from "axios";
 
-function ResultForm() {
+function ResultUpdateForm() {
   const [RegNo, setRegNo] = useState();
   const [fullName, setFullName] = useState();
   const [Sclass, setSclass] = useState();
@@ -557,4 +557,4 @@ function ResultForm() {
   );
 }
 
-export default ResultForm;
+export default ResultUpdateForm;
