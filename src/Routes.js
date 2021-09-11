@@ -1,6 +1,7 @@
 /*eslint-disable*/
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Main from './Components/CallComponent/Main'
 
 import Dashboard from "./Components/Pages/Dashboard/Dashboard";
 import AddmissionForm from "./Components/Pages/Student/AdmissionForm";
@@ -35,6 +36,7 @@ function Routes() {
     <>
       <Router>
         <Switch>
+        <Route exact path="/Main" component={Main} />
           <Route exact path="/Dashboard" component={Dashboard} />
 
           <Route exact path="/AddmissionForm" component={AddmissionForm} />

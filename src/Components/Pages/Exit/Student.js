@@ -44,7 +44,7 @@ function Student() {
       .post("http://localhost:3004/getStudentBasedOnRegno", {
         headers: {
           "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
         },
         stdRollNo: RegNo,
       })
@@ -115,7 +115,7 @@ function Student() {
       Axios.post("http://localhost:3004/insertStudentExit", {   
         headers: {
           "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
         },     
         studentId: stdId,
         stdName: name,

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
     "@reach/checkbox": "^0.16.0",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
@@ -23,6 +24,7 @@
     "popper.js": "^1.16.1",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.1",
+    "react-copy-to-clipboard": "^5.0.4",
     "react-datepicker": "^4.2.1",
     "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",
@@ -30,6 +32,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-scrollbar": "^0.5.6",
+    "simple-peer": "^9.11.0",
+    "socket.io-client": "^4.2.0",
     "web-vitals": "^1.1.1",
     "yup": "^0.32.9"
   },
