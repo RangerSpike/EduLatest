@@ -70,7 +70,7 @@ function ResultUpdateForm(props) {
         }
       });
   };
-  
+
   const getStdData = () => {
     console.log("hi");
     axios
@@ -197,29 +197,15 @@ function ResultUpdateForm(props) {
   };
 
   const handleSubmit = (e) => {
-    console.log(
-      "Submit Started" + "-" + CalulatedFor + "-" + RegNo,
-      +"-" + fullName + "-" + Sclass
-    );
-
     console.log("Submit Started", resultList);
     e.preventDefault();
-
     axios
-      .post("http://localhost:3004/insertResultForm", {
+      .post("http://localhost:3004/updateRespForm", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
         },
-        RegNo: RegNo,
-        fullName: fullName,
-        stdID: id,
-        Sclass: Sclass,
-        CalulatedFor: CalulatedFor,
-        iAtotal: iaResult,
-        eaTotal: extResult,
-        stdTotal: finalResult,
-        percenTage: percentage,
+        stdID: newId,
         resultList: resultList,
         resultListLength: resultList.length,
       })
@@ -229,7 +215,7 @@ function ResultUpdateForm(props) {
         // setYearLov([]);
         // setTeacher("");
         // setTeacherLov([]);
-        console.log("Values Submitted");
+        console.log("Values Updated");
       });
   };
   return (
