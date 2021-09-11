@@ -61,7 +61,7 @@ function ResultForm() {
       });
   };
 
-  useEffect(() => {
+  useEffect(() => {   
     getSubsLov();
   }, []);
 
@@ -73,6 +73,44 @@ function ResultForm() {
     const filteredList = [...resultList];
     filteredList.splice(index, 1);
 
+    let iA = 0;
+    let ext = 0;
+    let final = 0;
+    let percentage = 0;
+    let Result = "";
+
+    for (let i = 0; i < filteredList.length; i++) {
+      if (iA === 0) {
+        iA = filteredList[i].iAMarks;
+      } else {
+        iA = parseInt(iA) + parseInt(filteredList[i].iAMarks);
+      }
+      if (ext === 0) {
+        ext = filteredList[i].extMarks;
+      } else {
+        ext = parseInt(ext) + parseInt(filteredList[i].extMarks);
+      }
+    }
+
+    final = parseInt(iA) + parseInt(ext);
+    percentage = (parseInt(final) / parseInt(CalulatedFor)) * 100;
+    console.log(percentage);
+
+    if (percentage < 35) {
+      Result = "Fail";
+    } else {
+      Result = "Pass";
+    }
+    setIaResult(iA);
+    setExtResult(ext);
+    setPercentage(percentage.toFixed(2));
+    setFinalResult(final);
+
+    if (percentage > 35) {
+      setResult(Result);
+    } else {
+      setResult(Result);
+    }
     setResultList(filteredList);
   };
 
@@ -114,18 +152,21 @@ function ResultForm() {
 
     for (let i = 0; i < resultList.length; i++) {
       if (iA === 0) {
-        iA = resultList[i].IAmarks;
+        iA = resultList[i].iAMarks;
       } else {
-        iA = iA + resultList[i].IAmarks;
+        iA = parseInt(iA) + parseInt(resultList[i].iAMarks);
       }
       if (ext === 0) {
         ext = resultList[i].extMarks;
       } else {
-        ext = ext + resultList[i].extMarks;
+        ext = parseInt(ext) + parseInt(resultList[i].extMarks);
       }
     }
-    final = iA + ext;
-    percentage = (final / CalulatedFor) * 100;
+
+    final = parseInt(iA) + parseInt(ext);
+    percentage = (parseInt(final) / parseInt(CalulatedFor)) * 100;
+    console.log(percentage);
+
     if (percentage < 35) {
       Result = "Fail";
     } else {
@@ -133,7 +174,8 @@ function ResultForm() {
     }
     setIaResult(iA);
     setExtResult(ext);
-   setFinalResult(final);
+    setPercentage(percentage.toFixed(2));
+    setFinalResult(final);
 
     if (percentage > 35) {
       setResult(Result);
@@ -141,7 +183,7 @@ function ResultForm() {
       setResult(Result);
     }
 
-    console.log("Ia:", iA);
+    console.log("percenage:", percentage);
   };
 
   const handleSubmit = (e) => {
@@ -173,11 +215,15 @@ function ResultForm() {
         resultListLength: resultList.length,
       })
       .then(() => {
-        // setTaskList([]);
-        // setYear("");
-        // setYearLov([]);
-        // setTeacher("");
-        // setTeacherLov([]);
+        setResultList([]);
+        setRegNo("");
+        setFullName("");
+        setSclass("");
+        setIaResult("");
+        setExtResult("");
+        setFinalResult("");
+        setPercentage("");
+        setResult("");
         console.log("Values Submitted");
       });
   };
@@ -364,9 +410,9 @@ function ResultForm() {
                       <td>
                         <select
                           className="select2"
-                          name="subjectName"
-                          id="subjectName"
-                          value={item.subjectName}
+                          name="subject"
+                          id="subject"
+                          value={item.subject}
                           onChange={(e) => handleChange(e, i)}
                           required
                         >
@@ -390,9 +436,10 @@ function ResultForm() {
                           placeholder="Marks ..."
                           className="form-control"
                           style={{ width: "200px", marginLeft: "140px" }}
-                          name="IAmarks"
-                          id="IAmarks"
-                          value={item.IAmarks}
+                          name="iAMarks"
+                          id="iAMarks"
+                          value={item.iAMarks}
+                          onBlur={handleCalculation}
                           onChange={(e) => handleChange(e, i)}
                           required
                         />
@@ -408,7 +455,6 @@ function ResultForm() {
                           value={item.extMarks}
                           onBlur={handleCalculation}
                           onChange={(e) => handleChange(e, i)}
-                          onBlur={handleCalculation}
                           required
                         />
                       </td>
@@ -417,7 +463,6 @@ function ResultForm() {
                           className="btn btn-danger "
                           onClick={() => {
                             removeRow(i);
-                            handleCalculation();
                           }}
                         >
                           <i className="fa fa-trash" aria-hidden="true"></i>
@@ -541,15 +586,6 @@ function ResultForm() {
                 </div>
               </div>
               <div className="row form-group">
-                <div className="col-lg-4 col-sm form-group">
-                  <button
-                    type="button"
-                    className="btn-fill-lg btn-gradient-yellow btn-hover-bluedark "
-                    style={{ marginLeft: "40          0px" }}
-                  >
-                    Calculate
-                  </button>
-                </div>
                 <div className="col-lg-4 col-sm form-group">
                   <button
                     type="submit"

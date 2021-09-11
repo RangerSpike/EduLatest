@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
@@ -15,6 +15,11 @@ function Navbar() {
   const [contactDropdown, setContactDropdown] = useState(false);
   const [userDropDown, setUserDropDown] = useState(false);
 
+  const [currentUser, setCurrentUser] = useState();
+  useEffect(() => {
+    setCurrentUser(localStorage.getItem('Role'));
+    console.log(localStorage.getItem('Role'));
+  }, []);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
@@ -121,11 +126,12 @@ function Navbar() {
           className="d-inline-block align-top"
         />
       </Link>
+
       <div className="menu-icon" onClick={handleClick}>
         <i className={click ? "fas fa-times" : "fas fa-bars"} />
       </div>
       <ul className={click ? "nav-menu active" : "nav-menu"}>
-        <li
+        {currentUser === "Admin" ?<li
           className="nav-item"
           onMouseEnter={() => {
             onMouseEnter("USE");
@@ -138,7 +144,7 @@ function Navbar() {
             Users <IoMdArrowDropdown />
           </Link>
           {userDropDown && <Dropdown Menutype="USE" />}
-        </li>
+        </li>: null}
         <li
           className="nav-item"
           onMouseEnter={() => {

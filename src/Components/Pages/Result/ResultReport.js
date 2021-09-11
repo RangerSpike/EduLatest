@@ -23,7 +23,7 @@ function ResultReport() {
       })
       .then((res) => {
         if (res.data.length > 0) {
-          //console.log(res.data);
+          console.log(res.data);
           setData(res.data);
         }
       });
@@ -118,7 +118,7 @@ function ResultReport() {
                   {data.map((item) => (
                     <tr key={item.RESULT_ID} role="row" className="odd ">
                       <td
-                        onClick={() => openAdForm(item.RESULT_ID)}
+                        onClick={() => openAdForm(item.STD_ID)}
                         style={{ cursor: "pointer" }}
                       >
                         {item.RESULT_ID}

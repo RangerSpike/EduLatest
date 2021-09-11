@@ -2,9 +2,10 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../../Common/Navbar/Navbar";
 import axios from "axios";
-
+import { useHistory } from "react-router-dom";
 function ResultUpdateForm(props) {
   const newId = props.match.params.id;
+  const history = useHistory()
 
   const [RegNo, setRegNo] = useState();
   const [fullName, setFullName] = useState();
@@ -20,7 +21,7 @@ function ResultUpdateForm(props) {
   const [result, setResult] = useState();
 
   const list = {
-    stdId: id,
+    stdId: newId,
     subject: "",
     iAMarks: 0,
     extMarks: 0,
@@ -40,10 +41,21 @@ function ResultUpdateForm(props) {
       })
       .then((res) => {
         if (res.data.length > 0) {
-          console.log("SAMAN :" + res.data);
+          getMultiRoe();
+          setFullName(res.data[0].STD_NAME);
+          setRegNo(res.data[0].REG_NO);
+          setSclass(res.data[0].STD_CLASS);
+          setPercentage(res.data[0].PERCENATGE);
+          setFinalResult(res.data[0].STD_TOTAL);
+          setResult(res.data[0].STD_RESULT2);
+          setIaResult(res.data[0].STD_IA_TOTAL);
+          setExtResult(res.data[0].STD_EA_TOTAL);
+          //console.log("SAMAN :" + res.data[0]);
         }
       });
+  };
 
+  const getMultiRoe = () => {
     axios
       .post("http://localhost:3004/getReslutMULBasedOnId", {
         headers: {
@@ -55,7 +67,7 @@ function ResultUpdateForm(props) {
       })
       .then((res) => {
         if (res.data.length > 0) {
-          console.log("SAMAN :" + res.data);
+          //console.log("SAMAN :" + res.data);
           let rows = [];
           for (let i = 0; i < res.data.length; i++) {
             rows.push(list);
@@ -72,7 +84,7 @@ function ResultUpdateForm(props) {
   };
 
   const getStdData = () => {
-    console.log("hi");
+    //console.log("hi");
     axios
       .post("http://localhost:3004/getStudentBasedOnRegno", {
         headers: {
@@ -84,19 +96,18 @@ function ResultUpdateForm(props) {
       })
       .then((res) => {
         if (res.data.length > 0) {
-          console.log(res.data);
+          //console.log(res.data);
           setStdId(res.data[0].STUDENT_ID);
           setFullName(res.data[0].STD_NAME);
           setSclass(res.data[0].STD_CLASS);
-          setPercentage(res.data[0].PERCENATGE);
-          //setFinalResult(res.data[0].PERCENATGE)
         }
       });
   };
   useEffect(() => {
     getDataBasedOnId();
-    getDataBasedOnId();
+    getStdData();
   }, []);
+
   const getSubsLov = () => {
     axios
       .get("http://localhost:3004/getSubsLov", {
@@ -123,6 +134,44 @@ function ResultUpdateForm(props) {
     const filteredList = [...resultList];
     filteredList.splice(index, 1);
 
+    let iA = 0;
+    let ext = 0;
+    let final = 0;
+    let percentage = 0;
+    let Result = "";
+
+    for (let i = 0; i < filteredList.length; i++) {
+      if (iA === 0) {
+        iA = filteredList[i].iAMarks;
+      } else {
+        iA = parseInt(iA) + parseInt(filteredList[i].iAMarks);
+      }
+      if (ext === 0) {
+        ext = filteredList[i].extMarks;
+      } else {
+        ext = parseInt(ext) + parseInt(filteredList[i].extMarks);
+      }
+    }
+
+    final = parseInt(iA) + parseInt(ext);
+    percentage = (parseInt(final) / parseInt(CalulatedFor)) * 100;
+    //console.log(percentage);
+
+    if (percentage < 35) {
+      Result = "Fail";
+    } else {
+      Result = "Pass";
+    }
+    setIaResult(iA);
+    setExtResult(ext);
+    setPercentage(percentage.toFixed(2));
+    setFinalResult(final);
+
+    if (percentage > 35) {
+      setResult(Result);
+    } else {
+      setResult(Result);
+    }
     setResultList(filteredList);
   };
 
@@ -155,7 +204,7 @@ function ResultUpdateForm(props) {
   };
 
   const handleCalculation = () => {
-    console.log(resultList);
+    //console.log(resultList);
     let iA = 0;
     let ext = 0;
     let final = 0;
@@ -164,19 +213,21 @@ function ResultUpdateForm(props) {
 
     for (let i = 0; i < resultList.length; i++) {
       if (iA === 0) {
-        iA = parseInt(resultList[i].IAmarks);
+        iA = resultList[i].iAMarks;
       } else {
-        iA = parseInt(iA) + parseInt(resultList[i].IAmarks);
+        iA = parseInt(iA) + parseInt(resultList[i].iAMarks);
       }
-
       if (ext === 0) {
         ext = resultList[i].extMarks;
       } else {
-        ext = ext + resultList[i].extMarks;
+        ext = parseInt(ext) + parseInt(resultList[i].extMarks);
       }
     }
-    final = iA.parseInt() + ext.parseInt();
-    percentage = (final / CalulatedFor) * 100;
+
+    final = parseInt(iA) + parseInt(ext);
+    percentage = (parseInt(final) / parseInt(CalulatedFor)) * 100;
+    //console.log(percentage);
+
     if (percentage < 35) {
       Result = "Fail";
     } else {
@@ -184,7 +235,7 @@ function ResultUpdateForm(props) {
     }
     setIaResult(iA);
     setExtResult(ext);
-    setPercentage(percentage);
+    setPercentage(percentage.toFixed(2));
     setFinalResult(final);
 
     if (percentage > 35) {
@@ -193,19 +244,26 @@ function ResultUpdateForm(props) {
       setResult(Result);
     }
 
-    console.log("Ia:", iA);
+    //console.log("percenage:", percentage);
   };
 
   const handleSubmit = (e) => {
-    console.log("Submit Started", resultList);
+    //console.log("Submit Started", resultList);
+
     e.preventDefault();
     axios
-      .post("http://localhost:3004/updateRespForm", {
+      .post("http://localhost:3004/updateResultForm", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
         },
         stdID: newId,
+        CalulatedFor: CalulatedFor,
+        iAtotal: iaResult,
+        eaTotal: extResult,
+        stdTotal: finalResult,
+        percenTage: percentage,
+        result: result,
         resultList: resultList,
         resultListLength: resultList.length,
       })
@@ -215,7 +273,8 @@ function ResultUpdateForm(props) {
         // setYearLov([]);
         // setTeacher("");
         // setTeacherLov([]);
-        console.log("Values Updated");
+        history.push('/ResultReport')
+        //console.log("Values Updated");
       });
   };
   return (
@@ -243,13 +302,14 @@ function ResultUpdateForm(props) {
                   name="RegNo"
                   value={RegNo}
                   onChange={(e) => setRegNo(e.target.value)}
+                  disabled
                 />
               </div>
               <div className="col-lg-4 col-12 form-group">
                 <button
                   type="button"
                   className="fw-btn-fill btn-gradient-yellow"
-                  onClick={() => getStdData()}
+                  //onClick={() => getStdData()}
                   style={{
                     width: "100px",
                     marginTop: "36px",
@@ -401,9 +461,9 @@ function ResultUpdateForm(props) {
                       <td>
                         <select
                           className="select2"
-                          name="subjectName"
-                          id="subjectName"
-                          value={item.subjectName}
+                          name="subject"
+                          id="subject"
+                          value={item.subject}
                           onChange={(e) => handleChange(e, i)}
                           required
                         >
@@ -427,9 +487,9 @@ function ResultUpdateForm(props) {
                           placeholder="Marks ..."
                           className="form-control"
                           style={{ width: "200px", marginLeft: "140px" }}
-                          name="IAmarks"
-                          id="IAmarks"
-                          value={item.IAmarks}
+                          name="iAMarks"
+                          id="iAMarks"
+                          value={item.iAMarks}
                           onChange={(e) => handleChange(e, i)}
                           required
                         />
@@ -445,7 +505,7 @@ function ResultUpdateForm(props) {
                           value={item.extMarks}
                           onBlur={handleCalculation}
                           onChange={(e) => handleChange(e, i)}
-                          onBlur={handleCalculation}
+                          //onBlur={handleCalculation}
                           required
                         />
                       </td>
@@ -580,20 +640,11 @@ function ResultUpdateForm(props) {
               <div className="row form-group">
                 <div className="col-lg-4 col-sm form-group">
                   <button
-                    type="button"
-                    className="btn-fill-lg btn-gradient-yellow btn-hover-bluedark "
-                    style={{ marginLeft: "40          0px" }}
-                  >
-                    Calculate
-                  </button>
-                </div>
-                <div className="col-lg-4 col-sm form-group">
-                  <button
                     type="submit"
                     className="btn-fill-lg btn-gradient-yellow btn-hover-bluedark"
                     style={{ marginLeft: "400px" }}
                   >
-                    Submit
+                    Update
                   </button>
                 </div>
               </div>
