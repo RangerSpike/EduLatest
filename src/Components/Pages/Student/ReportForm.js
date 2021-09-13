@@ -191,6 +191,7 @@ function ReportForm(props) {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
       },
+      sid:newId,
       stdname: fullName,
       stdgender: gender,
       stddob: dob,

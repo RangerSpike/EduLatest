@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import Navbar from "../../Common/Navbar/Navbar";
@@ -9,8 +9,9 @@ function UsersReport() {
   const history = useHistory();
 
   const [data, setData] = useState([]);
-  const [userId, setUserId] = useState([]);
-  const [userName, setUserName] = useState([]);
+
+  const [userId, setUserId] = useState();
+  const [userName, setUserName] = useState();
 
   const getData = () => {
     setData([]);
@@ -25,26 +26,35 @@ function UsersReport() {
     });
   };
 
-  const updateRecordsAfterFilter = () => {
-    setData([]);
-    //console.log("updateDuplicateVar called : ");
-    if (userId === "" && !userName === "") {
-      getData();
-    } else {
-      Axios.post("http://localhost:3004/getUsersFilterList", {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        },
-        userId: userId ? userId : `"` + `"`,
-        userName: userName ? userName : `"` + `"`,
-      }).then((res) => {
-        setData(res.data);
-        // setTchId("")
-        // setTchName("")
-        console.log("result set in FILter: ", res.data);
-      });
-    }
+  const filterData = () => {
+    // let computedComments = data;
+
+    Axios.post("http://localhost:3004/getUsersFilterList", {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
+      userName: userName + `"` + `"`,
+      userId: userId + `"` + `"`
+    }).then((res) => {
+      console.log(res.data);
+      setData(res.data);
+    });
+    // if (userId || userName) {
+    //   computedComments = computedComments.filter(
+    //     (comment) =>
+    //       comment.USER_ID.includes(userId) ||
+    //       comment.FULL_NAME.toLowerCase().includes(userName)
+    //   );
+    //   console.log("Filterd ", computedComments);
+    //   setMapData(computedComments);
+    //   setUserId("");
+    //   setUserName("");
+    // } else {
+    //   setMapData(data);
+    //   setUserId("");
+    //   setUserName("");
+    // }
   };
 
   const openAdForm = (id) => {
@@ -94,7 +104,7 @@ function UsersReport() {
                   type="button"
                   className="fw-btn-fill btn-gradient-yellow"
                   style={{ width: "100px" }}
-                  onClick={() => updateRecordsAfterFilter()}
+                  onClick={() => filterData()}
                 >
                   SEARCH
                 </button>
