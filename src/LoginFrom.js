@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Login.css";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
@@ -12,6 +12,9 @@ const LoginFrom = () => {
     e.preventDefault();
     Login(details);
   };
+  useEffect(() => {
+    console.log("❤🧡🧡💛💚💙💜");
+  }, []);
 
   const history = useHistory();
 
@@ -35,22 +38,22 @@ const LoginFrom = () => {
     }).then((res) => {
       //console.log("Successfully Send For Validation");
       console.log("Validate", res.data);
-      window.localStorage.setItem('Role', res.data.role);
-      window.localStorage.setItem('UserName', res.data.userName);
+      window.localStorage.setItem("Role", res.data.role);
+      window.localStorage.setItem("UserName", res.data.userName);
 
       if (
-      details.userName == res.data.userName &&
-      details.password == res.data.password
-    ) {
-      //console.log("Logged in");
-      history.push("/Dashboard");
-      setUser({
-        userName: details.userName,
-      });
-    } else {
-      //console.log("Details do not match!");
-      setError("Details do not match!");
-    }
+        details.userName == res.data.userName &&
+        details.password == res.data.password
+      ) {
+        //console.log("Logged in");
+        history.push("/Dashboard");
+        setUser({
+          userName: details.userName,
+        });
+      } else {
+        //console.log("Details do not match!");
+        setError("Details do not match!");
+      }
     });
     //history.push("/Dashboard");
   };

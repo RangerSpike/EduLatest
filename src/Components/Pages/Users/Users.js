@@ -1,7 +1,9 @@
 /*eslint-disable*/
 import React, { useState } from "react";
 import Navbar from "../../Common/Navbar/Navbar";
+import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
+import DatePicker from "react-datepicker";
 
 function Users() {
   const optionRole = [
@@ -47,7 +49,7 @@ function Users() {
   const [role, setRole] = useState();
   const [phone, setPhone] = useState();
   const [cfmPassword, setcfmPassword] = useState();
-  const [actDate, setActDate] = useState();
+  const [actDate, setActDate] = useState(new Date);
   const [deActDate, setDActDate] = useState();
 
   const handleChange = (e) => {
@@ -74,50 +76,36 @@ function Users() {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    // console.log(
-    //   " Values " +
-    //     "---" +
-    //     fullName +
-    //     "---" +
-    //     userName +
-    //     "---" +
-    //     password +
-    //     "---" +
-    //     role +
-    //     "---" +
-    //     phone +
-    //     "---" +
-    //     actDate +
-    //     "---" +
-    //     deActDate
-    // );
-
-    axios
-      .post("http://localhost:3004/createUser", {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        },
-        fullName: fullName,
-        userName: userName,
-        password: password,
-        role: role,
-        phone: phone,
-        actDate: setDateFormat(actDate),
-        deActDate: setDateFormat(deActDate),
-      })
-      .then(() => {
-        console.log("Successfully Created");
-        setFullName("");
-        setUserName("");
-        setPassword("");
-        setRole("");
-        setPhone("");
-        setcfmPassword("");
-        setActDate("");
-        setDeActDate("");
-      });
+    e.preventDefault();  
+    if (cfmPassword === password) {
+      axios
+        .post("http://localhost:3004/createUser", {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          },
+          fullName: fullName,
+          userName: userName,
+          password: password,
+          role: role,
+          phone: phone,
+          actDate: setDateFormat(actDate),
+          deActDate: deActDate ? setDateFormat(deActDate) : deActDate
+        })
+        .then(() => {
+          console.log("Successfully Created");
+          setFullName("");
+          setUserName("");
+          setPassword("");
+          setRole("");
+          setPhone("");
+          setcfmPassword("");          
+          setDActDate("");
+          window.scroll(0,0)
+        });
+    }else{
+      alert('Passwords Do Not Match')
+    }
   };
 
   return (
@@ -216,14 +204,14 @@ function Users() {
                 //style={{ paddingTop: "50px" }}
               >
                 <label>ACTIVATION DATE</label>
-                <input
-                  type="date"
+                <DatePicker
+                  className="form-control air-datepicker"
+                  selected={actDate}
+                  onChange={(date) => setActDate(date)}
                   placeholder="DD/MM/YYYY"
-                  id="actDate"
-                  name="actDate"
-                  className="form-control"
-                  select={actDate}
+                  dateformat="dd-MM-yyyy"
                   onChange={(e) => handleChange(e)}
+                  disabled
                 />
               </div>
               <div

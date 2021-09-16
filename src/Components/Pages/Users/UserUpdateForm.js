@@ -39,9 +39,9 @@ function UserUpdateForm(props) {
         setPassword(res.data[0].PASSWORD);
         setcfmPassword(res.data[0].PASSWORD);
         setRole(res.data[0].ROLE);
-        setPhone(res.data[0].PHONE);        
+        setPhone(res.data[0].PHONE);
         setActDate(res.data[0].USER_ACT_DATE);
-        setDActDate(res.data[0].USER_DACT_DATE);
+        setDActDate(res.data[0].USER_DEACT_DATE ? res.data[0].USER_DEACT_DATE : "");
       });
   };
 
@@ -129,18 +129,18 @@ function UserUpdateForm(props) {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
         },
-        userId:id,
+        userId: id,
         fullName: fullName,
         userName: userName,
         password: password,
         role: role,
         phone: phone,
         actDate: actDate,
-        deActDate: deActDate ? setDateFormat(deActDate): null,
+        deActDate: deActDate ? setDateFormat(deActDate) : null,
       })
       .then(() => {
         //console.log("Successfully Created");
-        history.push('/UsersReport')
+        history.push("/UsersReport");
       });
   };
 
@@ -239,14 +239,14 @@ function UserUpdateForm(props) {
                 className="col-md-6 form-group"
                 //style={{ paddingTop: "50px" }}
               >
-                <label>ACTIVATION DATE</label>
+                <label>Activation Date</label>
                 <input
                   type="text"
                   placeholder="DD/MM/YYYY"
                   id="actDate"
                   name="actDate"
                   className="form-control"
-                  //select={actDate}
+                  disabled
                   value={actDate}
                   onChange={(e) => handleChange(e)}
                 />
@@ -255,16 +255,29 @@ function UserUpdateForm(props) {
                 className="col-md-6 form-group"
                 //style={{ paddingTop: "50px" }}
               >
-                <label>DEACTIVATION DATE</label>
-                <input
-                  type="date"
-                  placeholder="DD/MM/YYYY"
-                  id="deActDate"
-                  select={deActDate}
-                  name="deActDate"
-                  className="form-control"
-                  onChange={(e) => handleChange(e)}
-                />
+                <label>Deactivation Date</label>
+                {deActDate ? (
+                  <input
+                    className="form-control"
+                    type="text"
+                    placeholder="DD/MM/YYYY"
+                    id="deActDate"
+                    value={deActDate}
+                    name="deActDate"
+                    onChange={(e) => handleChange(e)}
+                    disabled
+                  />
+                ) : (
+                  <input
+                    type="date"
+                    placeholder="DD/MM/YYYY"
+                    id="deActDate"
+                    select={deActDate}
+                    name="deActDate"
+                    className="form-control"
+                    onChange={(e) => handleChange(e)}
+                  />
+                )}
               </div>
 
               <div className="col-md-3 form-group">
