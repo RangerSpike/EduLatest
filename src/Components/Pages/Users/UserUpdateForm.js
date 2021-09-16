@@ -16,6 +16,7 @@ function UserUpdateForm(props) {
   const [cfmPassword, setcfmPassword] = useState();
   const [actDate, setActDate] = useState();
   const [deActDate, setDActDate] = useState();
+  const [deActCheck, setDeactCheck] = useState();
 
   const optionRole = [
     { key: "Select Role", onChange: "" },
@@ -41,7 +42,8 @@ function UserUpdateForm(props) {
         setRole(res.data[0].ROLE);
         setPhone(res.data[0].PHONE);
         setActDate(res.data[0].USER_ACT_DATE);
-        setDActDate(res.data[0].USER_DEACT_DATE ? res.data[0].USER_DEACT_DATE : "");
+        setDActDate(res.data[0].USER_DEACT_DATE);
+        setDeactCheck(res.data[0].USER_DEACT_DATE ? res.data[0].USER_DEACT_DATE : "");
       });
   };
 
@@ -105,43 +107,29 @@ function UserUpdateForm(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(
-    //   " Values " +
-    //     "---" +
-    //     fullName +
-    //     "---" +
-    //     userName +
-    //     "---" +
-    //     password +
-    //     "---" +
-    //     role +
-    //     "---" +
-    //     phone +
-    //     "---" +
-    //     actDate +
-    //     "---" +
-    //     deActDate
-    // );
-
-    axios
-      .post("http://localhost:3004/updateUser", {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        },
-        userId: id,
-        fullName: fullName,
-        userName: userName,
-        password: password,
-        role: role,
-        phone: phone,
-        actDate: actDate,
-        deActDate: deActDate ? setDateFormat(deActDate) : null,
-      })
-      .then(() => {
-        //console.log("Successfully Created");
-        history.push("/UsersReport");
-      });
+    if (password === cfmPassword) {
+      axios
+        .post("http://localhost:3004/updateUser", {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          },
+          userId: id,
+          fullName: fullName,
+          userName: userName,
+          password: password,
+          role: role,
+          phone: phone,
+          actDate: actDate,
+          deActDate: deActDate ? setDateFormat(deActDate) : null,
+        })
+        .then(() => {
+          //console.log("Successfully Created");
+          history.push("/UsersReport");
+        });
+    } else {
+      alert("Passwords Do Not Match!");
+    }
   };
 
   return (
@@ -256,7 +244,7 @@ function UserUpdateForm(props) {
                 //style={{ paddingTop: "50px" }}
               >
                 <label>Deactivation Date</label>
-                {deActDate ? (
+                {deActCheck ? (
                   <input
                     className="form-control"
                     type="text"

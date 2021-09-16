@@ -37,39 +37,45 @@ function ResponsiblityForm() {
   };
 
   const getLov = () => {
-    axios.get("http://localhost:3004/getYearLov", {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-      },
-    }).then((res) => {
-      setYearLov(res.data);
-      //console.log("result set in effect: ", res.data);
-    });
+    axios
+      .get("http://localhost:3004/getYearLov", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+      })
+      .then((res) => {
+        setYearLov(res.data);
+        //console.log("result set in effect: ", res.data);
+      });
   };
 
   const getSubsLov = () => {
-    axios.get("http://localhost:3004/getSubsLov", {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-      },
-    }).then((res) => {
-      setSubsLov(res.data);
-      //console.log("result set in effect: ", res.data);
-    });
+    axios
+      .get("http://localhost:3004/getSubsLov", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+      })
+      .then((res) => {
+        setSubsLov(res.data);
+        //console.log("result set in effect: ", res.data);
+      });
   };
 
-  const getTchLov = () => {    
-    axios.get("http://localhost:3004/getTeacherList", {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-      },
-    }).then((res) => {
-      setTeacherLov(res.data);
-      //console.log("result set in effect: ", res.data);
-    });
+  const getTchLov = () => {
+    axios
+      .get("http://localhost:3004/getTeacherList", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+      })
+      .then((res) => {
+        setTeacherLov(res.data);
+        //console.log("result set in effect: ", res.data);
+      });
   };
 
   useEffect(() => {
@@ -91,24 +97,29 @@ function ResponsiblityForm() {
   };
 
   const handleSubmit = (e) => {
-    console.log("Submit Started",taskList);
+    console.log("Submit Started", taskList);
     e.preventDefault();
- 
-    axios.post("http://localhost:3004/insertRespForm", {      
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-      },
-      formData: taskList,
-      testLenth:taskList.length
-    }).then(() => {      
-      setTaskList([]);
-      setYear("");
-      setYearLov([]);
-      setTeacher("");
-      setTeacherLov([]);
-      console.log("Values Submitted");
-    });
+    if (taskList.length > 0) {
+      axios
+        .post("http://localhost:3004/insertRespForm", {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          },
+          formData: taskList,
+          testLenth: taskList.length,
+        })
+        .then(() => {
+          setTaskList([]);
+          setYear("");
+          setYearLov([]);
+          setTeacher("");
+          setTeacherLov([]);
+          console.log("Values Submitted");
+        });
+    } else {
+      alert("Minimum Of One Row is Required To Submit The Data");
+    }
   };
 
   return (

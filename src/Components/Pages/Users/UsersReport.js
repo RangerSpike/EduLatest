@@ -28,33 +28,21 @@ function UsersReport() {
 
   const filterData = () => {
     // let computedComments = data;
-
-    Axios.post("http://localhost:3004/getUsersFilterList", {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-      },
-      userName: userName + `"` + `"`,
-      userId: userId + `"` + `"`
-    }).then((res) => {
-      console.log(res.data);
-      setData(res.data);
-    });
-    // if (userId || userName) {
-    //   computedComments = computedComments.filter(
-    //     (comment) =>
-    //       comment.USER_ID.includes(userId) ||
-    //       comment.FULL_NAME.toLowerCase().includes(userName)
-    //   );
-    //   console.log("Filterd ", computedComments);
-    //   setMapData(computedComments);
-    //   setUserId("");
-    //   setUserName("");
-    // } else {
-    //   setMapData(data);
-    //   setUserId("");
-    //   setUserName("");
-    // }
+    if (userName || userId) {
+      Axios.post("http://localhost:3004/getUsersFilterList", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+        userName: userName ? userName : `"` + `"`,
+        userId: userId ? userId : `"` + `"`,
+      }).then((res) => {
+        console.log(res.data);
+        setData(res.data);
+      });
+    } else {
+      getData();
+    }
   };
 
   const openAdForm = (id) => {
@@ -163,17 +151,6 @@ function UsersReport() {
                       aria-controls="DataTables_Table_0"
                       rowSpan="1"
                       colSpan="1"
-                      aria-label="Gender: activate to sort column ascending"
-                      style={{ width: "52px" }}
-                    >
-                      Password
-                    </th>
-                    <th
-                      className="sorting"
-                      tabIndex="0"
-                      aria-controls="DataTables_Table_0"
-                      rowSpan="1"
-                      colSpan="1"
                       aria-label="className: activate to sort column ascending"
                       style={{ width: "40px" }}
                     >
@@ -217,17 +194,16 @@ function UsersReport() {
                 <tbody className="text-center">
                   {data.map((item) => (
                     <tr key={item.USER_ID} role="row" className="odd ">
+                      <td>{item.USER_ID}</td>
+                      {/* <td style={styleback}>{item.stich_name}</td> */}
+
                       <td
                         onClick={() => openAdForm(item.USER_ID)}
                         style={{ cursor: "pointer" }}
                       >
-                        {item.USER_ID}
+                        {item.FULL_NAME}
                       </td>
-                      {/* <td style={styleback}>{item.stich_name}</td> */}
-
-                      <td>{item.FULL_NAME}</td>
                       <td>{item.USERNAME}</td>
-                      <td>{item.PASSWORD}</td>
                       <td>{item.PHONE}</td>
                       <td>{item.USER_ACT_DATE}</td>
                       <td>{item.ROLE}</td>

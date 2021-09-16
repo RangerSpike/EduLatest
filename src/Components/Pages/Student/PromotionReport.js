@@ -83,14 +83,13 @@ function PromotionReport() {
     //console.log("BAIGAN KA PR DATA", prData);
     Axios.post("http://localhost:3004/promoteStudentBasedOnId", {
       stdList: prData,
+      std: std === "10" ? "Transferd" : parseInt(std) + 1,
     }).then(() => {
       updateRecords();
-      //setprData([]);
+      //setStd("")
       //setFormValues(rows);
     });
   };
-
-  const [Vresult, setVresult] = useState([]);
 
   const updateRecordsAfterFilter = (val) => {
     //setVresult((Vresult) => [...Vresult, val]);
@@ -206,12 +205,13 @@ function PromotionReport() {
                   </tr>
                 </thead>
 
-                <tbody>
+                <tbody style={{ textAlign: "center" }}>
                   {formValues.map((item, i) => (
                     <tr role="row" className="odd" key={i}>
                       <td className="sorting_1">
                         <div className="form-check">
                           <input
+                            style={{ marginLeft: "0.2px" }}
                             type="checkbox"
                             className="form-check-input"
                             id="select"

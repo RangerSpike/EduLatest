@@ -45,7 +45,6 @@ function ResponsiblityUpdateForm(props) {
     setTaskList(updatedTaskList);
   };
 
-
   const getLov = () => {
     axios
       .get("http://localhost:3004/getYearLov", {
@@ -109,14 +108,13 @@ function ResponsiblityUpdateForm(props) {
           for (let i = 0; i < res.data.length; i++) {
             rows.push(list);
             rows[i] = {
-                year: res.data[i].YEAR,
-                teachers: res.data[i].TEACHERS_ID,
-                subjectName: res.data[i].SUBJECT_NAME,
-                standardName: res.data[i].CLASS,
-                gradeName: res.data[i].GRADE,
-                timings: res.data[i].TIMINGS,
-              };
-
+              year: res.data[i].YEAR,
+              teachers: res.data[i].TEACHERS_ID,
+              subjectName: res.data[i].SUBJECT_NAME,
+              standardName: res.data[i].CLASS,
+              gradeName: res.data[i].GRADE,
+              timings: res.data[i].TIMINGS,
+            };
           }
           setTaskList(rows);
           //console.log("result set in: ", rows);
@@ -148,26 +146,29 @@ function ResponsiblityUpdateForm(props) {
   const handleSubmit = (e) => {
     console.log("Submit Started", taskList);
     e.preventDefault();
-
-    axios
-      .post("http://localhost:3004/updateRespForm", {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        },
-        formData: taskList,
-        testLenth: taskList.length,
-        year:Year,
-        teacherId:Teachers
-      })
-      .then(() => {
-        setTaskList([]);
-        setYear("");
-        setYearLov([]);
-        setTeacher("");
-        setTeacherLov([]);
-        console.log("Values Updated");
-      });
+    if (taskList.length > 0) {
+      axios
+        .post("http://localhost:3004/updateRespForm", {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          },
+          formData: taskList,
+          testLenth: taskList.length,
+          year: Year,
+          teacherId: Teachers,
+        })
+        .then(() => {
+          setTaskList([]);
+          setYear("");
+          setYearLov([]);
+          setTeacher("");
+          setTeacherLov([]);
+          console.log("Values Updated");
+        });
+    } else {
+      alert("Minimum Of One Row is Required To Submit The Data");
+    }
   };
 
   return (
@@ -193,6 +194,7 @@ function ResponsiblityUpdateForm(props) {
                   className="select3 select2-hidden-accessible"
                   name="Year"
                   id="Year"
+                  disabled
                   value={Year}
                   onChange={(e) => {
                     setYear(e.target.value);
@@ -216,6 +218,7 @@ function ResponsiblityUpdateForm(props) {
                   className="select3 select2-hidden-accessible"
                   name="Teachers"
                   id="Teachers"
+                  disabled
                   value={Teachers}
                   onChange={(e) => {
                     setTeacher(e.target.value);

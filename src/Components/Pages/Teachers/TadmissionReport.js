@@ -35,8 +35,8 @@ function TadmissionReport() {
         teacherName: tchName ? tchName : `"` + `"`,
       }).then((res) => {
         setData(res.data);
-        // setTchId("")
-        // setTchName("")
+        setTchId("");
+        setTchName("");
         console.log("result set in effect: ", res.data);
       });
     } else {
@@ -164,17 +164,6 @@ function TadmissionReport() {
                       aria-label="Section: activate to sort column ascending"
                       style={{ width: "54.6667px" }}
                     >
-                      Address
-                    </th>
-                    <th
-                      className="sorting"
-                      tabIndex="0"
-                      aria-controls="DataTables_Table_0"
-                      rowSpan="1"
-                      colSpan="1"
-                      aria-label="Section: activate to sort column ascending"
-                      style={{ width: "54.6667px" }}
-                    >
                       Date of Join
                     </th>
                   </tr>
@@ -182,18 +171,17 @@ function TadmissionReport() {
                 <tbody className="text-center">
                   {data.map((item) => (
                     <tr key={item.TEACHERS_ID} role="row" className="odd ">
+                      <td>{item.TEACHERS_ID}</td>
+                      {/* <td style={styleback}>{item.stich_name}</td> */}
+
                       <td
                         onClick={() => openAdForm(item.TEACHERS_ID)}
                         style={{ cursor: "pointer" }}
                       >
-                        {item.TEACHERS_ID}
+                        {item.TCH_NAME}
                       </td>
-                      {/* <td style={styleback}>{item.stich_name}</td> */}
-
-                      <td>{item.TCH_NAME}</td>
                       <td>{item.TCH_GENDER}</td>
                       <td>{item.TCH_PHONE}</td>
-                      <td>{item.TCH_ADDRESS}</td>
                       <td>{item.TCH_DOJ}</td>
                     </tr>
                   ))}

@@ -4,7 +4,7 @@ import Peer from "simple-peer";
 
 const SocketContext = createContext();
 
-const socket = io("http://db.edusoft.entema-software.com");
+const socket = io("http://localhost:3004");
 
 const ContextProvider = ({ children }) => {
   const [callAccepted, setCallAccepted] = useState(false);
@@ -82,6 +82,7 @@ const ContextProvider = ({ children }) => {
 
   const leaveCall = () => {
     setCallEnded(true);
+    //socket.on("me", (id) => setMe(id));
     // onCallRefresh();
     connectionRef.current.destroy();
 

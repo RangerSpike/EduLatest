@@ -7,6 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Navbar from "../../Common/Navbar/Navbar";
 
 function Tadmissionform() {
+
   const [dob, setDobDate] = useState();
   const [doj, setDojDate] = useState(new Date());
   const [teacherId, setTeacherId] = useState();
@@ -18,6 +19,7 @@ function Tadmissionform() {
   const [Yoe, setYoe] = useState();
   const [prevSchool, setPrevSchool] = useState();
   const [email, setEmail] = useState();
+  const [description, setDescription] = useState();
 
   const optionGender = [
     { key: "Select Gender", value: "" },
@@ -40,6 +42,7 @@ function Tadmissionform() {
       tch_address: address,
       tch_pus: prevSchool,
       tch_email: email,
+      tch_description:description
     }).then(() => {
       setDobDate("");
       setDobDate("");      
@@ -52,6 +55,7 @@ function Tadmissionform() {
       setYoe("");
       setPrevSchool("");
       setEmail("");
+      setDescription("");
       window.scrollTo(0, 0);
     });
   };
@@ -78,6 +82,8 @@ function Tadmissionform() {
       setEmail(e.target.value);
     } else if (input === "teacherId") {
       setTeacherId(e.target.value);
+    } else if (input === "description") {
+      setDescription(e.target.value);
     }
   };
 
@@ -124,21 +130,9 @@ function Tadmissionform() {
           </div>
           <form className="new-added-form" onSubmit={onSubmit}>
             <div className="row">
+              
               <div className="col-sm-3 form-group">
-                <label>Teacher ID</label>
-                <input
-                  type="text"
-                  placeholder="Teacher ID"
-                  className="form-control"
-                  id="teacherId"
-                  name="teacherId"
-                  value={teacherId}
-                  onChange={(e) => handleChange(e)}
-                  disabled
-                />
-              </div>
-              <div className="col-sm-3 form-group">
-                <label>Name</label>
+                <label>Name*</label>
                 <input
                   type="text"
                   placeholder="Full Name"
@@ -151,7 +145,7 @@ function Tadmissionform() {
                 />
               </div>
               <div className="col-md-3  form-group">
-                <label htmlFor="gender">Gender</label>
+                <label htmlFor="gender">Gender*</label>
                 <select
                   class="form-select"
                   aria-label="Default select example"
@@ -172,7 +166,7 @@ function Tadmissionform() {
                 </select>
               </div>
               <div className="col-xl-3 col-lg-6 col-12 form-group">
-                <label htmlFor="dob">Date Of Birth</label>
+                <label htmlFor="dob">Date Of Birth*</label>
                 <DatePicker
                   className="form-control air-datepicker"
                   placeholder="DD/MM/YYYY"
@@ -185,7 +179,7 @@ function Tadmissionform() {
                 />
               </div>
               <div className="col-xl-3 col-lg-6 col-12 form-group">
-                <label>Phone Number</label>
+                <label>Phone Number*</label>
                 <input
                   type="text"
                   placeholder="Ph. Number"
@@ -210,7 +204,7 @@ function Tadmissionform() {
                 className="col-lg-6 col-12 form-group"
                 style={{ height: "100px" }}
               >
-                <label>Address</label>
+                <label>Address*</label>
                 <input
                   className="textarea form-control"
                   type="textarea"
@@ -254,8 +248,7 @@ function Tadmissionform() {
                   id="Yoe"
                   name="Yoe"
                   value={Yoe}
-                  onChange={(e) => handleChange(e)}
-                  required
+                  onChange={(e) => handleChange(e)}                  
                 />
               </div>
               <div className="col-xl-3 col-lg-6 col-12 form-group">
@@ -288,10 +281,32 @@ function Tadmissionform() {
                 id="prevSchool"
                 cols="10"
                 rows="3"
+                disabled={!Yoe}
                 value={prevSchool}
                 onChange={(e) => handleChange(e)}
               />
             </div>
+
+            <div
+            className="col-lg-6 col-12 form-group"
+            style={{ height: "100px" , marginTop:"100px"}}
+          >
+            <div className="heading-layout1">
+              <div className="item-title">
+                <h3>Description</h3>
+              </div>
+            </div>
+            <input
+              className="textarea form-control"
+              type="textarea"
+              name="description"
+              id="description"
+              cols="10"
+              rows="3"
+              value={description}
+              onChange={(e) => handleChange(e)}
+            />
+          </div>
             <div className="col-12 form-group mg-t-8">
               <button
                 type="submit"

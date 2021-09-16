@@ -12,16 +12,8 @@ const LoginFrom = () => {
     e.preventDefault();
     Login(details);
   };
-  useEffect(() => {
-    console.log("❤🧡🧡💛💚💙💜");
-  }, []);
 
   const history = useHistory();
-
-  const adminUser = {
-    userName: "",
-    password: "",
-  };
 
   const [user, setUser] = useState({ userName: "" });
   const [error, setError] = useState("");

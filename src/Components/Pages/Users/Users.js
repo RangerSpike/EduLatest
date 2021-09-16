@@ -125,7 +125,7 @@ function Users() {
                   className="col-md-6 form-group"
                   //style={{ paddingTop: "50px" }}
                 >
-                  <label>Full Name</label>
+                  <label>Full Name*</label>
                   <input
                     type="text"
                     placeholder="fullName"
@@ -134,13 +134,14 @@ function Users() {
                     className="form-control"
                     value={fullName}
                     onChange={(e) => handleChange(e)}
+                    required
                   />
                 </div>
                 <div
                   className="col-md-6 form-group"
                   //style={{ paddingTop: "50px" }}
                 >
-                  <label>User Name</label>
+                  <label>User Name*</label>
                   <input
                     type="text"
                     placeholder="userName"
@@ -149,6 +150,7 @@ function Users() {
                     className="form-control"
                     value={userName}
                     onChange={(e) => handleChange(e)}
+                    required
                   />
                 </div>
 
@@ -156,7 +158,7 @@ function Users() {
                   className="col-md-6 form-group"
                   //style={{ paddingTop: "50px" }}
                 >
-                  <label>Password</label>
+                  <label>Password*</label>
                   <input
                     type="password"
                     placeholder="password"
@@ -165,13 +167,14 @@ function Users() {
                     className="form-control"
                     value={password}
                     onChange={(e) => handleChange(e)}
+                    required
                   />
                 </div>
                 <div
                   className="col-md-6 form-group"
                   //style={{ paddingTop: "50px" }}
                 >
-                  <label>Confirm Password</label>
+                  <label>Confirm Password*</label>
                   <input
                     type="password"
                     placeholder="Password"
@@ -180,6 +183,7 @@ function Users() {
                     className="form-control"
                     value={cfmPassword}
                     onChange={(e) => handleChange(e)}
+                    required
                   />
                 </div>
                 <div
@@ -194,16 +198,16 @@ function Users() {
                     name="phone"
                     className="form-control"
                     value={phone}
-                    onChange={(e) => handleChange(e)}
+                    onChange={(e) => handleChange(e)}                    
                   />
                 </div>
               </div>
 
               <div
                 className="col-md-6 form-group"
-                //style={{ paddingTop: "50px" }}
+                style={{ paddingTop: "40px" }}
               >
-                <label>ACTIVATION DATE</label>
+                <label>Activation Date</label>
                 <DatePicker
                   className="form-control air-datepicker"
                   selected={actDate}
@@ -218,7 +222,7 @@ function Users() {
                 className="col-md-6 form-group"
                 //style={{ paddingTop: "50px" }}
               >
-                <label>DEACTIVATION DATE</label>
+                <label>Deactivation Date</label>
                 <input
                   type="date"
                   placeholder="DD/MM/YYYY"
@@ -231,7 +235,7 @@ function Users() {
               </div>
 
               <div className="col-md-3 form-group">
-                <label htmlFor="role">Role</label>
+                <label htmlFor="role">Role*</label>
                 <select
                   class="form-select"
                   aria-label="Default select example"

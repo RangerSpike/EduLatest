@@ -213,14 +213,16 @@ function AdmissionReport() {
                   {data.map((item) => (
                     <tr key={item.STUDENT_ID} role="row" className="odd ">
                       <td
-                        onClick={() => openAdForm(item.STUDENT_ID)}
-                        style={{ cursor: "pointer" }}
+                       
                       >
                         {item.STUDENT_ID}
                       </td>
                       {/* <td style={styleback}>{item.stich_name}</td> */}
 
-                      <td>{item.STD_NAME}</td>
+                      <td
+                      onClick={() => openAdForm(item.STUDENT_ID)}
+                      style={{ cursor: "pointer" }}
+                      >{item.STD_NAME}</td>
                       <td>{item.STD_GENDER}</td>
                       <td>{item.STD_CLASS}</td>
                       <td>{item.STD_PAR_GARD}</td>

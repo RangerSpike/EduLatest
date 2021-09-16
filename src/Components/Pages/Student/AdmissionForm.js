@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import Axios from "axios";
 import Navbar from "../../../Components/Common/Navbar/Navbar";
-import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import ScrollArea from "react-scrollbar";
 import "react-datepicker/dist/react-datepicker.css";
@@ -235,7 +234,7 @@ function AdmissionForm() {
             </div>
             <form className="new-added-form" onSubmit={handleSubmit}>
               <div className="row">
-                <div className="col-sm-3   form-group">
+               {/* <div className="col-sm-3   form-group">
                   <label htmlFor="admissionId">Admission No</label>
                   <input
                     type="text"
@@ -247,9 +246,9 @@ function AdmissionForm() {
                     value={admissionId}
                     onChange={(e) => handleChange(e)}
                   />
-                </div>
+               </div>*/}
                 <div className="col-sm-3 form-group">
-                  <label htmlFor="fullName">Full Name </label>
+                  <label htmlFor="fullName">Full Name*</label>
                   <input
                     type="text"
                     placeholder="Name"
@@ -262,7 +261,7 @@ function AdmissionForm() {
                   />
                 </div>
                 <div className="col-md-3 form-group">
-                  <label htmlFor="gender">Gender</label>
+                  <label htmlFor="gender">Gender*</label>
                   <select
                     class="form-select"
                     aria-label="Default select example"
@@ -287,7 +286,7 @@ function AdmissionForm() {
                 </div>
 
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
-                  <label>Date Of Birth</label>
+                  <label>Date Of Birth*</label>
                   <DatePicker
                     className="form-control air-datepicker"
                     selected={dob}
@@ -310,7 +309,7 @@ function AdmissionForm() {
                   />
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
-                  <label htmlFor="gender">Relegion</label>
+                  <label htmlFor="gender">Relegion*</label>
                   <select
                     class="form-select"
                     aria-label="Default select example"
@@ -355,7 +354,7 @@ function AdmissionForm() {
                   </select>
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
-                  <label htmlFor="nationality">Nationality</label>
+                  <label htmlFor="nationality">Nationality*</label>
                   <select
                     class="form-select"
                     aria-label="Default select example"
@@ -392,7 +391,7 @@ function AdmissionForm() {
                   />
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
-                  <label htmlFor="class">Class</label>
+                  <label htmlFor="class">Class*</label>
                   <select
                     class="form-select"
                     aria-label="Default select example"
@@ -465,7 +464,7 @@ function AdmissionForm() {
                   className="col-lg-6 col-12 form-group"
                   style={{ height: "100px" }}
                 >
-                  <label>Address</label>
+                  <label>Address*</label>
                   <input
                     className="textarea form-control"
                     as="textarea"
@@ -486,7 +485,7 @@ function AdmissionForm() {
                   </div>
                 </div>
                 <div className="col-sm-3 form-group">
-                  <label>Father/Gaurdian Name </label>
+                  <label>Father/Gaurdian Name *</label>
                   <input
                     type="text"
                     placeholder=""
@@ -499,7 +498,7 @@ function AdmissionForm() {
                   />
                 </div>
                 <div className="col-sm-3 form-group">
-                  <label>Father/Gaurdian Occupation </label>
+                  <label>Father/Gaurdian Occupation *</label>
                   <input
                     type="text"
                     placeholder=""
@@ -513,7 +512,7 @@ function AdmissionForm() {
                 </div>
 
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
-                  <label>Phone No </label>
+                  <label>Phone No *</label>
                   <input
                     type="text"
                     placeholder=""
@@ -540,10 +539,7 @@ function AdmissionForm() {
                 <div className="col-12 form-group mg-t-8">
                   <button
                     type="submit"
-                    className="btn-fill-lg btn-gradient-yellow btn-hover-bluedark "
-                    // onClick={() => {
-                    //   newForm();
-                    // }}
+                    className="btn-fill-lg btn-gradient-yellow btn-hover-bluedark "                    
                   >
                     Submit
                   </button>
