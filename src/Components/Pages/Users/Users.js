@@ -4,6 +4,9 @@ import Navbar from "../../Common/Navbar/Navbar";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import DatePicker from "react-datepicker";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function Users() {
   const optionRole = [
@@ -42,6 +45,10 @@ function Users() {
 
     return formatedDate;
   };
+
+  const notifypas = () =>toast("Passwords Do Not Match");
+  const notifymin = () =>toast("Min 10 Charecters Required For Phone Number");
+
 
   const [fullName, setFullName] = useState();
   const [userName, setUserName] = useState();
@@ -107,16 +114,27 @@ function Users() {
             window.scroll(0, 0);
           });
       } else {
-        alert("Passwords Do Not Match");
+        notifypas();
       }
     } else {
-      alert("Min 10 Charecters Required For Phone Number");
+      notifymin();
     }
   };
 
   return (
     <div>
       <Navbar />{" "}
+      <ToastContainer
+                  position="top-center"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                />
       <div className="row">
         <div className="card">
           <div className="card-body">

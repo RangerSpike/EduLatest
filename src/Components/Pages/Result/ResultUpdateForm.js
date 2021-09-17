@@ -3,6 +3,9 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../../Common/Navbar/Navbar";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function ResultUpdateForm(props) {
   const newId = props.match.params.id;
   const history = useHistory();
@@ -19,6 +22,8 @@ function ResultUpdateForm(props) {
   const [finalResult, setFinalResult] = useState(0);
   const [percentage, setPercentage] = useState(0);
   const [result, setResult] = useState();
+
+  const notifymin = () =>toast("Result Exceeds the Value of Calculated For!");
 
   const list = {
     stdId: newId,
@@ -276,12 +281,23 @@ function ResultUpdateForm(props) {
           history.push("/ResultReport");    
         });
     }else{
-      alert('Result Exceeds the Value of Calculated For!')
+      notifymin();
     }
   };
   return (
     <>
       <Navbar />
+      <ToastContainer
+                  position="top-center"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                />
       <div className="card height-auto">
         <div className="card-body">
           <form

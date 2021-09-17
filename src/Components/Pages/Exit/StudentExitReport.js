@@ -3,8 +3,11 @@ import React, { useEffect, useState } from "react";
 import "../Student/AdmissionReport.css";
 import Navbar from "../../Common/Navbar/Navbar";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 function StudentExitReport() {
+  const history = useHistory();
+
   const [data, setData] = useState([]);
   const [stdId, setId] = useState();
   const [stdName, setName] = useState();
@@ -44,6 +47,11 @@ function StudentExitReport() {
     } else {
       getData();
     }
+  };
+
+  const openAdForm = (id) => {
+    console.log(id);
+    history.push(`/StudentExitUpdate/${id}`);
   };
 
   useEffect(() => {
@@ -179,15 +187,14 @@ function StudentExitReport() {
                 <tbody className="text-center">
                   {data.map((item) => (
                     <tr key={item.STUDENTS_ID} role="row" className="odd ">
-                      <td
-                        //onClick={() => openAdForm(item.STUDENT_ID)}
-                        style={{ cursor: "pointer" }}
-                      >
-                        {item.STUDENTS_ID}
-                      </td>
-                      {/* <td style={styleback}>{item.stich_name}</td> */}
+                      <td>{item.STUDENTS_ID}</td>
 
-                      <td>{item.STD_NAME}</td>
+                      <td
+                        style={{ cursor: "pointer" }}
+                        onClick={() => openAdForm(item.STUDENTS_ID)}
+                      >
+                        {item.STD_NAME}
+                      </td>
 
                       <td>{item.STD_DOJ}</td>
                       <td>{item.STD_DOE}</td>

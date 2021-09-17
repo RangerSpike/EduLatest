@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 import "../Student/AdmissionReport.css";
 import Navbar from "../../Common/Navbar/Navbar";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 function TeachersExitReport() {
+  const history = useHistory();
   const [data, setData] = useState([]);
   const [tchId, setTchid] = useState();
   const [tchName, setTchName] = useState();
@@ -44,6 +46,11 @@ function TeachersExitReport() {
     } else {
       getData();
     }
+  };
+
+  const openAdForm = (id) => {
+    console.log(id);
+    history.push(`/TeacherExitUpdate/${id}`);
   };
 
   useEffect(() => {
@@ -168,15 +175,15 @@ function TeachersExitReport() {
                 <tbody className="text-center">
                   {data.map((item) => (
                     <tr key={item.EXIT_ID} role="row" className="odd ">
-                      <td
-                        //onClick={() => openAdForm(item.STUDENT_ID)}
-                        style={{ cursor: "pointer" }}
-                      >
-                        {item.TEACHERS_ID}
-                      </td>
+                      <td>{item.TEACHERS_ID}</td>
                       {/* <td style={styleback}>{item.stich_name}</td> */}
 
-                      <td>{item.TCH_NAME}</td>
+                      <td
+                        onClick={() => openAdForm(item.TEACHERS_ID)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {item.TCH_NAME}
+                      </td>
 
                       <td>{item.TCH_DOJ}</td>
                       <td>{item.TCH_DOE}</td>

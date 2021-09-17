@@ -24,9 +24,12 @@ import ResultReport from "./Components/Pages/Result/ResultReport";
 import ResultUpdateForm from "./Components/Pages/Result/ResultUpdateForm";
 
 import Student from "./Components/Pages/Exit/Student";
+import StudentExitUpdate from './Components/Pages/Exit/StudentExitUpdateForm';
 import StdERep from "./Components/Pages/Exit/StudentExitReport";
+
 import Teacher from "./Components/Pages/Exit/Teacher";
 import TeachERep from "./Components/Pages/Exit/TeachersExitReport";
+import TeacherExitUpdate from './Components/Pages/Exit/TeacherExitUpdate';
 
 import Users from "./Components/Pages/Users/Users";
 import UsersReport from "./Components/Pages/Users/UsersReport";
@@ -72,10 +75,13 @@ function Routes() {
           <Route exact path="/ResultUpdateForm/:id" component={ResultUpdateForm} />
 
           <Route exact path="/Student" component={Student} />
+          <Route exact path="/StudentExitUpdate/:id" component={StudentExitUpdate} />
           <Route exact path="/StdERep" component={StdERep} />
-          <Route exact path="/Teacher" component={Teacher} />
-          <Route exact path="/TeachERep" component={TeachERep} />
 
+          <Route exact path="/Teacher" component={Teacher} />
+          <Route exact path="/TeacherExitUpdate/:id" component={TeacherExitUpdate} />
+          <Route exact path="/TeachERep" component={TeachERep} />
+          
           <Route exact path="/Users" component={Users} />
           <Route exact path="/UsersReport" component={UsersReport} />
           <Route exact path="/UserUpdate/:id" component={UserUpdateForm} />

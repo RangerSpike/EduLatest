@@ -5,6 +5,8 @@ import Navbar from "../../../Components/Common/Navbar/Navbar";
 import DatePicker from "react-datepicker";
 import ScrollArea from "react-scrollbar";
 import "react-datepicker/dist/react-datepicker.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import "./AdmissionForm.css";
 
@@ -28,6 +30,8 @@ function AdmissionForm() {
   const [fatherOccupation, setFatherOccupation] = useState();
   const [phoneNo, setPhone] = useState();
   const [email, setEmail] = useState();
+
+  const notifymin = () =>toast("Min 10 Charecters Required For Phone Number");
 
   const handleChange = (e) => {
     console.log(e.target.value);
@@ -159,7 +163,7 @@ function AdmissionForm() {
         window.scrollTo(0, 0);
       });
     } else {
-      alert("Min 10 Charecters Required For Phone Number");
+      notifymin();
     }
   };
 
@@ -227,6 +231,17 @@ function AdmissionForm() {
   return (
     <>
       <Navbar />
+      <ToastContainer
+                  position="top-center"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                />
       <ScrollArea>
         <div className="card height-auto">
           <div className="card-body">

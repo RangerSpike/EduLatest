@@ -5,6 +5,9 @@ import DatePicker from "react-datepicker";
 import Axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import Navbar from "../../Common/Navbar/Navbar";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function Tadmissionform() {
   const [dob, setDobDate] = useState();
@@ -19,6 +22,7 @@ function Tadmissionform() {
   const [prevSchool, setPrevSchool] = useState();
   const [email, setEmail] = useState();
   const [description, setDescription] = useState();
+  const notifymin = () =>toast("Min 10 Charecters Required For Phone Number");
 
   const optionGender = [
     { key: "Select Gender", value: "" },
@@ -58,7 +62,7 @@ function Tadmissionform() {
         window.scrollTo(0, 0);
       });
     } else {
-      alert("Min 10 Charecters Required For Phone Number");
+      notifymin();
     }
   };
 
@@ -123,6 +127,17 @@ function Tadmissionform() {
   return (
     <>
       <Navbar />
+      <ToastContainer
+                  position="top-center"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                />
       <div className="card height-auto">
         <div className="card-body">
           <div className="heading-layout1">

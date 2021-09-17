@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../Common/Navbar/Navbar";
 import axios from "axios";
 import { useHistory } from "react-router";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function UserUpdateForm(props) {
   let id = props.match.params.id;
@@ -17,6 +20,9 @@ function UserUpdateForm(props) {
   const [actDate, setActDate] = useState();
   const [deActDate, setDActDate] = useState();
   const [deActCheck, setDeactCheck] = useState();
+
+  const notifypas = () =>toast("Passwords Do Not Match");
+  const notifymin = () =>toast("Min 10 Charecters Required For Phone Number");
 
   const optionRole = [
     { key: "Select Role", onChange: "" },
@@ -132,16 +138,27 @@ function UserUpdateForm(props) {
             history.push("/UsersReport");
           });
       } else {
-        alert("Passwords Do Not Match!");
+        notifypas();
       }
     }else{
-      alert("Min 10 Charecters Required For Phone Number");
+      notifymin();
     }
   };
 
   return (
     <div>
       <Navbar />{" "}
+      <ToastContainer
+                  position="top-center"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                />
       <div className="row">
         <div className="card">
           <div className="card-body">
