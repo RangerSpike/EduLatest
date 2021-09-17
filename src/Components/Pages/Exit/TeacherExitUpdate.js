@@ -1,11 +1,13 @@
 // eslint-disable-next-line
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import Navbar from "../../Common/Navbar/Navbar";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 function TeacherExitUpdate(props) {
+  const history = useHistory();
   let newId = "";
   newId = props.match.params.id;
 
@@ -14,6 +16,27 @@ function TeacherExitUpdate(props) {
   const [id, setId] = useState();
   const [name, setName] = useState();
   const [reason, setReason] = useState();
+
+  useEffect(() => {
+    axios
+      .post("http://localhost:3004/getTeacherExitOnId", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+        tchId: newId,
+      })
+      .then((res) => {
+        if (res.data.length > 0) {
+          console.log(res.data);
+          setId(res.data[0].TEACHERS_ID);
+          setName(res.data[0].TCH_NAME);     
+          setDojDate(res.data[0].TCH_DOJ);
+          setDoeDate(res.data[0].TCH_DOE);         
+          setReason(res.data[0].TCH_REASON)
+        }
+      });
+  }, [newId]);
 
   const handleChange = (e) => {
     //console.log(e.target.value);
@@ -32,79 +55,22 @@ function TeacherExitUpdate(props) {
     }
   };
 
-  const getTchData = () => {
-    axios
-      .post("http://localhost:3004/getTeacherBasedOnExitId", {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        },
-        tchId: id,
-      })
-      .then((res) => {
-        if (res.data.length > 0) {
-          //console.log(res.data);
-          //setStdId(res.data[0].STUDENT_ID);
-          setName(res.data[0].TCH_NAME);
-          setDojDate(res.data[0].TCH_DOJ);
-        }
-      });
-  };
-  const setDateFormat = (value) => {
-    let currentDate;
-    if (value) {
-      currentDate = new Date(value);
-    } else {
-      currentDate = new Date();
-    }
-
-    let currentYear = new Intl.DateTimeFormat("en", { year: "numeric" }).format(
-      currentDate
-    );
-    let currentMonth = new Intl.DateTimeFormat("en", {
-      month: "numeric",
-    }).format(currentDate);
-    let currentDay = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(
-      currentDate
-    );
-
-    // let formatedDate = currentDay + "-0" + currentMonth + "-" + currentYear;
-
-    let formatedDate;
-
-    if (currentMonth in [1, 2, 3, 4, 5, 6, 7, 8, 9]) {
-      formatedDate = currentDay + "-0" + currentMonth + "-" + currentYear;
-    } else {
-      formatedDate = currentDay + "-" + currentMonth + "-" + currentYear;
-    }
-
-    return formatedDate;
-  };
-
   const onSubmit = (e) => {
     e.preventDefault();
-    
-    if (id && name) {
+
+    if (id || name) {
       axios
-        .post("http://localhost:3004/insertTeacherExit", {
+        .post("http://localhost:3004/updateTeacherExit", {
           headers: {
             "Access-Control-Allow-Origin": "*",
-           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
           },
-          tchId: id,
-          tchName: name,
-          tchDoe: setDateFormat(doe),
-          tchDoj: doj,
+          tchId: newId,
           tchReason: reason,
-          tchSts: "Transferd",
         })
         .then(() => {
           console.log("Successfully Created");
-          setDojDate("");
-          setDoeDate();
-          setId("");
-          setName("");
-          setReason("");
+          history.push("/TeachERep");
         });
     }
   };
@@ -132,7 +98,7 @@ function TeacherExitUpdate(props) {
                   name="id"
                   value={id}
                   onChange={(e) => handleChange(e)}
-                  onBlur={getTchData()}
+                  //onBlur={getTchData()}
                 />
               </div>
               <div className="col-sm-3 form-group">
@@ -150,14 +116,16 @@ function TeacherExitUpdate(props) {
               </div>
               <div className="col-xl-3 col-lg-6 col-12 form-group">
                 <label>Date Of Exit</label>
-                <DatePicker
+                <input
+                  type="text"
                   className="form-control air-datepicker"
-                  selected={doe}
+                  value={doe}
                   onChange={(date) => setDoeDate(date)}
                   placeholder="DD/MM/YYYY"
                   dateFormat="dd-MM-yyyy"
                   id="doe"
                   name="doe"
+                  disabled
                 />
               </div>
 

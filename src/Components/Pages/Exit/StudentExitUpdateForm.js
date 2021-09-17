@@ -60,8 +60,8 @@ function StudentExitUpdate(props) {
           setSClass(res.data[0].STD_CLASS);
           setDojDate(res.data[0].STD_DOJ);
           setDoeDate(res.data[0].STD_DOE);
-          setCci(res.data[0].STD_CHR_CERT)
-          setReason(res.data[0].STD_REASON)
+          setCci(res.data[0].STD_CHR_CERT);
+          setReason(res.data[0].STD_REASON);
         }
       });
   }, [newId]);
@@ -85,58 +85,22 @@ function StudentExitUpdate(props) {
     { key: "Positive", value: "Positive" },
     { key: "Negetive", value: "Negetive" },
   ];
-  const setDateFormat = (value) => {
-    let currentDate;
-    if (value) {
-      currentDate = new Date(value);
-    } else {
-      currentDate = new Date();
-    }
-
-    let currentYear = new Intl.DateTimeFormat("en", { year: "numeric" }).format(
-      currentDate
-    );
-    let currentMonth = new Intl.DateTimeFormat("en", {
-      month: "numeric",
-    }).format(currentDate);
-    let currentDay = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(
-      currentDate
-    );
-
-    // let formatedDate = currentDay + "-0" + currentMonth + "-" + currentYear;
-
-    let formatedDate;
-
-    if (currentMonth in [1, 2, 3, 4, 5, 6, 7, 8, 9]) {
-      formatedDate = currentDay + "-0" + currentMonth + "-" + currentYear;
-    } else {
-      formatedDate = currentDay + "-" + currentMonth + "-" + currentYear;
-    }
-
-    return formatedDate;
-  };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (stdId && SClass && name) {
-      Axios.post("http://localhost:3004/insertStudentExit", {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        },
-        studentId: stdId,
-        stdName: name,
-        stdClass: SClass,
-        stdDoe: setDateFormat(doe),
-        stdDoj: doj,
-        stdCharC: cci,
-        stdReason: reason,
-        stdSts: stdSts,
-      }).then(() => {
-        console.log("Successfully Created");
-        history.push("/StdERep");
-      });
-    }
+
+    Axios.post("http://localhost:3004/updateStudentExit", {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
+      studentId: newId,
+      stdCharC: cci,
+      stdReason: reason,
+    }).then(() => {
+      console.log("Successfully Created");
+      history.push("/StdERep");
+    });
   };
 
   return (
