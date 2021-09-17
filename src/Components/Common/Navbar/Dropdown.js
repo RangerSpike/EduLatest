@@ -43,7 +43,7 @@ function Dropdown(props) {
     >
       {Menulist.map((item, index) => {
         return (
-          <li key={index}>
+          <li key={index} hidden={item.hide}>
             <Link
               className={item.cName}
               to={item.path}

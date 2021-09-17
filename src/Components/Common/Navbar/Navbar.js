@@ -4,8 +4,11 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import Dropdown from "./Dropdown";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import { useHistory } from "react-router-dom";
 
 function Navbar() {
+  const history = useHistory();
   const [click, setClick] = useState(false);
   const [video, setVideo] = useState(false);
   const [discoverDropDown, setDiscoverDropDown] = useState(false);
@@ -17,8 +20,8 @@ function Navbar() {
 
   const [currentUser, setCurrentUser] = useState();
   useEffect(() => {
-    setCurrentUser(localStorage.getItem('Role'));
-    console.log(localStorage.getItem('Role'));
+    setCurrentUser(localStorage.getItem("Role"));
+    console.log(localStorage.getItem("Role"));
   }, []);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
@@ -115,6 +118,11 @@ function Navbar() {
     }
   };
 
+  const logoutHandler = () => {
+    history.push("/");
+    window.location.reload();
+  };
+
   return (
     <nav className="rabbit">
       <Link to="/" className="rabbit-logo" onClick={closeMobileMenu}>
@@ -131,20 +139,22 @@ function Navbar() {
         <i className={click ? "fas fa-times" : "fas fa-bars"} />
       </div>
       <ul className={click ? "nav-menu active" : "nav-menu"}>
-        {currentUser === "Admin" ?<li
-          className="nav-item"
-          onMouseEnter={() => {
-            onMouseEnter("USE");
-          }}
-          onMouseLeave={() => {
-            onMouseLeave("USE");
-          }}
-        >
-          <Link className="nav-links" onClick={closeMobileMenu}>
-            Users <IoMdArrowDropdown />
-          </Link>
-          {userDropDown && <Dropdown Menutype="USE" />}
-        </li>: null}
+        {currentUser === "Admin" ? (
+          <li
+            className="nav-item"
+            onMouseEnter={() => {
+              onMouseEnter("USE");
+            }}
+            onMouseLeave={() => {
+              onMouseLeave("USE");
+            }}
+          >
+            <Link className="nav-links" onClick={closeMobileMenu}>
+              Users <IoMdArrowDropdown />
+            </Link>
+            {userDropDown && <Dropdown Menutype="USE" />}
+          </li>
+        ) : null}
         <li
           className="nav-item"
           onMouseEnter={() => {
@@ -204,21 +214,23 @@ function Navbar() {
           {mediaDropdown && <Dropdown Menutype="MED" />}
         </li>
 
-        <li
-          className="nav-item"
-          onMouseEnter={() => {
-            onMouseEnter("CON");
-          }}
-          onMouseLeave={() => {
-            onMouseLeave("CON");
-          }}
-        >
-          <Link className="nav-links" onClick={closeMobileMenu}>
-            Exit Form
-            <IoMdArrowDropdown />
-          </Link>
-          {contactDropdown && <Dropdown Menutype="CON" />}
-        </li>
+        {currentUser === "Admin" ? (
+          <li
+            className="nav-item"
+            onMouseEnter={() => {
+              onMouseEnter("CON");
+            }}
+            onMouseLeave={() => {
+              onMouseLeave("CON");
+            }}
+          >
+            <Link className="nav-links" onClick={closeMobileMenu}>
+              Exit Form
+              <IoMdArrowDropdown />
+            </Link>
+            {contactDropdown && <Dropdown Menutype="CON" />}
+          </li>
+        ) : null}
         <li
           className="nav-item"
           onMouseEnter={() => {
@@ -234,6 +246,15 @@ function Navbar() {
           </Link>
           {video && <Dropdown Menutype="VID" />}
         </li>
+        <ExitToAppIcon
+          onClick={logoutHandler}
+          style={{
+            marginTop: "28px",
+            marginLeft: "10px",
+            cursor: "pointer",
+            color: "white",
+          }}
+        ></ExitToAppIcon>
       </ul>
     </nav>
   );

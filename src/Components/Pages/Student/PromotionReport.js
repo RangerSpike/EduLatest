@@ -33,7 +33,7 @@ function PromotionReport() {
           select: false,
           studentId: res.data[i].STUDENT_ID,
           name: res.data[i].STD_NAME,
-          CurClass: res.data[i].STD_CLASS,
+          CurClass: res.data[i].STD_CURRSEC,
         };
       }
       setFormValues(rows);

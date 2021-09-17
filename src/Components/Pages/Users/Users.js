@@ -49,7 +49,7 @@ function Users() {
   const [role, setRole] = useState();
   const [phone, setPhone] = useState();
   const [cfmPassword, setcfmPassword] = useState();
-  const [actDate, setActDate] = useState(new Date);
+  const [actDate, setActDate] = useState(new Date());
   const [deActDate, setDActDate] = useState();
 
   const handleChange = (e) => {
@@ -76,35 +76,41 @@ function Users() {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();  
-    if (cfmPassword === password) {
-      axios
-        .post("http://localhost:3004/createUser", {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-          },
-          fullName: fullName,
-          userName: userName,
-          password: password,
-          role: role,
-          phone: phone,
-          actDate: setDateFormat(actDate),
-          deActDate: deActDate ? setDateFormat(deActDate) : deActDate
-        })
-        .then(() => {
-          console.log("Successfully Created");
-          setFullName("");
-          setUserName("");
-          setPassword("");
-          setRole("");
-          setPhone("");
-          setcfmPassword("");          
-          setDActDate("");
-          window.scroll(0,0)
-        });
-    }else{
-      alert('Passwords Do Not Match')
+    e.preventDefault();
+    console.log();
+    if (phone.length === 10) {
+      if (cfmPassword === password) {
+        axios
+          .post("http://localhost:3004/createUser", {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods":
+                "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+            },
+            fullName: fullName,
+            userName: userName,
+            password: password,
+            role: role,
+            phone: phone,
+            actDate: setDateFormat(actDate),
+            deActDate: deActDate ? setDateFormat(deActDate) : deActDate,
+          })
+          .then(() => {
+            console.log("Successfully Created");
+            setFullName("");
+            setUserName("");
+            setPassword("");
+            setRole("");
+            setPhone("");
+            setcfmPassword("");
+            setDActDate("");
+            window.scroll(0, 0);
+          });
+      } else {
+        alert("Passwords Do Not Match");
+      }
+    } else {
+      alert("Min 10 Charecters Required For Phone Number");
     }
   };
 
@@ -190,7 +196,7 @@ function Users() {
                   className="col-md-6 form-group"
                   //style={{ paddingTop: "50px" }}
                 >
-                  <label>Phone Number</label>
+                  <label>Phone Number*</label>
                   <input
                     type="text"
                     placeholder="phone"
@@ -198,7 +204,8 @@ function Users() {
                     name="phone"
                     className="form-control"
                     value={phone}
-                    onChange={(e) => handleChange(e)}                    
+                    onChange={(e) => handleChange(e)}
+                    required
                   />
                 </div>
               </div>

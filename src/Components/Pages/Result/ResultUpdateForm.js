@@ -5,7 +5,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 function ResultUpdateForm(props) {
   const newId = props.match.params.id;
-  const history = useHistory()
+  const history = useHistory();
 
   const [RegNo, setRegNo] = useState();
   const [fullName, setFullName] = useState();
@@ -126,13 +126,8 @@ function ResultUpdateForm(props) {
     getSubsLov();
   }, []);
 
-  const addRow = () => {
-    setResultList([...resultList, list]);
-  };
-
-  const removeRow = (index) => {
+  useEffect(() => {
     const filteredList = [...resultList];
-    filteredList.splice(index, 1);
 
     let iA = 0;
     let ext = 0;
@@ -155,7 +150,7 @@ function ResultUpdateForm(props) {
 
     final = parseInt(iA) + parseInt(ext);
     percentage = (parseInt(final) / parseInt(CalulatedFor)) * 100;
-    //console.log(percentage);
+    console.log(percentage);
 
     if (percentage < 35) {
       Result = "Fail";
@@ -172,6 +167,15 @@ function ResultUpdateForm(props) {
     } else {
       setResult(Result);
     }
+  }, [resultList]);
+
+  const addRow = () => {
+    setResultList([...resultList, list]);
+  };
+
+  const removeRow = (index) => {
+    const filteredList = [...resultList];
+    filteredList.splice(index, 1);
     setResultList(filteredList);
   };
 
@@ -251,31 +255,29 @@ function ResultUpdateForm(props) {
     //console.log("Submit Started", resultList);
 
     e.preventDefault();
-    axios
-      .post("http://localhost:3004/updateResultForm", {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        },
-        stdID: newId,
-        CalulatedFor: CalulatedFor,
-        iAtotal: iaResult,
-        eaTotal: extResult,
-        stdTotal: finalResult,
-        percenTage: percentage,
-        result: result,
-        resultList: resultList,
-        resultListLength: resultList.length,
-      })
-      .then(() => {
-        // setTaskList([]);
-        // setYear("");
-        // setYearLov([]);
-        // setTeacher("");
-        // setTeacherLov([]);
-        history.push('/ResultReport')
-        //console.log("Values Updated");
-      });
+    if (finalResult <= 600) {
+      axios
+        .post("http://localhost:3004/updateResultForm", {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          },
+          stdID: newId,
+          CalulatedFor: CalulatedFor,
+          iAtotal: iaResult,
+          eaTotal: extResult,
+          stdTotal: finalResult,
+          percenTage: percentage,
+          result: result,
+          resultList: resultList,
+          resultListLength: resultList.length,
+        })
+        .then(() => {       
+          history.push("/ResultReport");    
+        });
+    }else{
+      alert('Result Exceeds the Value of Calculated For!')
+    }
   };
   return (
     <>
@@ -511,6 +513,7 @@ function ResultUpdateForm(props) {
                       </td>
                       <td>
                         <button
+                          type="button"
                           className="btn btn-danger "
                           onClick={() => {
                             removeRow(i);

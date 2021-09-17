@@ -61,7 +61,7 @@ function ResultForm() {
       });
   };
 
-  useEffect(() => {   
+  useEffect(() => {
     getSubsLov();
   }, []);
 
@@ -72,6 +72,7 @@ function ResultForm() {
   const removeRow = (index) => {
     const filteredList = [...resultList];
     filteredList.splice(index, 1);
+    setResultList(filteredList);
 
     let iA = 0;
     let ext = 0;
@@ -111,7 +112,6 @@ function ResultForm() {
     } else {
       setResult(Result);
     }
-    setResultList(filteredList);
   };
 
   const handleChange = (e, index) => {
@@ -460,6 +460,7 @@ function ResultForm() {
                       </td>
                       <td>
                         <button
+                          type="button"
                           className="btn btn-danger "
                           onClick={() => {
                             removeRow(i);

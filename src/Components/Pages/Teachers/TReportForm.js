@@ -47,7 +47,7 @@ function TReportform(props) {
         setYoe(res.data[0].TCH_EXP);
         setPrevSchool(res.data[0].TCH_PUS);
         setEmail(res.data[0].TCH_EMAIL);
-      }      
+      }
     });
   }, []);
 
@@ -84,33 +84,36 @@ function TReportform(props) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-
-    Axios.post("http://localhost:3004/updateTeacher", {
-      tch_id: id,
-      tch_name: name,
-      tch_gender: gender,
-      tch_dob: dob,
-      tch_phone: phoneNo,
-      tch_exp: Yoe,
-      tch_photo: img,
-      tch_address: address,
-      tch_pus: prevSchool,
-      tch_email: email,
-    }).then(() => {
-      setDobDate("");
-      setDobDate("");
-      setTeacherId("");
-      setName("");
-      setGender("");
-      setAddress("");
-      setImage("");
-      setPhoneNo("");
-      setYoe("");
-      setPrevSchool("");
-      setEmail("");
-      id = null;
-      window.scrollTo(0, 0);
-    });
+    if (phoneNo.length === 10) {
+      Axios.post("http://localhost:3004/updateTeacher", {
+        tch_id: id,
+        tch_name: name,
+        tch_gender: gender,
+        tch_dob: dob,
+        tch_phone: phoneNo,
+        tch_exp: Yoe,
+        tch_photo: img,
+        tch_address: address,
+        tch_pus: prevSchool,
+        tch_email: email,
+      }).then(() => {
+        setDobDate("");
+        setDobDate("");
+        setTeacherId("");
+        setName("");
+        setGender("");
+        setAddress("");
+        setImage("");
+        setPhoneNo("");
+        setYoe("");
+        setPrevSchool("");
+        setEmail("");
+        id = null;
+        window.scrollTo(0, 0);
+      });
+    } else {
+      alert("Min 10 Charecters Required For Phone Number");
+    }
   };
 
   const handleChange = (e) => {

@@ -186,33 +186,37 @@ function ReportForm(props) {
   ];
 
   const handleSubmit = () => {
-    Axios.post("http://localhost:3004/UpdateStudent", {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-      },
-      sid:newId,
-      stdname: fullName,
-      stdgender: gender,
-      stddob: dob,
-      stddoj: doj,
-      stdrel: religion,
-      stdcast: cast,
-      stdntn: nationality,
-      stdclass: Sclass,
-      stdsec: Ssection,
-      stdroll: rollno,
-      stdbg: bloodGroup,
-      stdadd: address,
-      stdphoto: image,
-      stdpg: father,
-      stdpo: fatherOccupation,
-      stdph: phoneNo,
-      stdemail: email,
-    }).then(() => {
-      console.log("Successfully Updated");
-      history.push("/AdmissionReport");
-    });
+    if (phoneNo.length === 10) {
+      Axios.post("http://localhost:3004/UpdateStudent", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+        sid: newId,
+        stdname: fullName,
+        stdgender: gender,
+        stddob: dob,
+        stddoj: doj,
+        stdrel: religion,
+        stdcast: cast,
+        stdntn: nationality,
+        stdclass: Sclass,
+        stdsec: Ssection,
+        stdroll: rollno,
+        stdbg: bloodGroup,
+        stdadd: address,
+        stdphoto: image,
+        stdpg: father,
+        stdpo: fatherOccupation,
+        stdph: phoneNo,
+        stdemail: email,
+      }).then(() => {
+        console.log("Successfully Updated");
+        history.push("/AdmissionReport");
+      });
+    } else {
+      alert("Min 10 Charecters Required For Phone Number");
+    }
   };
 
   return (
@@ -511,7 +515,7 @@ function ReportForm(props) {
               <div className="col-xl-3 col-lg-6 col-12 form-group">
                 <label>E-Mail ID</label>
                 <input
-                  type="text"
+                  type="email"
                   placeholder=""
                   className="form-control"
                   name="email"

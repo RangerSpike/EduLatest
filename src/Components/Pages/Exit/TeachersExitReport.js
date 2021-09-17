@@ -1,18 +1,57 @@
 // eslint-disable-next-line
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../Student/AdmissionReport.css";
 import Navbar from "../../Common/Navbar/Navbar";
+import axios from "axios";
+
 function TeachersExitReport() {
-  const formValues = {
-    tchId: "101",
-    name: "Mohammed",
-    doj: "490",
-    doe: "85%",
-    reson: "SOMETING SOMETHING",
+  const [data, setData] = useState([]);
+  const [tchId, setTchid] = useState();
+  const [tchName, setTchName] = useState();
+
+  const getData = () => {
+    axios
+      .get("http://localhost:3004/getTeacherExit", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+      })
+      .then((res) => {
+        if (res.data.length > 0) {
+          console.log(res.data);
+          setData(res.data);
+        }
+      });
   };
+
+  const updateRecordsAfterFilter = () => {
+    console.log("updateDuplicateVar called : ");
+    if (tchId || tchName) {
+      axios
+        .post("http://localhost:3004/getTeacherExitFilter", {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          },
+          tchId: tchId ? tchId : `"` + `"`,
+          tchName: tchName ? tchName : `"` + `"`,
+        })
+        .then((res) => {
+          setData(res.data);
+          console.log("result set in effect: ", res.data);
+        });
+    } else {
+      getData();
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <>
-    <Navbar/>
+      <Navbar />
       <div className="card height-auto">
         <div className="card-body">
           <div className="heading-layout1">
@@ -21,18 +60,41 @@ function TeachersExitReport() {
             </div>
           </div>
           <form className="mg-b-20">
-    <div className="row gutters-8">
-        <div className="col-lg-4  col-12 form-group">
-            <input type="text" placeholder="Search by Teacher ID ..." className="form-control"/>
-        </div>
-        <div className="col-lg-4 col-12 form-group">
-            <input type="text" placeholder="Search by Teacher Name ..." className="form-control"/>
-        </div>
-        <div className="col-lg-2 col-12 form-group">
-            <button type="submit" className="fw-btn-fill btn-gradient-yellow" style={{ width:"100px"}}>SEARCH</button>
-        </div>
-    </div>
-</form>
+            <div className="row gutters-8">
+              <div className="col-lg-4  col-12 form-group">
+                <input
+                  type="text"
+                  placeholder="Search by Teacher ID ..."
+                  className="form-control"
+                  id="tchId"
+                  name="tchId"
+                  value={tchId}
+                  onChange={(e) => setTchid(e.target.value)}
+                />
+              </div>
+              <div className="col-lg-4 col-12 form-group">
+                <input
+                  type="text"
+                  placeholder="Search by Teacher Name ..."
+                  className="form-control"
+                  id="tchName"
+                  name="tchName"
+                  value={tchName}
+                  onChange={(e) => setTchName(e.target.value)}
+                />
+              </div>
+              <div className="col-lg-2 col-12 form-group">
+                <button
+                  type="button"
+                  className="fw-btn-fill btn-gradient-yellow"
+                  style={{ width: "100px" }}
+                  onClick={() => updateRecordsAfterFilter()}
+                >
+                  SEARCH
+                </button>
+              </div>
+            </div>
+          </form>
           <div className="table-responsive">
             <div
               id="DataTables_Table_0_wrapper"
@@ -104,13 +166,23 @@ function TeachersExitReport() {
                   </tr>
                 </thead>
                 <tbody className="text-center">
-                  <tr role="row" className="odd ">
-                    <td>{formValues.tchId}</td>
-                    <td>{formValues.name}</td>
-                    <td>{formValues.doj}</td>
-                    <td>{formValues.doe}</td>
-                    <td>{formValues.reson}</td>
-                  </tr>
+                  {data.map((item) => (
+                    <tr key={item.EXIT_ID} role="row" className="odd ">
+                      <td
+                        //onClick={() => openAdForm(item.STUDENT_ID)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {item.TEACHERS_ID}
+                      </td>
+                      {/* <td style={styleback}>{item.stich_name}</td> */}
+
+                      <td>{item.TCH_NAME}</td>
+
+                      <td>{item.TCH_DOJ}</td>
+                      <td>{item.TCH_DOE}</td>
+                      <td>{item.TCH_REASON}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>

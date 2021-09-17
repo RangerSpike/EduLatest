@@ -7,7 +7,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import Navbar from "../../Common/Navbar/Navbar";
 
 function Tadmissionform() {
-
   const [dob, setDobDate] = useState();
   const [doj, setDojDate] = useState(new Date());
   const [teacherId, setTeacherId] = useState();
@@ -30,34 +29,37 @@ function Tadmissionform() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    
-    Axios.post("http://localhost:3004/createTeacher", {
-      tch_name: name,
-      tch_gender: gender,
-      tch_dob: setDateFormat(dob),
-      tch_doj: setDateFormat(doj),
-      tch_phone: phoneNo,
-      tch_exp: Yoe,
-      tch_photo: img,
-      tch_address: address,
-      tch_pus: prevSchool,
-      tch_email: email,
-      tch_description:description
-    }).then(() => {
-      setDobDate("");
-      setDobDate("");      
-      setTeacherId("");
-      setName("");
-      setGender("");
-      setAddress("");
-      setImage("");
-      setPhoneNo("");
-      setYoe("");
-      setPrevSchool("");
-      setEmail("");
-      setDescription("");
-      window.scrollTo(0, 0);
-    });
+    if (phoneNo.length === 10) {
+      Axios.post("http://localhost:3004/createTeacher", {
+        tch_name: name,
+        tch_gender: gender,
+        tch_dob: setDateFormat(dob),
+        tch_doj: setDateFormat(doj),
+        tch_phone: phoneNo,
+        tch_exp: Yoe,
+        tch_photo: img,
+        tch_address: address,
+        tch_pus: prevSchool,
+        tch_email: email,
+        tch_description: description,
+      }).then(() => {
+        setDobDate("");
+        setDobDate("");
+        setTeacherId("");
+        setName("");
+        setGender("");
+        setAddress("");
+        setImage("");
+        setPhoneNo("");
+        setYoe("");
+        setPrevSchool("");
+        setEmail("");
+        setDescription("");
+        window.scrollTo(0, 0);
+      });
+    } else {
+      alert("Min 10 Charecters Required For Phone Number");
+    }
   };
 
   const handleChange = (e) => {
@@ -130,7 +132,6 @@ function Tadmissionform() {
           </div>
           <form className="new-added-form" onSubmit={onSubmit}>
             <div className="row">
-              
               <div className="col-sm-3 form-group">
                 <label>Name*</label>
                 <input
@@ -248,7 +249,7 @@ function Tadmissionform() {
                   id="Yoe"
                   name="Yoe"
                   value={Yoe}
-                  onChange={(e) => handleChange(e)}                  
+                  onChange={(e) => handleChange(e)}
                 />
               </div>
               <div className="col-xl-3 col-lg-6 col-12 form-group">
@@ -288,30 +289,30 @@ function Tadmissionform() {
             </div>
 
             <div
-            className="col-lg-6 col-12 form-group"
-            style={{ height: "100px" , marginTop:"100px"}}
-          >
-            <div className="heading-layout1">
-              <div className="item-title">
-                <h3>Description</h3>
+              className="col-lg-6 col-12 form-group"
+              style={{ height: "100px", marginTop: "100px" }}
+            >
+              <div className="heading-layout1">
+                <div className="item-title">
+                  <h3>Description</h3>
+                </div>
               </div>
+              <input
+                className="textarea form-control"
+                type="textarea"
+                name="description"
+                id="description"
+                cols="10"
+                rows="3"
+                value={description}
+                onChange={(e) => handleChange(e)}
+              />
             </div>
-            <input
-              className="textarea form-control"
-              type="textarea"
-              name="description"
-              id="description"
-              cols="10"
-              rows="3"
-              value={description}
-              onChange={(e) => handleChange(e)}
-            />
-          </div>
             <div className="col-12 form-group mg-t-8">
               <button
                 type="submit"
                 className="btn-fill-lg btn-gradient-yellow btn-hover-bluedark"
-                style={{ marginTop: "40px" }}                
+                style={{ marginTop: "40px" }}
               >
                 Submit
               </button>

@@ -43,7 +43,9 @@ function UserUpdateForm(props) {
         setPhone(res.data[0].PHONE);
         setActDate(res.data[0].USER_ACT_DATE);
         setDActDate(res.data[0].USER_DEACT_DATE);
-        setDeactCheck(res.data[0].USER_DEACT_DATE ? res.data[0].USER_DEACT_DATE : "");
+        setDeactCheck(
+          res.data[0].USER_DEACT_DATE ? res.data[0].USER_DEACT_DATE : ""
+        );
       });
   };
 
@@ -107,28 +109,33 @@ function UserUpdateForm(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password === cfmPassword) {
-      axios
-        .post("http://localhost:3004/updateUser", {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-          },
-          userId: id,
-          fullName: fullName,
-          userName: userName,
-          password: password,
-          role: role,
-          phone: phone,
-          actDate: actDate,
-          deActDate: deActDate ? setDateFormat(deActDate) : null,
-        })
-        .then(() => {
-          //console.log("Successfully Created");
-          history.push("/UsersReport");
-        });
-    } else {
-      alert("Passwords Do Not Match!");
+    if (phone.length === 10) {
+      if (password === cfmPassword) {
+        axios
+          .post("http://localhost:3004/updateUser", {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods":
+                "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+            },
+            userId: id,
+            fullName: fullName,
+            userName: userName,
+            password: password,
+            role: role,
+            phone: phone,
+            actDate: actDate,
+            deActDate: deActDate ? setDateFormat(deActDate) : null,
+          })
+          .then(() => {
+            //console.log("Successfully Created");
+            history.push("/UsersReport");
+          });
+      } else {
+        alert("Passwords Do Not Match!");
+      }
+    }else{
+      alert("Min 10 Charecters Required For Phone Number");
     }
   };
 

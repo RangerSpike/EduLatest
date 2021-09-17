@@ -10,7 +10,6 @@ function Message() {
   const [sendTo, setSendTo] = useState();
   const [Standard, setStandard] = useState();
   const [Section, setSection] = useState();
-
   const [currentUser, setCurrentUser] = useState();
   const [isDisabled, setIsDisabled] = useState(false);
 
@@ -49,9 +48,6 @@ function Message() {
   };
 
   const getStdSecDetails = () => {
-    //console.log("Section", Section);
-    //console.log("Standard", Standard);
-
     axios
       .post("http://localhost:3004/getFilterdStudentContactData", {
         headers: {
@@ -72,15 +68,11 @@ function Message() {
               x = x + "," + res.data[i].STD_PHONE;
           }
         }
-        setContacts(x);
-        //console.log(x);
+        setContacts(x);     
       });
-
-    //console.log("niche ka ");
   };
 
   const handleChange = (e) => {
-    // console.log(e.target.value);
 
     const input = e.target.name;
     if (input === "title") {
@@ -136,6 +128,10 @@ function Message() {
       })
       .then(() => {
         console.log("SMS SENT");
+        setTitle("");
+        setMessage("");
+        setStandard("");
+        setSection("");
       });
     //console.log("HANDLE SUB");
   };

@@ -45,7 +45,7 @@ function AdmissionForm() {
       setNationality(e.target.value);
     } else if (input === "Sclass") {
       setSclass(e.target.value);
-    } else if (input === "Ssection") {      
+    } else if (input === "Ssection") {
       setSSection(e.target.value);
     } else if (input === "rollno") {
       setRollNo(e.target.value);
@@ -66,21 +66,20 @@ function AdmissionForm() {
     }
   };
 
-  // const formatChange = (date) => {
-  //   let newdate = new Date(date);
-
-  //   let crtDay = newdate.getDate();
-  //   let crtMonth = newdate.getMonth() + 1;
-  //   let crtYear = newdate.getFullYear();
-
-  //   if (crtMonth in [1, 2, 3, 4, 5, 6, 7, 8, 9]) {
-  //     newdate = crtDay + "-0" + crtMonth + "-" + crtYear;
-  //   } else {
-  //     newdate = crtDay + "-" + crtMonth + "-" + crtYear;
-  //   }
-  //   console.log(newdate);
-  //   return newdate;
-  // };
+  const checkRollNumber = () => {
+    Axios.post("http://localhost:3004/countRollNo", {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
+      stdroll: rollno,
+    }).then((res) => {      
+      if (res.data[0].ROLLCOUNT > 0) {
+        alert("Roll Number Already Exist!!");
+        setRollNo("");
+      }
+    });
+  };
 
   const setDateFormat = (value) => {
     let currentDate;
@@ -115,49 +114,53 @@ function AdmissionForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    Axios.post("http://localhost:3004/createStudent", {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-      },
-      stdname: fullName,
-      stdgender: gender,
-      stddob: setDateFormat(dob),
-      stddoj: setDateFormat(doj),
-      stdrel: religion,
-      stdcast: cast,
-      stdntn: nationality,
-      stdclass: Sclass,
-      stdsec: Ssection,
-      stdroll: rollno,
-      stdbg: bloodGroup,
-      stdadd: address,
-      stdphoto: image,
-      stdpg: father,
-      stdpo: fatherOccupation,
-      stdph: phoneNo,
-      stdemail: email,
-    }).then(() => {
-      console.log("Successfully Created");
-      setAdmissionId("");
-      setFullName("");
-      setGender("");
-      setDobDate("");
-      setReligion("");
-      setCast("");
-      setNationality("");
-      setSclass("");
-      setSSection("");
-      setRollNo("");
-      setBloodGroup("");
-      setAddress("");
-      setImage("");
-      setFather("");
-      setFatherOccupation("");
-      setPhone("");
-      setEmail("");
-      window.scrollTo(0, 0);
-    });
+    if (phoneNo.length === 10) {
+      Axios.post("http://localhost:3004/createStudent", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+        stdname: fullName,
+        stdgender: gender,
+        stddob: setDateFormat(dob),
+        stddoj: setDateFormat(doj),
+        stdrel: religion,
+        stdcast: cast,
+        stdntn: nationality,
+        stdclass: Sclass,
+        stdsec: Ssection,
+        stdroll: rollno,
+        stdbg: bloodGroup,
+        stdadd: address,
+        stdphoto: image,
+        stdpg: father,
+        stdpo: fatherOccupation,
+        stdph: phoneNo,
+        stdemail: email,
+      }).then(() => {
+        console.log("Successfully Created");
+        setAdmissionId("");
+        setFullName("");
+        setGender("");
+        setDobDate("");
+        setReligion("");
+        setCast("");
+        setNationality("");
+        setSclass("");
+        setSSection("");
+        setRollNo("");
+        setBloodGroup("");
+        setAddress("");
+        setImage("");
+        setFather("");
+        setFatherOccupation("");
+        setPhone("");
+        setEmail("");
+        window.scrollTo(0, 0);
+      });
+    } else {
+      alert("Min 10 Charecters Required For Phone Number");
+    }
   };
 
   const optionGender = [
@@ -234,7 +237,7 @@ function AdmissionForm() {
             </div>
             <form className="new-added-form" onSubmit={handleSubmit}>
               <div className="row">
-               {/* <div className="col-sm-3   form-group">
+                {/* <div className="col-sm-3   form-group">
                   <label htmlFor="admissionId">Admission No</label>
                   <input
                     type="text"
@@ -387,6 +390,7 @@ function AdmissionForm() {
                     id="rollno"
                     name="rollno"
                     value={rollno}
+                    onBlur={checkRollNumber}
                     onChange={(e) => handleChange(e)}
                   />
                 </div>
@@ -527,7 +531,7 @@ function AdmissionForm() {
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label>E-Mail ID</label>
                   <input
-                    type="text"
+                    type="email"
                     placeholder=""
                     className="form-control"
                     name="email"
@@ -539,7 +543,7 @@ function AdmissionForm() {
                 <div className="col-12 form-group mg-t-8">
                   <button
                     type="submit"
-                    className="btn-fill-lg btn-gradient-yellow btn-hover-bluedark "                    
+                    className="btn-fill-lg btn-gradient-yellow btn-hover-bluedark "
                   >
                     Submit
                   </button>
