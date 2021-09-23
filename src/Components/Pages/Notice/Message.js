@@ -68,12 +68,11 @@ function Message() {
               x = x + "," + res.data[i].STD_PHONE;
           }
         }
-        setContacts(x);     
+        setContacts(x);
       });
   };
 
   const handleChange = (e) => {
-
     const input = e.target.name;
     if (input === "title") {
       setTitle(e.target.value);
@@ -114,8 +113,33 @@ function Message() {
     setCurrentUser(localStorage.getItem("Role"));
   }, []);
 
+  const submutData = () => {
+    axios
+      .post("http://localhost:3004/insertMessage", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+        sendTo: sendTo,
+        standard: Standard ,
+        section: Section ,
+        title: title,
+        message: message,
+        numbers: Contacts,
+        sentBy: localStorage.getItem("UserName"),
+      })
+      .then(() => {
+        //console.log(localStorage.getItem("UserName"));
+        setSendTo("Student")
+        setTitle("");
+        setMessage("");
+        setStandard("");
+        setSection("");
+      });
+  };
+
   const handleSumit = (e) => {
-    e.preventDefault();
+    e.preventDefault();    
     axios
       .post("http://localhost:3004/getMessage", {
         headers: {
@@ -128,12 +152,9 @@ function Message() {
       })
       .then(() => {
         console.log("SMS SENT");
-        setTitle("");
-        setMessage("");
-        setStandard("");
-        setSection("");
+        submutData();
       });
-    //console.log("HANDLE SUB");
+    console.log("HANDLE SUB");
   };
   return (
     <>

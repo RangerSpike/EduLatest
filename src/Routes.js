@@ -15,6 +15,8 @@ import ResponsiblityForm from "./Components/Pages/Teachers/ResponsiblityForm";
 import ResponsiblityUpdateForm from "./Components/Pages/Teachers/ResponsibilityUpdateForm";
 import ResponsibilityReport from "./Components/Pages/Teachers/ResponsibilityReport";
 import TReportform from "./Components/Pages/Teachers/TReportForm";
+import TeacherLeaveForm from "./Components/Pages/Teachers/TeacherLeaveForm";
+import TeacherLeaveReport from "./Components/Pages/Teachers/TeachersLeaveReport";
 
 import Notice from "./Components/Pages/Notice/Notice";
 import Message from "./Components/Pages/Notice/Message";
@@ -30,6 +32,7 @@ import StdERep from "./Components/Pages/Exit/StudentExitReport";
 import Teacher from "./Components/Pages/Exit/Teacher";
 import TeachERep from "./Components/Pages/Exit/TeachersExitReport";
 import TeacherExitUpdate from './Components/Pages/Exit/TeacherExitUpdate';
+import TeacherDash from "./Components/Pages/Dashboard/TeacherDash";
 
 import Users from "./Components/Pages/Users/Users";
 import UsersReport from "./Components/Pages/Users/UsersReport";
@@ -81,6 +84,9 @@ function Routes() {
           <Route exact path="/Teacher" component={Teacher} />
           <Route exact path="/TeacherExitUpdate/:id" component={TeacherExitUpdate} />
           <Route exact path="/TeachERep" component={TeachERep} />
+          <Route exact path="/TeacherLeaveForm" component={TeacherLeaveForm} />
+          <Route exact path="/TeacherLeaveReport" component={TeacherLeaveReport} />
+          <Route exact path="/TeacherDash" component={TeacherDash} />
           
           <Route exact path="/Users" component={Users} />
           <Route exact path="/UsersReport" component={UsersReport} />

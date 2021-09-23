@@ -31,4 +31,18 @@ export const MenuItems = [
     cName: "heropanti-link",
     hide: false,
   },
+  {
+    title: "LeaveForm",
+    path: "/TeacherLeaveForm",
+    cName: "heropanti-link",
+    //hide: getCurrentUser() === "Teacher" ? false : true,
+    hide: false
+  },
+  {
+    title: "TeacherLeaveReport",
+    path: "/TeacherLeaveReport",
+    cName: "heropanti-link",
+    //hide: getCurrentUser() === "Teacher" ? false : true,
+    hide: false
+  },
 ];

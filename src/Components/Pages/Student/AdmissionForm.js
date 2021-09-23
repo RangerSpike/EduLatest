@@ -5,8 +5,8 @@ import Navbar from "../../../Components/Common/Navbar/Navbar";
 import DatePicker from "react-datepicker";
 import ScrollArea from "react-scrollbar";
 import "react-datepicker/dist/react-datepicker.css";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import "./AdmissionForm.css";
 
@@ -31,7 +31,8 @@ function AdmissionForm() {
   const [phoneNo, setPhone] = useState();
   const [email, setEmail] = useState();
 
-  const notifymin = () =>toast("Min 10 Charecters Required For Phone Number");
+  const notifymin = () => toast("Min 10 Charecters Required For Phone Number");
+  const notifyRoll = () => toast("Roll Number Already Exist!!");
 
   const handleChange = (e) => {
     console.log(e.target.value);
@@ -77,9 +78,9 @@ function AdmissionForm() {
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
       },
       stdroll: rollno,
-    }).then((res) => {      
+    }).then((res) => {
       if (res.data[0].ROLLCOUNT > 0) {
-        alert("Roll Number Already Exist!!");
+        notifyRoll();
         setRollNo("");
       }
     });
@@ -232,16 +233,16 @@ function AdmissionForm() {
     <>
       <Navbar />
       <ToastContainer
-                  position="top-center"
-                  autoClose={5000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover
-                />
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <ScrollArea>
         <div className="card height-auto">
           <div className="card-body">

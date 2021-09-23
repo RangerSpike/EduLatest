@@ -5,9 +5,8 @@ import DatePicker from "react-datepicker";
 import Axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import Navbar from "../../Common/Navbar/Navbar";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Tadmissionform() {
   const [dob, setDobDate] = useState();
@@ -21,8 +20,9 @@ function Tadmissionform() {
   const [Yoe, setYoe] = useState();
   const [prevSchool, setPrevSchool] = useState();
   const [email, setEmail] = useState();
+  const [salary, setSalary] = useState();
   const [description, setDescription] = useState();
-  const notifymin = () =>toast("Min 10 Charecters Required For Phone Number");
+  const notifymin = () => toast("Min 10 Charecters Required For Phone Number");
 
   const optionGender = [
     { key: "Select Gender", value: "" },
@@ -46,6 +46,7 @@ function Tadmissionform() {
         tch_pus: prevSchool,
         tch_email: email,
         tch_description: description,
+        tch_salary: salary,
       }).then(() => {
         setDobDate("");
         setDobDate("");
@@ -59,6 +60,7 @@ function Tadmissionform() {
         setPrevSchool("");
         setEmail("");
         setDescription("");
+        setSalary("");
         window.scrollTo(0, 0);
       });
     } else {
@@ -90,6 +92,8 @@ function Tadmissionform() {
       setTeacherId(e.target.value);
     } else if (input === "description") {
       setDescription(e.target.value);
+    } else if (input === "salary") {
+      setSalary(e.target.value);
     }
   };
 
@@ -128,16 +132,16 @@ function Tadmissionform() {
     <>
       <Navbar />
       <ToastContainer
-                  position="top-center"
-                  autoClose={5000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover
-                />
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="card height-auto">
         <div className="card-body">
           <div className="heading-layout1">
@@ -207,8 +211,22 @@ function Tadmissionform() {
                   required
                 />
               </div>
+              <div className="col-xl-3 col-lg-6 col-12 form-group">
+                <label>Salary</label>
+                <input
+                  type="text"
+                  placeholder="Salary"
+                  className="form-control"
+                  id="salary"
+                  name="salary"
+                  value={salary}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
               <div className="col-lg-3 col-12 form-group mg-t-30">
-                <label className="text-dark-medium">Upload Student Photo</label>
+                <label className="text-dark-medium">
+                  Upload Teachers Photo
+                </label>
                 <input
                   type="file"
                   className="form-control-file"
