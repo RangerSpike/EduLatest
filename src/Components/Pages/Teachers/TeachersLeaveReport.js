@@ -175,17 +175,19 @@ function TeacherLeaveReport() {
                     >
                       Status
                     </th>
-                    <th
-                      className="sorting"
-                      tabIndex="0"
-                      aria-controls="DataTables_Table_0"
-                      rowSpan="1"
-                      colSpan="1"
-                      aria-label="Section: activate to sort column ascending"
-                      style={{ width: "54.6667px" }}
-                    >
-                      Actions
-                    </th>
+                    {localStorage.getItem("Role") === "Admin" ? (
+                      <th
+                        className="sorting"
+                        tabIndex="0"
+                        aria-controls="DataTables_Table_0"
+                        rowSpan="1"
+                        colSpan="1"
+                        aria-label="Section: activate to sort column ascending"
+                        style={{ width: "54.6667px" }}
+                      >
+                        Actions
+                      </th>
+                    ) : null}
                   </tr>
                 </thead>
                 <tbody className="text-center">
@@ -203,38 +205,40 @@ function TeacherLeaveReport() {
                       <td>{item.REASON}</td>
                       <td>{item.DOL}</td>
                       <td>{item.LEAVE_STATUS}</td>
-                      <td>
-                        {item.LEAVE_STATUS != "Approved" ? (
-                          <button
-                            type="button"
-                            disabled={
-                              item.LEAVE_STATUS === "Approved" ? true : false
-                            }
-                            style={{
-                              background: "#008CBA",
-                              borderRadius: "5px",
-                            }}
-                            onClick={() =>
-                              updateStatus(item.TCH_ID, "Approved")
-                            }
-                          >
-                            Approve
-                          </button>
-                        ) : (
-                          <button
-                            type="button"
-                            disabled={
-                              item.LEAVE_STATUS === "Approved" ? false : true
-                            }
-                            style={{ background: "red", borderRadius: "5px" }}
-                            onClick={() =>
-                              updateStatus(item.TCH_ID, "Not Approved")
-                            }
-                          >
-                            Not Approve
-                          </button>
-                        )}
-                      </td>
+                      {localStorage.getItem("Role") === "Admin" ? (
+                        <td>
+                          {item.LEAVE_STATUS != "Approved" ? (
+                            <button
+                              type="button"
+                              disabled={
+                                item.LEAVE_STATUS === "Approved" ? true : false
+                              }
+                              style={{
+                                background: "#008CBA",
+                                borderRadius: "5px",
+                              }}
+                              onClick={() =>
+                                updateStatus(item.TCH_ID, "Approved")
+                              }
+                            >
+                              Approve
+                            </button>
+                          ) : (
+                            <button
+                              type="button"
+                              disabled={
+                                item.LEAVE_STATUS === "Approved" ? false : true
+                              }
+                              style={{ background: "red", borderRadius: "5px" }}
+                              onClick={() =>
+                                updateStatus(item.TCH_ID, "Not Approved")
+                              }
+                            >
+                              Not Approve
+                            </button>
+                          )}
+                        </td>
+                      ) : null}
                     </tr>
                   ))}
                 </tbody>

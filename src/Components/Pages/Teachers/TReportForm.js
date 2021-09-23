@@ -3,12 +3,14 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import Navbar from "../../Common/Navbar/Navbar";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useHistory } from "react-router-dom";
 
 function TReportform(props) {
   let id = props.match.params.id;
+
+  const history = useHistory()
 
   const [dob, setDobDate] = useState();
   const [doj, setDojDate] = useState();
@@ -21,7 +23,8 @@ function TReportform(props) {
   const [Yoe, setYoe] = useState();
   const [prevSchool, setPrevSchool] = useState();
   const [email, setEmail] = useState();
-  const notifymin = () =>toast("Min 10 Charecters Required For Phone Number");
+  const notifymin = () => toast("Min 10 Charecters Required For Phone Number");
+  const [salary, setSalary] = useState();
 
   const optionGender = [
     { key: "Select Gender", value: "" },
@@ -51,6 +54,7 @@ function TReportform(props) {
         setYoe(res.data[0].TCH_EXP);
         setPrevSchool(res.data[0].TCH_PUS);
         setEmail(res.data[0].TCH_EMAIL);
+        setSalary(res.data[0].TCH_SALARY);
       }
     });
   }, []);
@@ -100,19 +104,9 @@ function TReportform(props) {
         tch_address: address,
         tch_pus: prevSchool,
         tch_email: email,
+        tch_salary: salary,
       }).then(() => {
-        setDobDate("");
-        setDobDate("");
-        setTeacherId("");
-        setName("");
-        setGender("");
-        setAddress("");
-        setImage("");
-        setPhoneNo("");
-        setYoe("");
-        setPrevSchool("");
-        setEmail("");
-        id = null;
+        history.push("/TAdmissionReport");
         window.scrollTo(0, 0);
       });
     } else {
@@ -146,6 +140,8 @@ function TReportform(props) {
       setDobDate(e.target.value);
     } else if (input === "doj") {
       setDojDate(e.target.value);
+    } else if (input === "salary") {
+      setSalary(e.target.value);
     }
   };
 
@@ -153,16 +149,16 @@ function TReportform(props) {
     <>
       <Navbar />
       <ToastContainer
-                  position="top-center"
-                  autoClose={5000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover
-                />
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="card height-auto">
         <div className="card-body">
           <div className="heading-layout1">
@@ -244,6 +240,18 @@ function TReportform(props) {
                   value={phoneNo}
                   onChange={(e) => handleChange(e)}
                   required
+                />
+              </div>
+              <div className="col-xl-3 col-lg-6 col-12 form-group">
+                <label>Salary</label>
+                <input
+                  type="text"
+                  placeholder="Salary"
+                  className="form-control"
+                  id="salary"
+                  name="salary"
+                  value={salary}
+                  onChange={(e) => handleChange(e)}
                 />
               </div>
               <div className="col-lg-3 col-12 form-group mg-t-30">
