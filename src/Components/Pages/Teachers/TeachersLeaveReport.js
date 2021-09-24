@@ -33,7 +33,7 @@ function TeacherLeaveReport() {
           Not Approve
         </button>
       );
-    } else if (itemStatus === "Not Approved") {
+    } else if (itemStatus === "Not Approved" || itemStatus === "Pending") {
       return (
         <button
           type="button"
@@ -83,9 +83,9 @@ function TeacherLeaveReport() {
   //   // }
   // };
 
-  const openAdForm = (id) => {
+  const openAdForm = () => {
     //console.log("result set in DATABASED ON STUDENT  : ", id);
-    history.push(`/TReportform/${id}`);
+    history.push(`/SalaryReport`);
   };
 
   useEffect(() => {
@@ -110,54 +110,18 @@ function TeacherLeaveReport() {
         <div className="card-body">
           <div className="heading-layout1">
             <div className="item-title">
-              <h3 style={{ padding: "50px" }}>Teacher Leave Report</h3>
+              <h3 style={{ padding: "50px" }}>Teacher Salary Report</h3>
               <button
-            type="button"
-            className="fw-btn-fill btn-gradient-yellow"
-            style={{ width: "100px" }}
-            onClick={() => console.log("Saman")}
-          >
-            Generate Salaries
-          </button>
-            </div>
-          </div>
-          {/*<form className="mg-b-20">
-        <div className="row gutters-8">
-            <div className="col-lg-4  col-12 form-group">
-            <input
-                type="text"
-                placeholder="Search by Teachers ID ..."
-                className="form-control"
-                id="tchId"
-                name="tchId"
-                value={tchId}
-                onChange={(e) => setTchId(e.target.value)}
-            />
-            </div>
-            <div className="col-lg-4 col-12 form-group">
-            <input
-                type="text"
-                placeholder="Search by Teachers Name ..."
-                className="form-control"
-                id="tchName"
-                name="tchName"
-                value={tchName}
-                onChange={(e) => setTchName(e.target.value)}
-            />
-            </div>
-            <div className="col-lg-2 col-12 form-group">
-            <button
                 type="button"
                 className="fw-btn-fill btn-gradient-yellow"
-                style={{ width: "100px" }}
-                onClick={() => updateRecordsAfterFilter()}
-            >
-                SEARCH
-            </button>
+                style={{ width: "100px", cursor: "pointer" }}
+                onClick={() => openAdForm()}
+              >
+                Generate Salaries
+              </button>
             </div>
-        </div>
-  </form>*/}
-          
+          </div>
+
           <div className="table-responsive">
             <div
               id="DataTables_Table_0_wrapper"
@@ -246,13 +210,8 @@ function TeacherLeaveReport() {
                       <td>{item.LEAVE_ID}</td>
                       {/* <td style={styleback}>{item.stich_name}</td> */}
 
-                      <td
-                        //onClick={() => openAdForm(item.LEAVE_ID)}
-                        style={{ cursor: "pointer" }}
-                      >
-                        {item.TCH_NAME}
-                      </td>
-                      <td>{item.REASON}</td>
+                      <td>{item.TCH_NAME}</td>
+                      <td style={{ wordBreak:"break-all"}}>{item.REASON}</td>
                       <td>{item.DOL}</td>
                       <td>{item.LEAVE_STATUS}</td>
                       {localStorage.getItem("Role") === "Admin" ? (

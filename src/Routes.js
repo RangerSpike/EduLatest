@@ -17,6 +17,7 @@ import ResponsibilityReport from "./Components/Pages/Teachers/ResponsibilityRepo
 import TReportform from "./Components/Pages/Teachers/TReportForm";
 import TeacherLeaveForm from "./Components/Pages/Teachers/TeacherLeaveForm";
 import TeacherLeaveReport from "./Components/Pages/Teachers/TeachersLeaveReport";
+import SalaryReport from "./Components/Pages/Teachers/SalaryReport";
 
 import Notice from "./Components/Pages/Notice/Notice";
 import Message from "./Components/Pages/Notice/Message";
@@ -87,6 +88,7 @@ function Routes() {
           <Route exact path="/TeacherLeaveForm" component={TeacherLeaveForm} />
           <Route exact path="/TeacherLeaveReport" component={TeacherLeaveReport} />
           <Route exact path="/TeacherDash" component={TeacherDash} />
+          <Route exact path="/SalaryReport" component={SalaryReport} />
           
           <Route exact path="/Users" component={Users} />
           <Route exact path="/UsersReport" component={UsersReport} />

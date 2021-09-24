@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import Navbar from "../../Common/Navbar/Navbar";
@@ -11,6 +11,24 @@ function Teacher() {
   const [id, setId] = useState();
   const [name, setName] = useState();
   const [reason, setReason] = useState();
+  const [TeachersLov, setTeacherLov] = useState([]);
+
+  const getTchLov = () => {
+    axios.get("http://localhost:3004/getTeacherList", {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
+    }).then((res) => {
+      //console.log(res.data);
+      setTeacherLov(res.data);
+      //console.log("result set in effect: ", res.data);
+    });
+  };
+
+  useEffect(() => {
+    getTchLov();
+  }, []);
 
   const handleChange = (e) => {
     //console.log(e.target.value);
@@ -121,13 +139,35 @@ function Teacher() {
             <div className="row">
               <div className="col-sm-3   form-group">
                 <label> ID</label>
+                <select
+                  className="select3 select2-hidden-accessible"
+                  id="id"
+                  name="id"
+                  value={id}
+                  onChange={(e) => {
+                    setId(e.target.value);
+                    //console.log(e.target.value);
+                  }}
+                  //onBlur={checkTeacher}
+                >
+                  <option value="" data-select2-id="9">
+                    Select Teacher
+                  </option>
+                  {TeachersLov.map((data) => (
+                    <option key={data.TEACHERS_ID} value={data.TEACHERS_ID}>
+                      {data.TCH_NAME}
+                    </option>
+                  ))}
+                </select>
                 <input
                   type="text"
                   placeholder="Teacher ID"
                   className="form-control"
                   id="id"
                   name="id"
+                  disabled
                   value={id}
+                  style={{ marginTop: "10px" }}
                   onChange={(e) => handleChange(e)}
                   onBlur={getTchData()}
                 />

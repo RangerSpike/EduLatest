@@ -8,6 +8,9 @@
     max-width: 1000px;
  
 } */
+/* .td{
+    word-wrap:break-all;
+} */
 .table>:not(:last-child)>:last-child>* {
     border-bottom-color: currentColor;
     background: #a8c0ff;  
