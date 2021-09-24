@@ -43,6 +43,7 @@ function ReportForm(props) {
 
   const handleChange = (e) => {
     console.log(e.target.value);
+    //console.log(e.target.files[0]);
 
     const input = e.target.name;
     if (input === "fullName") {
@@ -66,7 +67,8 @@ function ReportForm(props) {
     } else if (input === "address") {
       setAddress(e.target.value);
     } else if (input === "image") {
-      setImage(e.target.value);
+      setImage(e.target.files[0]);
+      console.log(e.target.files[0]);
     } else if (input === "father") {
       setFather(e.target.value);
     } else if (input === "fatherOccupation") {
@@ -77,22 +79,6 @@ function ReportForm(props) {
       setEmail(e.target.value);
     }
   };
-
-  // const formatChange = (date) => {
-  //   let newdate = new Date(date);
-
-  //   let crtDay = newdate.getDate();
-  //   let crtMonth = newdate.getMonth() + 1;
-  //   let crtYear = newdate.getFullYear();
-
-  //   if (crtMonth in [1, 2, 3, 4, 5, 6, 7, 8, 9]) {
-  //     newdate = crtDay + "-0" + crtMonth + "-" + crtYear;
-  //   } else {
-  //     newdate = crtDay + "-" + crtMonth + "-" + crtYear;
-  //   }
-  //   console.log(newdate);
-  //   return newdate;
-  // };
 
   useEffect(() => {
     Axios.post("http://localhost:3004/getStudentAdBasedOnId", {
@@ -195,47 +181,42 @@ function ReportForm(props) {
       data.append("image", image, image.name);
 
       // Make an AJAX upload request using Axios
-      return axios.post(BASE_URL + 'upload', data)
+      return Axios.post('http://localhost:3004/upload', data)
         .then(response => {
-         
-           response.data.imageUrl
-         
+          Axios.post("http://localhost:3004/UpdateStudent", {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+            },
+            sid: newId,
+            stdname: fullName,
+            stdgender: gender,
+            stddob: dob,
+            stddoj: doj,
+            stdrel: religion,
+            stdcast: cast,
+            stdntn: nationality,
+            stdclass: Sclass,
+            stdsec: Ssection,
+            stdroll: rollno,
+            stdbg: bloodGroup,
+            stdadd: address,
+            stdphoto: response.data.imageUrl,
+            stdpg: father,
+            stdpo: fatherOccupation,
+            stdph: phoneNo,
+            stdemail: email,
+          }).then(() => {
+            console.log("Successfully Updated");
+            history.push("/AdmissionReport");
+          });                    
         })   
-    // Once all the files are uploaded 
-    axios.all(uploaders).then(() => {
-      console.log('done');
-    }).catch(err => alert(err.message));
+    // Once all the files are uploaded   
   }
 
   const handleSubmit = () => {
     if (phoneNo.length === 10) {
-      Axios.post("http://localhost:3004/UpdateStudent", {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        },
-        sid: newId,
-        stdname: fullName,
-        stdgender: gender,
-        stddob: dob,
-        stddoj: doj,
-        stdrel: religion,
-        stdcast: cast,
-        stdntn: nationality,
-        stdclass: Sclass,
-        stdsec: Ssection,
-        stdroll: rollno,
-        stdbg: bloodGroup,
-        stdadd: address,
-        stdphoto: image,
-        stdpg: father,
-        stdpo: fatherOccupation,
-        stdph: phoneNo,
-        stdemail: email,
-      }).then(() => {
-        console.log("Successfully Updated");
-        history.push("/AdmissionReport");
-      });
+      
     } else {
       notifymin();
     }
@@ -458,11 +439,7 @@ function ReportForm(props) {
               </div>
               <div className="col-lg-3 col-12 form-group mg-t-30">
                 <label className="text-dark-medium">Upload Student Photo</label>
-                <input
-                  type="file"
-                  className="form-control-file"
-                  onChange={(e) => handleChange(e)}
-                />
+                <input type="file" name="image" onChange={(e)=>handleChange(e)} />
               </div>
               <div className="col-xl-3 col-lg-6 col-12 form-group">
                 <label htmlFor="bloodGroup">bloodgroup</label>

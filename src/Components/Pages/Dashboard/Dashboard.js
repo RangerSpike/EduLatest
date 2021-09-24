@@ -25,6 +25,44 @@ import { useEffect, useState } from "react";
 
 export default function Dashboard() {  
 
+  const [currOne, setCurrOne] = useState();
+  const [PreOne, setPreOne] = useState();
+
+  const [currTwo, setCurrTwo] = useState();
+  const [PreTwo, setPreTwo] = useState();
+
+  const [currThree, setCurrThree] = useState();
+  const [PreThree, setPreThree] = useState();
+
+  const [currFour, setCurrFour] = useState();
+  const [PreFour, setPreFour] = useState();
+
+  const [currFive, setCurrFive] = useState();
+  const [PreFive, setPreFive] = useState();
+
+  const [currSix, setCurrSix] = useState();
+  const [PreSix, setPreSix] = useState();
+
+  const [currSeven, setCurrSeven] = useState();
+  const [PreSeven, setPreSeven] = useState();
+
+  const [currEight, setCurrEight] = useState();
+  const [PreEight, setPreEight] = useState();
+
+  const [currNine, setCurrNine] = useState();
+  const [PreNine, setPreNine] = useState();
+
+  const [currTen, setCurrTen] = useState();
+  const [PreTen, setPreTen] = useState();
+
+ 
+
+  const [totalStudents, setTotalStudents] = useState();
+  const [studentsPromoted, setStudentsPromoted] = useState();
+  const [studentsFailed, setStudentsFailed] = useState();
+  const [studentsExited, setStudentsExited] = useState();
+
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -38,72 +76,135 @@ export default function Dashboard() {
 
     {
       name: "class 1",
-      uv: 4000,
-      pv: 2400,
-      amt: 500,
+      CurrentYear: [currOne],
+      PreviousYear: [PreOne],
+      amt: 10,
     },
     {
       name: "class 2",
-      uv: 3000,
-      pv: 1398,
-      amt: 1000,
+      CurrentYear: [currTwo],
+      PreviousYear: [PreTwo],
+      amt: 20,
     },
     {
       name: "class 3",
-      uv: 2000,
-      pv: 9800,
-      amt: 1500,
+      CurrentYear: [currThree],
+      PreviousYear: [PreThree],
+      amt: 30,
     },
     {
       name: "class 4",
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
+      CurrentYear: [currFour],
+      PreviousYear: [PreFour],
+      amt: 40,
     },
     {
       name: "class 5",
-      uv: 1890,
-      pv: 4800,
-      amt: 2500,
+      CurrentYear: [currFive],
+      PreviousYear: [PreFive],
+      amt: 50,
     },
     {
       name: "class 6",
-      uv: 2390,
-      pv: 3800,
-      amt: 3000,
+      CurrentYear: [currSix],
+      PreviousYear: [PreSix],
+      amt: 60,
     },
     {
       name: "class 7",
-      uv: 3490,
-      pv: 4300,
-      amt: 3500,
+      CurrentYear: [currSeven],
+      PreviousYear: [PreSeven],
+      amt: 70,
     },
     {
       name: "class 8",
-      uv: 3490,
-      pv: 4300,
-      amt: 4000,
+      CurrentYear: [currEight],
+      PreviousYear: [PreEight],
+      amt: 80,
     },
     {
       name: "class 9",
-      uv: 3490,
-      pv: 4300,
-      amt: 4500,
+      CurrentYear: [currNine],
+      PreviousYear: [PreNine],
+      amt: 90,
     },
     {
       name: "class 10",
-      uv: 3490,
-      pv: 4300,
-      amt: 5000,
+      CurrentYear: [currTen],
+      PreviousYear: [PreTen],
+      amt: 100,
     },
   ];
 
-  const data1 = [
-    { name: "Total Students", value: 10000},
-    { name: "Students Promoted", value: 9700 },
-    { name: "Students Failed", value: 300 },
-    { name: "Students Exited", value: 100 },
+  const studentPieData = [
+    { name: "Total Students", value:totalStudents },
+    { name: "Students Promoted", value:studentsPromoted},
+    { name: "Students Failed", value:studentsFailed },
+    { name: "Students Exited", value:studentsExited },
   ];
+
+  
+  const data1 = [
+    { name: "Total Students", value: 100 },
+    { name: "Students Promoted", value: 222 },
+    { name: "Students Failed", value: 333 },
+    { name: "Students Exited", value: 444 },
+  ];
+
+  const getData = () => {
+    fetch("https://db.edusoft.entema-software.com/getDashData",{
+    headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+         }
+        })
+        .then((response) => response.json())
+        .then((json) => {
+          setCurrOne(json[0].Values)
+          setPreOne(json[1].Values)
+
+          setCurrTwo(json[2].Values)
+          setPreTwo(json[3].Values)
+
+          setCurrThree(json[4].Values)
+          setPreThree(json[5].Values)
+
+          setCurrFour(json[6].Values)
+          setPreFour(json[7].Values)
+
+          setCurrFive(json[8].Values)
+          setPreFive(json[9].Values)
+
+          setCurrSix(json[10].Values)
+          setPreSix(json[11].Values)
+
+          setCurrSeven(json[12].Values)
+          setPreSeven(json[13].Values)
+
+          setCurrEight(json[14].Values)
+          setPreEight(json[15].Values)
+
+          setCurrNine(json[16].Values)
+          setPreNine(json[17].Values)
+
+          setCurrTen(json[18].Values)
+          setPreTen(json[19].Values)
+
+
+          setTotalStudents(json[20].Values)
+          setStudentsPromoted(json[22].Values)
+          setStudentsFailed(json[23].Values)
+          setStudentsExited(json[21].Values)
+
+            console.log('hi  ', json);
+          
+        });
+};
+
+      useEffect(() => {
+        getData();
+      }, []);
+
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
@@ -143,15 +244,15 @@ export default function Dashboard() {
           <Legend />
           <Line
             type="monotone"
-            dataKey="pv"
+            dataKey="PreviousYear"
             stroke="#8884d8"
             activeDot={{ r: 8 }}
           />
-          <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+          <Line type="monotone" dataKey="CurrentYear" stroke="#82ca9d" />
         </LineChart>
       </div>
 
-      <div className="chart2" style={{ marginLeft: "750px" }}>
+      <div className="chart2" style={{ marginLeft: "750px",marginTop:"-420px" }}>
 
       <Button
          style={{marginLeft:"300px"}}
@@ -180,7 +281,7 @@ export default function Dashboard() {
         <PieChart width={400} height={400}>
        
           <Pie
-            data={data1}
+            data={studentPieData}
             dataKey="value"
             cx={200}
             cy={200}
@@ -196,6 +297,8 @@ export default function Dashboard() {
           <Tooltip />
         </PieChart>
       </div>
+
+
       <div style={{ marginLeft: "40px" ,marginTop:"60px"}}>
         <BarChart
         
@@ -214,17 +317,17 @@ export default function Dashboard() {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="pv" fill="#8884d8" />
-          <Bar dataKey="uv" fill="#82ca9d" />
+          <Bar dataKey="Previous Year" fill="#8884d8" />
+          <Bar dataKey="Current Year" fill="#82ca9d" />
         </BarChart>
 
         
       </div>
 
-      <div className="chart2" style={{ marginLeft: "750px" }}>
+      <div className="chart2" style={{ marginLeft: "750px", marginTop:"-400px"}}>
 
       <Button
-         style={{marginLeft:"300px",marginTop:"40px"}}
+         style={{marginLeft:"300px",}}
         id="basic-button"
         aria-controls="basic-menu"
         aria-haspopup="true"
@@ -270,7 +373,7 @@ export default function Dashboard() {
         <div className="featuredItem" style={{ background: "lightgrey" }}>
           <span className="featuredTitle">Overall Students</span>
           <div className="featuredMoneyContainer">
-            <span className="featuredMoney">100000</span>
+            <span className="featuredMoney">{totalStudents}</span>
             <span className="featuredMoneyRate"></span>
           </div>
           <span className="featuredSub"></span>
