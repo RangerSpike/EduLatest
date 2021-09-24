@@ -19,30 +19,69 @@ function TeacherLeaveReport() {
       },
     }).then((res) => {
       setData(res.data);
-      console.log("result set in effect: ", res.data);
+      //console.log("result set in effect: ", res.data);
     });
   };
-
-  const updateRecordsAfterFilter = () => {
-    console.log("updateDuplicateVar called : ");
-    // if (tchId || tchName) {
-    //   Axios.post("http://localhost:3004/getTeacherLeaveReport", {
-    //     headers: {
-    //       "Access-Control-Allow-Origin": "*",
-    //       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-    //     },
-    //     teacherId: tchId ? tchId : `"` + `"`,
-
-    //   }).then((res) => {
-    //     setData(res.data);
-    //     setTchId("");
-    //     setTchName("");
-    //     console.log("result set in effect: ", res.data);
-    //   });
-    // } else {
-    //   getData();
-    // }
+  const theButton = (itemStatus, leaveId, tchId) => {
+    if (itemStatus === "Approved") {
+      return (
+        <button
+          type="button"
+          style={{ background: "red", borderRadius: "5px" }}
+          onClick={() => updateStatus(leaveId, tchId, "Not Approved")}
+        >
+          Not Approve
+        </button>
+      );
+    } else if (itemStatus === "Not Approved") {
+      return (
+        <button
+          type="button"
+          style={{
+            background: "#008CBA",
+            borderRadius: "5px",
+          }}
+          onClick={() => updateStatus(leaveId, tchId, "Approved")}
+        >
+          Approve
+        </button>
+      );
+    } else if (itemStatus === "LoP") {
+      return (
+        <button
+          type="button"
+          style={{
+            background: "red",
+            borderRadius: "5px",
+          }}
+          onClick={() => updateStatus(leaveId, tchId, "Not Approved")}
+        >
+          Not Approve
+        </button>
+      );
+    }
   };
+
+  // const updateRecordsAfterFilter = () => {
+  //   console.log("updateDuplicateVar called : ");
+  //   // if (tchId || tchName) {
+  //   //   Axios.post("http://localhost:3004/getTeacherLeaveReport", {
+  //   //     headers: {
+  //   //       "Access-Control-Allow-Origin": "*",
+  //   //       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+  //   //     },
+  //   //     teacherId: tchId ? tchId : `"` + `"`,
+
+  //   //   }).then((res) => {
+  //   //     setData(res.data);
+  //   //     setTchId("");
+  //   //     setTchName("");
+  //   //     console.log("result set in effect: ", res.data);
+  //   //   });
+  //   // } else {
+  //   //   getData();
+  //   // }
+  // };
 
   const openAdForm = (id) => {
     //console.log("result set in DATABASED ON STUDENT  : ", id);
@@ -53,11 +92,13 @@ function TeacherLeaveReport() {
     getData();
   }, []);
 
-  const updateStatus = (id, sts) => {
-    Axios.post("http://localhost:3004/updateLeaveStatus", {
-      teacherId: id,
+  const updateStatus = (id, tch_id, sts) => {
+    Axios.post("http://localhost:3004/getTeacherLeaveCount", {
+      teacherId: tch_id,
       sts: sts,
+      id: id,
     }).then((res) => {
+      //console.log(res.data);
       getData();
     });
   };
@@ -70,6 +111,14 @@ function TeacherLeaveReport() {
           <div className="heading-layout1">
             <div className="item-title">
               <h3 style={{ padding: "50px" }}>Teacher Leave Report</h3>
+              <button
+            type="button"
+            className="fw-btn-fill btn-gradient-yellow"
+            style={{ width: "100px" }}
+            onClick={() => console.log("Saman")}
+          >
+            Generate Salaries
+          </button>
             </div>
           </div>
           {/*<form className="mg-b-20">
@@ -108,6 +157,7 @@ function TeacherLeaveReport() {
             </div>
         </div>
   </form>*/}
+          
           <div className="table-responsive">
             <div
               id="DataTables_Table_0_wrapper"
@@ -207,35 +257,10 @@ function TeacherLeaveReport() {
                       <td>{item.LEAVE_STATUS}</td>
                       {localStorage.getItem("Role") === "Admin" ? (
                         <td>
-                          {item.LEAVE_STATUS != "Approved" ? (
-                            <button
-                              type="button"
-                              disabled={
-                                item.LEAVE_STATUS === "Approved" ? true : false
-                              }
-                              style={{
-                                background: "#008CBA",
-                                borderRadius: "5px",
-                              }}
-                              onClick={() =>
-                                updateStatus(item.TCH_ID, "Approved")
-                              }
-                            >
-                              Approve
-                            </button>
-                          ) : (
-                            <button
-                              type="button"
-                              disabled={
-                                item.LEAVE_STATUS === "Approved" ? false : true
-                              }
-                              style={{ background: "red", borderRadius: "5px" }}
-                              onClick={() =>
-                                updateStatus(item.TCH_ID, "Not Approved")
-                              }
-                            >
-                              Not Approve
-                            </button>
+                          {theButton(
+                            item.LEAVE_STATUS,
+                            item.LEAVE_ID,
+                            item.TCH_ID
                           )}
                         </td>
                       ) : null}
