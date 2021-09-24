@@ -20,7 +20,7 @@ function SalaryReport() {
       },
     }).then((res) => {
       setData(res.data);
-      console.log("result set in effect: ", res.data);
+      console.log("setData: ", res.data);
     });
   };
 
@@ -32,49 +32,10 @@ function SalaryReport() {
       },
     }).then((res) => {
       setExitData(res.data);
-      console.log("result set in effect: ", res.data);
+      console.log("setExitData ", res.data);
     });
   };
-
-  const theButton = (itemStatus, leaveId, tchId) => {
-    if (itemStatus === "Approved") {
-      return (
-        <button
-          type="button"
-          style={{ background: "red", borderRadius: "5px" }}
-          onClick={() => updateStatus(leaveId, tchId, "Not Approved")}
-        >
-          Not Approve
-        </button>
-      );
-    } else if (itemStatus === "Not Approved") {
-      return (
-        <button
-          type="button"
-          style={{
-            background: "#008CBA",
-            borderRadius: "5px",
-          }}
-          onClick={() => updateStatus(leaveId, tchId, "Approved")}
-        >
-          Approve
-        </button>
-      );
-    } else if (itemStatus === "LoP") {
-      return (
-        <button
-          type="button"
-          style={{
-            background: "red",
-            borderRadius: "5px",
-          }}
-          onClick={() => updateStatus(leaveId, tchId, "Not Approved")}
-        >
-          Not Approve
-        </button>
-      );
-    }
-  };
+  
   useEffect(() => {
     getData();
     getExitData();
@@ -90,6 +51,7 @@ function SalaryReport() {
       getData();
     });
   };
+
   const calculateSalary = (dom, leaves, salary, lopLeaves) => {
     let perDaySAlary = parseInt(salary) / dom;
     let attendedDays = dom - lopLeaves;

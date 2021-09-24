@@ -190,6 +190,23 @@ function ReportForm(props) {
     { key: "O-", value: "O-" },
   ];
 
+  const uploadImages = () => {    
+      const data = new FormData();
+      data.append("image", image, image.name);
+
+      // Make an AJAX upload request using Axios
+      return axios.post(BASE_URL + 'upload', data)
+        .then(response => {
+         
+           response.data.imageUrl
+         
+        })   
+    // Once all the files are uploaded 
+    axios.all(uploaders).then(() => {
+      console.log('done');
+    }).catch(err => alert(err.message));
+  }
+
   const handleSubmit = () => {
     if (phoneNo.length === 10) {
       Axios.post("http://localhost:3004/UpdateStudent", {
