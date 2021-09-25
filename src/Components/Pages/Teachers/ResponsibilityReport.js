@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+/* eslint-disable no-useless-concat */
 import React from "react";
 import { useState, useEffect } from "react";
 import Axios from "axios";

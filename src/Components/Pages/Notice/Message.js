@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line
+/* eslint-disable no-useless-concat */
 import React, { useState, useEffect } from "react";
 import Navbar from "../../Common/Navbar/Navbar";
 import axios from "axios";
@@ -196,7 +197,7 @@ function Message() {
                         <option value="Student">Student</option>
                       </select>
                     </div>
-                    {sendTo != "Teacher" ? (
+                    {sendTo !== "Teacher" ? (
                       <>
                         <div className="col-xl-3 col-lg-6 col-12 form-group-1">
                           <label>standard</label>

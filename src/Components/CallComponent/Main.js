@@ -1,7 +1,7 @@
-import React from "react";
-import ReactDOM from "react-dom";
-
+/* eslint-disable */
 /* eslint-disable no-unused-vars */
+/* eslint-disable no-useless-concat */
+import React from "react";
 import SubMain from "./SubMain";
 import { ContextProvider } from "./Context";
 

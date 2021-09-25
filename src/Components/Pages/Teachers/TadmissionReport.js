@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+/* eslint-disable no-useless-concat */
 import React, { useEffect, useState } from "react";
 import "../Student/AdmissionReport.css";
 import Navbar from "../../Common/Navbar/Navbar";
