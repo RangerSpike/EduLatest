@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+/* eslint-disable no-unused-vars */
 import SubMain from "./SubMain";
 import { ContextProvider } from "./Context";
 

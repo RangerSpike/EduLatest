@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import "../Student/AdmissionReport.css";
 import Navbar from "../../Common/Navbar/Navbar";

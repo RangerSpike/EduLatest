@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import "./Dashboard.css";
 import React from 'react';
 import Navbar from "../../Common/Navbar/Navbar";

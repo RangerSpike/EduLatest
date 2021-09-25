@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import "./TeacherDash.css"
 import Navbar from "../../Common/Navbar/Navbar";

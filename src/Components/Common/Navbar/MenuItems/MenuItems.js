@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const getCurrentUser = () => {
   if (localStorage.getItem("Role") === "Admin") {
     return "Admin";

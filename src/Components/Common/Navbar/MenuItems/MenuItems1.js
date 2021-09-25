@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 export const MenuItems1 = [
   {
     title: 'Addmission Form',

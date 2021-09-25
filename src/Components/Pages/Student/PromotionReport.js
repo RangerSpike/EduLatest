@@ -1,5 +1,6 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-const-assign */
 import React, { useEffect, useState } from "react";
 import "./PromotionReport.css";

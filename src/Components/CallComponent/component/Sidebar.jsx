@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React , { useState, useContext }from 'react'
 import { Button, TextField, Grid, Typography, Container, Paper } from '@material-ui/core';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
