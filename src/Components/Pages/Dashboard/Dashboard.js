@@ -1,11 +1,13 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable */
 import "./Dashboard.css";
-import React from 'react';
+import React from "react";
 import Navbar from "../../Common/Navbar/Navbar";
 import hello from "../../../assets/hello.svg";
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import axios from "axios";
+
 import {
   LineChart,
   Line,
@@ -24,8 +26,7 @@ import {
 
 import { useEffect, useState } from "react";
 
-export default function Dashboard() {  
-
+export default function Dashboard() {
   const [currOne, setCurrOne] = useState();
   const [PreOne, setPreOne] = useState();
 
@@ -56,13 +57,10 @@ export default function Dashboard() {
   const [currTen, setCurrTen] = useState();
   const [PreTen, setPreTen] = useState();
 
- 
-
   const [totalStudents, setTotalStudents] = useState();
   const [studentsPromoted, setStudentsPromoted] = useState();
   const [studentsFailed, setStudentsFailed] = useState();
   const [studentsExited, setStudentsExited] = useState();
-
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -74,7 +72,6 @@ export default function Dashboard() {
   };
 
   const data = [
-
     {
       name: "class 1",
       CurrentYear: [currOne],
@@ -138,13 +135,12 @@ export default function Dashboard() {
   ];
 
   const studentPieData = [
-    { name: "Total Students", value:totalStudents },
-    { name: "Students Promoted", value:studentsPromoted},
-    { name: "Students Failed", value:studentsFailed },
-    { name: "Students Exited", value:studentsExited },
+    { name: "Total Students", value: totalStudents },
+    { name: "Students Promoted", value: studentsPromoted },
+    { name: "Students Failed", value: studentsFailed },
+    { name: "Students Exited", value: studentsExited },
   ];
 
-  
   const data1 = [
     { name: "Total Students", value: 100 },
     { name: "Students Promoted", value: 222 },
@@ -153,59 +149,95 @@ export default function Dashboard() {
   ];
 
   const getData = () => {
-    fetch("https://db.edusoft.entema-software.com/getDashData",{
-    headers: {
+    fetch("https://db.edusoft.entema-software.com/getDashData", {
+      headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-         }
-        })
-        .then((response) => response.json())
-        .then((json) => {
-          setCurrOne(json[0].Values)
-          setPreOne(json[1].Values)
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        setCurrOne(json[0].Values);
+        setPreOne(json[1].Values);
 
-          setCurrTwo(json[2].Values)
-          setPreTwo(json[3].Values)
+        setCurrTwo(json[2].Values);
+        setPreTwo(json[3].Values);
 
-          setCurrThree(json[4].Values)
-          setPreThree(json[5].Values)
+        setCurrThree(json[4].Values);
+        setPreThree(json[5].Values);
 
-          setCurrFour(json[6].Values)
-          setPreFour(json[7].Values)
+        setCurrFour(json[6].Values);
+        setPreFour(json[7].Values);
 
-          setCurrFive(json[8].Values)
-          setPreFive(json[9].Values)
+        setCurrFive(json[8].Values);
+        setPreFive(json[9].Values);
 
-          setCurrSix(json[10].Values)
-          setPreSix(json[11].Values)
+        setCurrSix(json[10].Values);
+        setPreSix(json[11].Values);
 
-          setCurrSeven(json[12].Values)
-          setPreSeven(json[13].Values)
+        setCurrSeven(json[12].Values);
+        setPreSeven(json[13].Values);
 
-          setCurrEight(json[14].Values)
-          setPreEight(json[15].Values)
+        setCurrEight(json[14].Values);
+        setPreEight(json[15].Values);
 
-          setCurrNine(json[16].Values)
-          setPreNine(json[17].Values)
+        setCurrNine(json[16].Values);
+        setPreNine(json[17].Values);
 
-          setCurrTen(json[18].Values)
-          setPreTen(json[19].Values)
+        setCurrTen(json[18].Values);
+        setPreTen(json[19].Values);
 
+        setTotalStudents(json[20].Values);
+        setStudentsPromoted(json[22].Values);
+        setStudentsFailed(json[23].Values);
+        setStudentsExited(json[21].Values);
 
-          setTotalStudents(json[20].Values)
-          setStudentsPromoted(json[22].Values)
-          setStudentsFailed(json[23].Values)
-          setStudentsExited(json[21].Values)
+        console.log("hi  ", json);
+      });
+  };
 
-            console.log('hi  ', json);
-          
-        });
-};
+  let barDataTemplate = {
+    name: "",
+    Leaves: 0,
+    DOM: 0,
+    amt: 5,
+  }
 
-      useEffect(() => {
-        getData();
-      }, []);
+  useEffect(() => {
+    getData();
+    getTeacherData();
+  }, []);
 
+  let rows = [];
+
+  const [tchBdata, setTchBdata] = useState([]);
+
+  const getTeacherData = () => {
+    axios
+      .get("https://db.edusoft.entema-software.com/getTchLeaveMerger", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+      })
+      .then((res) => {
+        if (res.data.length > 0) {
+          console.log("setData: ", res.data);
+          for (let i = 0; i < res.data.length; i++) {
+            rows.push(barDataTemplate);
+
+            rows[i] = {
+              name: res.data[i].TCH_NAME,
+              Leaves: res.data[i].LEAVES,
+              DOM: res.data[i].DOM,
+              amt: +5,
+            };
+          }
+          console.log("Saman ke row", rows);
+          setTchBdata(rows);
+        }
+      });
+  };
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
@@ -221,12 +253,12 @@ export default function Dashboard() {
           </div>
         </div>
         <h1>
-          <text className="overallstats"  
-          style={{marginLeft:"370px"}}
-          >OVERALL STATISTICS</text>
+          <text className="overallstats" style={{ marginLeft: "370px" }}>
+            OVERALL STATISTICS
+          </text>
         </h1>
       </div>
-      <div style={{ marginLeft: "40px" ,marginTop:"60px"}}>
+      <div style={{ marginLeft: "40px", marginTop: "60px" }}>
         <LineChart
           width={500}
           height={300}
@@ -253,40 +285,41 @@ export default function Dashboard() {
         </LineChart>
       </div>
 
-      <div className="chart2" style={{ marginLeft: "750px",marginTop:"-420px" }}>
-
-      <Button
-         style={{marginLeft:"300px"}}
-        id="basic-button"
-        aria-controls="basic-menu"
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
+      <div
+        className="chart2"
+        style={{ marginLeft: "750px", marginTop: "-420px" }}
       >
-        Select Year
-      </Button>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
-        <MenuItem onClick={handleClose}>2019</MenuItem>
-        <MenuItem onClick={handleClose}>2020</MenuItem>
-        <MenuItem onClick={handleClose}>Current Year</MenuItem>
-      </Menu>
+        <Button
+          style={{ marginLeft: "300px" }}
+          id="basic-button"
+          aria-controls="basic-menu"
+          aria-haspopup="true"
+          aria-expanded={open ? "true" : undefined}
+          onClick={handleClick}
+        >
+          Select Year
+        </Button>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
+          }}
+        >
+          <MenuItem onClick={handleClose}>2019</MenuItem>
+          <MenuItem onClick={handleClose}>2020</MenuItem>
+          <MenuItem onClick={handleClose}>Current Year</MenuItem>
+        </Menu>
 
         <PieChart width={400} height={400}>
-       
           <Pie
             data={studentPieData}
             dataKey="value"
             cx={200}
             cy={200}
-            outerRadius={140} 
+            outerRadius={140}
             fill="#8884d8"
             label
           >
@@ -299,13 +332,11 @@ export default function Dashboard() {
         </PieChart>
       </div>
 
-
-      <div style={{ marginLeft: "40px" ,marginTop:"60px"}}>
+      <div style={{ marginLeft: "40px", marginTop: "60px" }}>
         <BarChart
-        
           width={500}
           height={300}
-          data={data}
+          data={tchBdata}
           margin={{
             top: 5,
             right: 30,
@@ -318,38 +349,38 @@ export default function Dashboard() {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="Previous Year" fill="#8884d8" />
-          <Bar dataKey="Current Year" fill="#82ca9d" />
+          <Bar dataKey="DOM" fill="#8884d8" />
+          <Bar dataKey="Leaves" fill="#82ca9d" />
         </BarChart>
-
-        
       </div>
 
-      <div className="chart2" style={{ marginLeft: "750px", marginTop:"-400px"}}>
-
-      <Button
-         style={{marginLeft:"300px",}}
-        id="basic-button"
-        aria-controls="basic-menu"
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
+      <div
+        className="chart2"
+        style={{ marginLeft: "750px", marginTop: "-400px" }}
       >
-        Select Year
-      </Button>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
-        <MenuItem onClick={handleClose}>2019</MenuItem>
-        <MenuItem onClick={handleClose}>2020</MenuItem>
-        <MenuItem onClick={handleClose}>Current Year</MenuItem>
-      </Menu>
+        <Button
+          style={{ marginLeft: "300px" }}
+          id="basic-button"
+          aria-controls="basic-menu"
+          aria-haspopup="true"
+          aria-expanded={open ? "true" : undefined}
+          onClick={handleClick}
+        >
+          Select Year
+        </Button>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
+          }}
+        >
+          <MenuItem onClick={handleClose}>2019</MenuItem>
+          <MenuItem onClick={handleClose}>2020</MenuItem>
+          <MenuItem onClick={handleClose}>Current Year</MenuItem>
+        </Menu>
         <PieChart width={400} height={400}>
           <Pie
             data={data1}
@@ -369,7 +400,6 @@ export default function Dashboard() {
         </PieChart>
       </div>
 
-      
       <div className="featured">
         <div className="featuredItem" style={{ background: "lightgrey" }}>
           <span className="featuredTitle">Overall Students</span>
@@ -380,9 +410,7 @@ export default function Dashboard() {
           <span className="featuredSub"></span>
         </div>
         <div className="featuredItem" style={{ background: "lightgrey" }}>
-          <span className="featuredTitle">
-            Overall Teachers
-          </span>
+          <span className="featuredTitle">Overall Teachers</span>
           <div className="featuredMoneyContainer">
             <span className="featuredMoney">8000</span>
             <span className="featuredMoneyRate"></span>
