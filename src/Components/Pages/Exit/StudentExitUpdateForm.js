@@ -1,6 +1,4 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-useless-concat */
-// eslint-disable-next-line
+/*eslint-disable*/
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";

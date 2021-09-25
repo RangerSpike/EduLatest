@@ -1,6 +1,4 @@
-// eslint-disable-next-line
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-useless-concat */
+/*eslint-disable*/
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import Navbar from "../../Common/Navbar/Navbar";

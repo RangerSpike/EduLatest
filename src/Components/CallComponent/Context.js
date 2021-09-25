@@ -83,11 +83,8 @@ const ContextProvider = ({ children }) => {
 
   const leaveCall = () => {
     setCallEnded(true);
-    //socket.on("me", (id) => setMe(id));
-    // onCallRefresh();
     connectionRef.current.destroy();
-
-    //window.location.reload();
+    window.location.reload();
   };
 
   return (

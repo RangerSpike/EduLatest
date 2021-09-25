@@ -1,6 +1,4 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-useless-concat */
+/*eslint-disable*/
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import Navbar from "../../../Components/Common/Navbar/Navbar";
