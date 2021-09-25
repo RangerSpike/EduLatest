@@ -9,9 +9,7 @@ function SalaryReport() {
   const history = useHistory();
 
   const [data, setData] = useState([]);
-  const [exitData, setExitData] = useState([]);
-  const [tchId, setTchId] = useState([]);
-  const [tchName, setTchName] = useState([]);
+  const [exitData, setExitData] = useState([]);  
 
   const getData = () => {
     Axios.get("https://db.edusoft.entema-software.com/getTchLeaveMerger", {
@@ -36,7 +34,7 @@ function SalaryReport() {
       console.log("setExitData ", res.data);
     });
   };
-  
+
   useEffect(() => {
     getData();
     getExitData();
@@ -53,21 +51,27 @@ function SalaryReport() {
     });
   };
 
-  const calculateSalary = (dom, leaves, salary, lopLeaves) => {
-    let perDaySAlary = parseInt(salary) / dom;
-    let attendedDays = dom - lopLeaves;
+  const calculateSalary = (dom, leaves, salary) => {
+    let perDaySAlary = parseInt(salary) / dom;    
+    let attendedDays = 0;
+    if (leaves > 3) {
+      attendedDays = dom - (leaves - 3);
+      //console.log("ATTENDED",attendedDays);
+    } else {
+      attendedDays = dom;
+    }
     let finalSalary = attendedDays * perDaySAlary;
 
     return finalSalary.toFixed(2);
   };
-  const calculateExitSalary=(tod,edays,sal)=>{
+  const calculateExitSalary = (tod, edays, sal) => {
     let perDaySAlary = parseInt(sal) / tod;
     let attendedDays = edays;
 
     let finalSalary = attendedDays * perDaySAlary;
 
     return finalSalary.toFixed(2);
-  }
+  };
 
   return (
     <>
@@ -199,18 +203,6 @@ function SalaryReport() {
                       aria-label="Section: activate to sort column ascending"
                       style={{ width: "54.6667px" }}
                     >
-                      Leave Status
-                    </th>
-
-                    <th
-                      className="sorting"
-                      tabIndex="0"
-                      aria-controls="DataTables_Table_0"
-                      rowSpan="1"
-                      colSpan="1"
-                      aria-label="Section: activate to sort column ascending"
-                      style={{ width: "54.6667px" }}
-                    >
                       DOM
                     </th>
                     <th
@@ -259,7 +251,7 @@ function SalaryReport() {
                 <tbody className="text-center">
                   {data.map((item) => (
                     <tr key={item.LEAVE_ID} role="row" className="odd ">
-                      <td>{item.LEAVE_ID}</td>
+                      <td>{item.TEACHERS_ID}</td>
                       {/* <td style={styleback}>{item.stich_name}</td> */}
 
                       <td
@@ -270,16 +262,14 @@ function SalaryReport() {
                       </td>
                       <td>{item.TCH_PHONE}</td>
                       <td>{item.TCH_EMAIL}</td>
-                      <td>{item.LEAVE_STATUS}</td>
                       <td>{item.DOM}</td>
-                      <td>{item.Total_Leaves}</td>
+                      <td>{item.LEAVES}</td>
                       <td>{item.TCH_SALARY}</td>
                       <td>
                         {calculateSalary(
                           item.DOM,
-                          item.Total_Leaves,
-                          item.TCH_SALARY,
-                          item.Lop_Leaves
+                          item.LEAVES,
+                          item.TCH_SALARY
                         )}
                       </td>
                     </tr>
@@ -411,7 +401,7 @@ function SalaryReport() {
                         {calculateExitSalary(
                           item.TOTAL_DAYS,
                           item.EXITED_DAYS,
-                          item.TCH_SALARY,                          
+                          item.TCH_SALARY
                         )}
                       </td>
                     </tr>
