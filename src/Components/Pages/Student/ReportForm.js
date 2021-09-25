@@ -216,7 +216,7 @@ function ReportForm(props) {
 
   const handleSubmit = () => {
     if (phoneNo.length === 10) {
-      
+      uploadImages()
     } else {
       notifymin();
     }

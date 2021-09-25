@@ -9,7 +9,6 @@ import { useHistory } from "react-router-dom";
 
 function TReportform(props) {
   let id = props.match.params.id;
-
   const history = useHistory()
 
   const [dob, setDobDate] = useState();
@@ -90,17 +89,21 @@ function TReportform(props) {
     return formatedDate;
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (phoneNo.length === 10) {
-      Axios.post("http://localhost:3004/updateTeacher", {
+  const uploadImages = () => {
+    const data = new FormData();
+    data.append("image", img, img.name);
+
+    // Make an AJAX upload request using Axios
+    return Axios.post('http://localhost:3004/upload', data)
+      .then(response => {
+        Axios.post("http://localhost:3004/updateTeacher", {
         tch_id: id,
         tch_name: name,
         tch_gender: gender,
         tch_dob: dob,
         tch_phone: phoneNo,
         tch_exp: Yoe,
-        tch_photo: img,
+        tch_photo: response.data.imageUrl,
         tch_address: address,
         tch_pus: prevSchool,
         tch_email: email,
@@ -109,6 +112,14 @@ function TReportform(props) {
         history.push("/TAdmissionReport");
         window.scrollTo(0, 0);
       });
+      })
+ 
+}
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (phoneNo.length === 10) {
+      uploadImages();
     } else {
       notifymin();
     }
@@ -125,7 +136,7 @@ function TReportform(props) {
     } else if (input === "address") {
       setAddress(e.target.value);
     } else if (input === "img") {
-      setImage(e.target.value);
+      setImage(e.target.files[0]);
     } else if (input === "phoneNo") {
       setPhoneNo(e.target.value);
     } else if (input === "Yoe") {
@@ -136,10 +147,8 @@ function TReportform(props) {
       setEmail(e.target.value);
     } else if (input === "teacherId") {
       setTeacherId(e.target.value);
-    } else if (input === "dob") {
-      setDobDate(e.target.value);
-    } else if (input === "doj") {
-      setDojDate(e.target.value);
+    } else if (input === "description") {
+      setDescription(e.target.value);
     } else if (input === "salary") {
       setSalary(e.target.value);
     }
@@ -259,7 +268,7 @@ function TReportform(props) {
                 <input
                   type="file"
                   className="form-control-file"
-                  value={img}
+                  name="img"
                   onChange={(e) => handleChange(e)}
                 />
               </div>

@@ -15,7 +15,7 @@ function Tadmissionform() {
   const [name, setName] = useState();
   const [gender, setGender] = useState();
   const [address, setAddress] = useState();
-  const [img, setImage] = useState();
+  const [img, setImage] = useState([]);
   const [phoneNo, setPhoneNo] = useState();
   const [Yoe, setYoe] = useState();
   const [prevSchool, setPrevSchool] = useState();
@@ -31,9 +31,12 @@ function Tadmissionform() {
     { key: "Other", value: "Other" },
   ];
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (phoneNo.length === 10) {
+  const uploadImages = () => {
+    const data = new FormData();
+    data.append("image", img, img.name);
+
+    // Make an AJAX upload request using Axios
+    return Axios.post("http://localhost:3004/upload", data).then((response) => {
       Axios.post("http://localhost:3004/createTeacher", {
         tch_name: name,
         tch_gender: gender,
@@ -41,7 +44,7 @@ function Tadmissionform() {
         tch_doj: setDateFormat(doj),
         tch_phone: phoneNo,
         tch_exp: Yoe,
-        tch_photo: img,
+        tch_photo: response.data.imageUrl,
         tch_address: address,
         tch_pus: prevSchool,
         tch_email: email,
@@ -63,6 +66,13 @@ function Tadmissionform() {
         setSalary("");
         window.scrollTo(0, 0);
       });
+    });
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (phoneNo.length === 10) {
+      uploadImages();
     } else {
       notifymin();
     }
@@ -79,7 +89,8 @@ function Tadmissionform() {
     } else if (input === "address") {
       setAddress(e.target.value);
     } else if (input === "img") {
-      setImage(e.target.value);
+      setImage(e.target.files[0]);
+      console.log(e.target.files[0]);
     } else if (input === "phoneNo") {
       setPhoneNo(e.target.value);
     } else if (input === "Yoe") {
@@ -229,8 +240,7 @@ function Tadmissionform() {
                 </label>
                 <input
                   type="file"
-                  className="form-control-file"
-                  value={img}
+                  name="img"
                   onChange={(e) => handleChange(e)}
                 />
               </div>
