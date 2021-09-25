@@ -33,7 +33,7 @@ function TReportform(props) {
   ];
 
   useEffect(() => {
-    Axios.post("http://localhost:3004/getTeacherAdBasedOnId", {
+    Axios.post("https://db.edusoft.entema-software.com/getTeacherAdBasedOnId", {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -94,9 +94,9 @@ function TReportform(props) {
     data.append("image", img, img.name);
 
     // Make an AJAX upload request using Axios
-    return Axios.post('http://localhost:3004/upload', data)
+    return Axios.post('https://db.edusoft.entema-software.com/upload', data)
       .then(response => {
-        Axios.post("http://localhost:3004/updateTeacher", {
+        Axios.post("https://db.edusoft.entema-software.com/updateTeacher", {
         tch_id: id,
         tch_name: name,
         tch_gender: gender,

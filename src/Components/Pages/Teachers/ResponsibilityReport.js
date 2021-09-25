@@ -19,7 +19,7 @@ function ResponsibilityReport() {
   const updateRecordsAfterFilter = () => {
     console.log("updateDuplicateVar called : ");
     if (Year && Teachers) {
-      Axios.post("http://localhost:3004/getTeacherRespReport", {
+      Axios.post("https://db.edusoft.entema-software.com/getTeacherRespReport", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -42,7 +42,7 @@ function ResponsibilityReport() {
   };
 
   const getLov = () => {
-    Axios.get("http://localhost:3004/getYearLov", {
+    Axios.get("https://db.edusoft.entema-software.com/getYearLov", {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -54,7 +54,7 @@ function ResponsibilityReport() {
   };
 
   const getTchLov = () => {
-    Axios.get("http://localhost:3004/getTeacherList", {
+    Axios.get("https://db.edusoft.entema-software.com/getTeacherList", {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",

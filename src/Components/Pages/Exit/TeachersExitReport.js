@@ -13,7 +13,7 @@ function TeachersExitReport() {
 
   const getData = () => {
     axios
-      .get("http://localhost:3004/getTeacherExit", {
+      .get("https://db.edusoft.entema-software.com/getTeacherExit", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -31,7 +31,7 @@ function TeachersExitReport() {
     console.log("updateDuplicateVar called : ");
     if (tchId || tchName) {
       axios
-        .post("http://localhost:3004/getTeacherExitFilter", {
+        .post("https://db.edusoft.entema-software.com/getTeacherExitFilter", {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",

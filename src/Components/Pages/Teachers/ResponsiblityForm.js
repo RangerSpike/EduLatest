@@ -43,7 +43,7 @@ function ResponsiblityForm() {
 
   const getLov = () => {
     axios
-      .get("http://localhost:3004/getYearLov", {
+      .get("https://db.edusoft.entema-software.com/getYearLov", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -57,7 +57,7 @@ function ResponsiblityForm() {
 
   const getSubsLov = () => {
     axios
-      .get("http://localhost:3004/getSubsLov", {
+      .get("https://db.edusoft.entema-software.com/getSubsLov", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -71,7 +71,7 @@ function ResponsiblityForm() {
 
   const getTchLov = () => {
     axios
-      .get("http://localhost:3004/getTeacherList", {
+      .get("https://db.edusoft.entema-software.com/getTeacherList", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -106,7 +106,7 @@ function ResponsiblityForm() {
     e.preventDefault();
     if (taskList.length > 0) {
       axios
-        .post("http://localhost:3004/insertRespForm", {
+        .post("https://db.edusoft.entema-software.com/insertRespForm", {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",

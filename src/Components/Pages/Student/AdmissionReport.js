@@ -13,7 +13,7 @@ function AdmissionReport() {
   const history = useHistory();
 
   const getData = () => {
-    Axios.get("http://localhost:3004/getStudentDetails", {
+    Axios.get("https://db.edusoft.entema-software.com/getStudentDetails", {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -29,7 +29,7 @@ function AdmissionReport() {
   const updateRecordsAfterFilter = () => {
     console.log("updateDuplicateVar called : ");
     if (stdID || stdName) {
-      Axios.post("http://localhost:3004/getStudentAdReport", {
+      Axios.post("https://db.edusoft.entema-software.com/getStudentAdReport", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",

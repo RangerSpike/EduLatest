@@ -41,7 +41,7 @@ function Student() {
   const getStdData = (RegNo) => {
     console.log("hi");
     axios
-      .post("http://localhost:3004/getStudentBasedOnRegno", {
+      .post("https://db.edusoft.entema-software.com/getStudentBasedOnRegno", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
@@ -112,7 +112,7 @@ function Student() {
   const onSubmit = (e) => {
     e.preventDefault();
     if (stdId && SClass && name) {
-      Axios.post("http://localhost:3004/insertStudentExit", {   
+      Axios.post("https://db.edusoft.entema-software.com/insertStudentExit", {   
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"

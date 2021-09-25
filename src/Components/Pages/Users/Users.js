@@ -88,7 +88,7 @@ function Users() {
     if (phone.length === 10) {
       if (cfmPassword === password) {
         axios
-          .post("http://localhost:3004/createUser", {
+          .post("https://db.edusoft.entema-software.com/createUser", {
             headers: {
               "Access-Control-Allow-Origin": "*",
               "Access-Control-Allow-Methods":

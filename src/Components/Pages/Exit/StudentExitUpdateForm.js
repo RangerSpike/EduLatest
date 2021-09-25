@@ -45,7 +45,7 @@ function StudentExitUpdate(props) {
 
   useEffect(() => {
     axios
-      .post("http://localhost:3004/getStudentExitOnId", {
+      .post("https://db.edusoft.entema-software.com/getStudentExitOnId", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -89,7 +89,7 @@ function StudentExitUpdate(props) {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    Axios.post("http://localhost:3004/updateStudentExit", {
+    Axios.post("https://db.edusoft.entema-software.com/updateStudentExit", {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",

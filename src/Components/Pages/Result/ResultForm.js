@@ -29,7 +29,7 @@ function ResultForm() {
   const getStdData = () => {
     console.log("hi");
     axios
-      .post("http://localhost:3004/getStudentBasedOnRegno", {
+      .post("https://db.edusoft.entema-software.com/getStudentBasedOnRegno", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods":
@@ -49,7 +49,7 @@ function ResultForm() {
 
   const getSubsLov = () => {
     axios
-      .get("http://localhost:3004/getSubsLov", {
+      .get("https://db.edusoft.entema-software.com/getSubsLov", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -196,7 +196,7 @@ function ResultForm() {
     e.preventDefault();
 
     axios
-      .post("http://localhost:3004/insertResultForm", {
+      .post("https://db.edusoft.entema-software.com/insertResultForm", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",

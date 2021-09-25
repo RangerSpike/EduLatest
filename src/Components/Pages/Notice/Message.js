@@ -25,7 +25,7 @@ function Message() {
     //console.log("getStdSecDetails is Called");
 
     axios
-      .get("http://localhost:3004/getTeacherPno", {
+      .get("https://db.edusoft.entema-software.com/getTeacherPno", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -49,7 +49,7 @@ function Message() {
 
   const getStdSecDetails = () => {
     axios
-      .post("http://localhost:3004/getFilterdStudentContactData", {
+      .post("https://db.edusoft.entema-software.com/getFilterdStudentContactData", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -115,7 +115,7 @@ function Message() {
 
   const submutData = () => {
     axios
-      .post("http://localhost:3004/insertMessage", {
+      .post("https://db.edusoft.entema-software.com/insertMessage", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -141,7 +141,7 @@ function Message() {
   const handleSumit = (e) => {
     e.preventDefault();    
     axios
-      .post("http://localhost:3004/getMessage", {
+      .post("https://db.edusoft.entema-software.com/getMessage", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",

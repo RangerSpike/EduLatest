@@ -21,7 +21,7 @@ function PromotionReport() {
   const [formValues, setFormValues] = useState([]);
 
   const updateRecords = () => {
-    Axios.post("http://localhost:3004/getStudentPermisiionList", {
+    Axios.post("https://db.edusoft.entema-software.com/getStudentPermisiionList", {
       stdClass: std,
     }).then((res) => {
       //setData(res.data);
@@ -81,7 +81,7 @@ function PromotionReport() {
 
   const onsubmitHandler = () => {
     //console.log("BAIGAN KA PR DATA", prData);
-    Axios.post("http://localhost:3004/promoteStudentBasedOnId", {
+    Axios.post("https://db.edusoft.entema-software.com/promoteStudentBasedOnId", {
       stdList: prData,
       std: std === "10" ? "Transferd" : parseInt(std) + 1,
     }).then(() => {

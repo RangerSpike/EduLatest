@@ -14,7 +14,7 @@ function StudentExitReport() {
 
   const getData = () => {
     axios
-      .get("http://localhost:3004/getStudentExit", {
+      .get("https://db.edusoft.entema-software.com/getStudentExit", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -32,7 +32,7 @@ function StudentExitReport() {
     console.log("updateDuplicateVar called : ");
     if (stdId || stdName) {
       axios
-        .post("http://localhost:3004/getStudentExitFilter", {
+        .post("https://db.edusoft.entema-software.com/getStudentExitFilter", {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",

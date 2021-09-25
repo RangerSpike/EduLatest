@@ -14,7 +14,7 @@ function Teacher() {
   const [TeachersLov, setTeacherLov] = useState([]);
 
   const getTchLov = () => {
-    axios.get("http://localhost:3004/getTeacherList", {
+    axios.get("https://db.edusoft.entema-software.com/getTeacherList", {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -49,7 +49,7 @@ function Teacher() {
 
   const getTchData = () => {
     axios
-      .post("http://localhost:3004/getTeacherBasedOnExitId", {
+      .post("https://db.edusoft.entema-software.com/getTeacherBasedOnExitId", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -101,7 +101,7 @@ function Teacher() {
     
     if (id && name) {
       axios
-        .post("http://localhost:3004/insertTeacherExit", {
+        .post("https://db.edusoft.entema-software.com/insertTeacherExit", {
           headers: {
             "Access-Control-Allow-Origin": "*",
            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",

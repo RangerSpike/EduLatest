@@ -81,7 +81,7 @@ function ReportForm(props) {
   };
 
   useEffect(() => {
-    Axios.post("http://localhost:3004/getStudentAdBasedOnId", {
+    Axios.post("https://db.edusoft.entema-software.com/getStudentAdBasedOnId", {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -181,9 +181,9 @@ function ReportForm(props) {
       data.append("image", image, image.name);
 
       // Make an AJAX upload request using Axios
-      return Axios.post('http://localhost:3004/upload', data)
+      return Axios.post('https://db.edusoft.entema-software.com/upload', data)
         .then(response => {
-          Axios.post("http://localhost:3004/UpdateStudent", {
+          Axios.post("https://db.edusoft.entema-software.com/UpdateStudent", {
             headers: {
               "Access-Control-Allow-Origin": "*",
               "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",

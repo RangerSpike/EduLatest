@@ -19,7 +19,7 @@ function TeacherLeaveForm() {
   const notifyTeacher = () => toast("Teacher Id Is Not Valid");
 
   const getTchLov = () => {
-    Axios.get("http://localhost:3004/getTeacherList", {
+    Axios.get("https://db.edusoft.entema-software.com/getTeacherList", {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -38,7 +38,7 @@ function TeacherLeaveForm() {
   const onSubmit = (e) => {
     e.preventDefault();
     if (name) {
-      Axios.post("http://localhost:3004/insertTeacherLeave", {
+      Axios.post("https://db.edusoft.entema-software.com/insertTeacherLeave", {
         teacherId: id,
         teacherName: name,
         dol: setDateFormat(dol),
@@ -72,7 +72,7 @@ function TeacherLeaveForm() {
     }
   };
   const checkTeacher = () => {
-    Axios.post("http://localhost:3004/teacherLeaveValidate", {
+    Axios.post("https://db.edusoft.entema-software.com/teacherLeaveValidate", {
       teacherId: id,
     }).then((res) => {
       //console.log("SAMAN ", res.data);

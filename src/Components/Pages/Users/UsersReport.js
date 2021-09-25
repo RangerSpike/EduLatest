@@ -15,7 +15,7 @@ function UsersReport() {
 
   const getData = () => {
     setData([]);
-    Axios.get("http://localhost:3004/getUserDetails", {
+    Axios.get("https://db.edusoft.entema-software.com/getUserDetails", {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -29,7 +29,7 @@ function UsersReport() {
   const filterData = () => {
     // let computedComments = data;
     if (userName || userId) {
-      Axios.post("http://localhost:3004/getUsersFilterList", {
+      Axios.post("https://db.edusoft.entema-software.com/getUsersFilterList", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",

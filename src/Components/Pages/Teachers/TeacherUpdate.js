@@ -15,7 +15,7 @@ function TeacherUpdate() {
   const [TeachersLov, setTeacherLov] = useState([]);
 
   const getData = () => {
-    Axios.get("http://localhost:3004/getTeacherList", {
+    Axios.get("https://db.edusoft.entema-software.com/getTeacherList", {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -29,7 +29,7 @@ function TeacherUpdate() {
   const updateRecordsAfterFilter = () => {
     console.log("updateDuplicateVar called : ");
     if (tchId || tchName) {
-      Axios.post("http://localhost:3004/getTeacherAdReport", {
+      Axios.post("https://db.edusoft.entema-software.com/getTeacherAdReport", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",

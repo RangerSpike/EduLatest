@@ -36,8 +36,8 @@ function Tadmissionform() {
     data.append("image", img, img.name);
 
     // Make an AJAX upload request using Axios
-    return Axios.post("http://localhost:3004/upload", data).then((response) => {
-      Axios.post("http://localhost:3004/createTeacher", {
+    return Axios.post("https://db.edusoft.entema-software.com/upload", data).then((response) => {
+      Axios.post("https://db.edusoft.entema-software.com/createTeacher", {
         tch_name: name,
         tch_gender: gender,
         tch_dob: setDateFormat(dob),

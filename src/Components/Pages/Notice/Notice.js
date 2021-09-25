@@ -73,7 +73,7 @@ function Notice() {
   };
   const getData = () => {
     axios
-      .get("http://localhost:3004/getNotice", {
+      .get("https://db.edusoft.entema-software.com/getNotice", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -86,7 +86,7 @@ function Notice() {
       });
 
     axios
-      .get("http://localhost:3004/getStudentPno", {
+      .get("https://db.edusoft.entema-software.com/getStudentPno", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -114,7 +114,7 @@ function Notice() {
     e.preventDefault();
 
     axios
-      .post("http://localhost:3004/insertNotice", {
+      .post("https://db.edusoft.entema-software.com/insertNotice", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -125,7 +125,7 @@ function Notice() {
       })
       .then(() => {
         axios
-          .post("http://localhost:3004/getNoticeSms", {
+          .post("https://db.edusoft.entema-software.com/getNoticeSms", {
             headers: {
               "Access-Control-Allow-Origin": "*",
               "Access-Control-Allow-Methods":

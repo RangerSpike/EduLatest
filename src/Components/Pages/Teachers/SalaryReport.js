@@ -13,7 +13,7 @@ function SalaryReport() {
   const [tchName, setTchName] = useState([]);
 
   const getData = () => {
-    Axios.get("http://localhost:3004/getTchLeaveMerger", {
+    Axios.get("https://db.edusoft.entema-software.com/getTchLeaveMerger", {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -25,7 +25,7 @@ function SalaryReport() {
   };
 
   const getExitData = () => {
-    Axios.get("http://localhost:3004/getTchExitMerger", {
+    Axios.get("https://db.edusoft.entema-software.com/getTchExitMerger", {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -42,7 +42,7 @@ function SalaryReport() {
   }, []);
 
   const updateStatus = (id, tch_id, sts) => {
-    Axios.post("http://localhost:3004/getTeacherLeaveCount", {
+    Axios.post("https://db.edusoft.entema-software.com/getTeacherLeaveCount", {
       teacherId: tch_id,
       sts: sts,
       id: id,

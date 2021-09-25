@@ -21,7 +21,7 @@ const LoginFrom = () => {
   const Login = (details) => {
     console.log(details);
 
-    Axios.post("http://localhost:3004/validateUserDetails", {
+    Axios.post("https://db.edusoft.entema-software.com/validateUserDetails", {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",

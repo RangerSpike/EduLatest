@@ -52,7 +52,7 @@ function ResponsiblityUpdateForm(props) {
 
   const getLov = () => {
     axios
-      .get("http://localhost:3004/getYearLov", {
+      .get("https://db.edusoft.entema-software.com/getYearLov", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -67,7 +67,7 @@ function ResponsiblityUpdateForm(props) {
 
   const getSubsLov = () => {
     axios
-      .get("http://localhost:3004/getSubsLov", {
+      .get("https://db.edusoft.entema-software.com/getSubsLov", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -81,7 +81,7 @@ function ResponsiblityUpdateForm(props) {
 
   const getTchLov = () => {
     axios
-      .get("http://localhost:3004/getTeacherList", {
+      .get("https://db.edusoft.entema-software.com/getTeacherList", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -98,7 +98,7 @@ function ResponsiblityUpdateForm(props) {
     console.log("updateDuplicateVar called : ");
     if (Year && Teachers) {
       axios
-        .post("http://localhost:3004/getTeacherRespReport", {
+        .post("https://db.edusoft.entema-software.com/getTeacherRespReport", {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -153,7 +153,7 @@ function ResponsiblityUpdateForm(props) {
     e.preventDefault();
     if (taskList.length > 0) {
       axios
-        .post("http://localhost:3004/updateRespForm", {
+        .post("https://db.edusoft.entema-software.com/updateRespForm", {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",

@@ -12,7 +12,7 @@ function TeacherLeaveReport() {
   const [tchName, setTchName] = useState([]);
 
   const getData = () => {
-    Axios.get("http://localhost:3004/getTeacherLeaveReport", {
+    Axios.get("https://db.edusoft.entema-software.com/getTeacherLeaveReport", {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -93,7 +93,7 @@ function TeacherLeaveReport() {
   }, []);
 
   const updateStatus = (id, tch_id, sts) => {
-    Axios.post("http://localhost:3004/getTeacherLeaveCount", {
+    Axios.post("https://db.edusoft.entema-software.com/getTeacherLeaveCount", {
       teacherId: tch_id,
       sts: sts,
       id: id,

@@ -74,7 +74,7 @@ function AdmissionForm() {
   };
 
   const checkRollNumber = () => {
-    Axios.post("http://localhost:3004/countRollNo", {
+    Axios.post("https://db.edusoft.entema-software.com/countRollNo", {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -195,11 +195,11 @@ function AdmissionForm() {
       data.append("image", image, image.name);
 
       // Make an AJAX upload request using Axios
-      return Axios.post('http://localhost:3004/upload', data)
+      return Axios.post('https://db.edusoft.entema-software.com/upload', data)
         .then(response => {
           console.log(response.data.imageUrl);
           //setImageName(response.data.imageUrl)
-          Axios.post("http://localhost:3004/createStudent", {
+          Axios.post("https://db.edusoft.entema-software.com/createStudent", {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",

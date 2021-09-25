@@ -36,7 +36,7 @@ function ResultUpdateForm(props) {
 
   const getDataBasedOnId = () => {
     axios
-      .post("http://localhost:3004/getReslutDataBasedOnId", {
+      .post("https://db.edusoft.entema-software.com/getReslutDataBasedOnId", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods":
@@ -62,7 +62,7 @@ function ResultUpdateForm(props) {
 
   const getMultiRoe = () => {
     axios
-      .post("http://localhost:3004/getReslutMULBasedOnId", {
+      .post("https://db.edusoft.entema-software.com/getReslutMULBasedOnId", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods":
@@ -91,7 +91,7 @@ function ResultUpdateForm(props) {
   const getStdData = () => {
     //console.log("hi");
     axios
-      .post("http://localhost:3004/getStudentBasedOnRegno", {
+      .post("https://db.edusoft.entema-software.com/getStudentBasedOnRegno", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods":
@@ -115,7 +115,7 @@ function ResultUpdateForm(props) {
 
   const getSubsLov = () => {
     axios
-      .get("http://localhost:3004/getSubsLov", {
+      .get("https://db.edusoft.entema-software.com/getSubsLov", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -262,7 +262,7 @@ function ResultUpdateForm(props) {
     e.preventDefault();
     if (finalResult <= 600) {
       axios
-        .post("http://localhost:3004/updateResultForm", {
+        .post("https://db.edusoft.entema-software.com/updateResultForm", {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",

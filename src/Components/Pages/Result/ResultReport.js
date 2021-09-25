@@ -15,7 +15,7 @@ function ResultReport() {
 
   const getData = () => {
     axios
-      .get("http://localhost:3004/getReslutData", {
+      .get("https://db.edusoft.entema-software.com/getReslutData", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",

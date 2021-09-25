@@ -32,7 +32,7 @@ function UserUpdateForm(props) {
 
   const getData = () => {
     axios
-      .post("http://localhost:3004/getUserDetailsBasedOnId", {
+      .post("https://db.edusoft.entema-software.com/getUserDetailsBasedOnId", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -118,7 +118,7 @@ function UserUpdateForm(props) {
     if (phone.length === 10) {
       if (password === cfmPassword) {
         axios
-          .post("http://localhost:3004/updateUser", {
+          .post("https://db.edusoft.entema-software.com/updateUser", {
             headers: {
               "Access-Control-Allow-Origin": "*",
               "Access-Control-Allow-Methods":
