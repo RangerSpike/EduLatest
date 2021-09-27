@@ -62,6 +62,9 @@ export default function Dashboard() {
   const [studentsFailed, setStudentsFailed] = useState();
   const [studentsExited, setStudentsExited] = useState();
 
+
+  const [offlineClass,setOfflineClass] = useState();
+  
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -148,6 +151,11 @@ export default function Dashboard() {
     { name: "Students Exited", value: 444 },
   ];
 
+  const data2 = [
+    { name: "offline Classes taken this month", value: offlineClass },
+   
+  ];
+
   const getData = () => {
     fetch("https://db.edusoft.entema-software.com/getDashData", {
       headers: {
@@ -206,6 +214,7 @@ export default function Dashboard() {
   useEffect(() => {
     getData();
     getTeacherData();
+    getTeacherPieData();
   }, []);
 
   let rows = [];
@@ -236,6 +245,21 @@ export default function Dashboard() {
           console.log("Saman ke row", rows);
           setTchBdata(rows);
         }
+      });
+  };
+
+  const getTeacherPieData = () => {
+    fetch("https://db.edusoft.entema-software.com/getTchClassesCount", {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      }
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        setOfflineClass(json[0].CLASSES_TAKEN)
+        console.log('oooo',json)
+ 
       });
   };
 
@@ -289,7 +313,7 @@ export default function Dashboard() {
         className="chart2"
         style={{ marginLeft: "750px", marginTop: "-420px" }}
       >
-        <Button
+        {/*<Button
           style={{ marginLeft: "300px" }}
           id="basic-button"
           aria-controls="basic-menu"
@@ -311,7 +335,7 @@ export default function Dashboard() {
           <MenuItem onClick={handleClose}>2019</MenuItem>
           <MenuItem onClick={handleClose}>2020</MenuItem>
           <MenuItem onClick={handleClose}>Current Year</MenuItem>
-        </Menu>
+        </Menu>*/}
 
         <PieChart width={400} height={400}>
           <Pie
@@ -358,7 +382,7 @@ export default function Dashboard() {
         className="chart2"
         style={{ marginLeft: "750px", marginTop: "-400px" }}
       >
-        <Button
+        {/*<Button
           style={{ marginLeft: "300px" }}
           id="basic-button"
           aria-controls="basic-menu"
@@ -380,10 +404,10 @@ export default function Dashboard() {
           <MenuItem onClick={handleClose}>2019</MenuItem>
           <MenuItem onClick={handleClose}>2020</MenuItem>
           <MenuItem onClick={handleClose}>Current Year</MenuItem>
-        </Menu>
+        </Menu>*/}
         <PieChart width={400} height={400}>
           <Pie
-            data={data1}
+            data={data2}
             dataKey="value"
             cx={200}
             cy={200}
