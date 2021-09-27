@@ -3,9 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import Navbar from "../Components/Common/Navbar/Navbar";
-import DatePicker from "react-datepicker";
 import ScrollArea from "react-scrollbar";
-import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -36,7 +34,7 @@ function CallDetails() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    Axios.post("https://db.edusoft.entema-software.com/createStudent", {
+    Axios.post("http://db.edusoft.entema-software.com/insertOnlineClass", {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -49,21 +47,6 @@ function CallDetails() {
         notifymin()   
       });
   };
-
-  const optionGender = [
-    { key: "Select Gender", value: "" },
-    { key: "Male", value: "Male" },
-    { key: "Female", value: "Female" },
-    { key: "Other", value: "Other" },
-  ];
-
-  const optionReligion = [
-    { key: "Select Religion", value: "" },
-    { key: "Hindu", value: "Hindu" },
-    { key: "Muslim", value: "Muslim" },
-    { key: "Christian", value: "Christian" },
-    { key: "Others", value: "Others" },
-  ];
 
   const optionClass = [
     { key: "Select Class", value: "" },
@@ -123,7 +106,7 @@ function CallDetails() {
           <div className="card-body">
             <div className="heading-layout1">
               <div className="item-title">
-                <h3>Add New Students</h3>
+                <h3>Online Details</h3>
               </div>
             </div>
             <form className="new-added-form" onSubmit={handleSubmit}>
