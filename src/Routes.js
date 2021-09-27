@@ -1,7 +1,6 @@
 /*eslint-disable*/
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Main from './Components/CallComponent/Main'
 
 import Dashboard from "./Components/Pages/Dashboard/Dashboard";
 import AddmissionForm from "./Components/Pages/Student/AdmissionForm";
@@ -38,14 +37,15 @@ import TeacherDash from "./Components/Pages/Dashboard/TeacherDash";
 import Users from "./Components/Pages/Users/Users";
 import UsersReport from "./Components/Pages/Users/UsersReport";
 import UserUpdateForm from "./Components/Pages/Users/UserUpdateForm";
+import CallDetails from "./CallComp/CallDetails";
 
 function Routes() {
   return (
     <>
       <Router>
-        <Switch>
-        <Route exact path="/EduMeet" component={Main} />
+        <Switch>        
           <Route exact path="/Dashboard" component={Dashboard} />
+          <Route exact path="/CallDetails" component={CallDetails} />
 
           <Route exact path="/AddmissionForm" component={AddmissionForm} />
           <Route exact path="/AdmissionReport" component={AdmissionReport} />

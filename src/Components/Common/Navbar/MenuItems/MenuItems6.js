@@ -11,7 +11,7 @@ export const MenuItems6 = [
     },
     {
       title: 'Video Classes',
-      path: '/EduMeet',
+      path: '/CallDetails',
       cName: 'heropanti-link'
     },
   ];
