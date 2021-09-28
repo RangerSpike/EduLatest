@@ -6,16 +6,16 @@ import Navbar from "../Components/Common/Navbar/Navbar";
 import ScrollArea from "react-scrollbar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useHistory } from "react-router-dom";
 
 function CallDetails() {
-
+  const history = useHistory() 
   const [TeachersLov, setTeacherLov] = useState([]);
   const [Teachers, setTeacher] = useState("");
   const [Sclass, setSclass] = useState();
   const [Ssection, setSSection] = useState();
 
-
-  const notifymin = () => toast("Submitted")
+  const notifymin = () => toast("Submitted");
 
   const handleChange = (e) => {
     console.log(e.target.value);
@@ -24,28 +24,28 @@ function CallDetails() {
     const input = e.target.name;
     if (input === "Sclass") {
       setSclass(e.target.value);
-    }  else if (input === "Ssection") {
+    } else if (input === "Ssection") {
       setSSection(e.target.value);
     } else if (input === "Teachers") {
       setTeacher(e.target.value);
-    }   
+    }
   };
 
-
   const handleSubmit = (e) => {
-    e.preventDefault();
-    Axios.post("http://db.edusoft.entema-software.com/insertOnlineClass", {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        },  
-        stdclass: Sclass,
-        stdsec: Ssection,
-        Teachers:Teachers,
-      }).then(() => {
-        console.log("Successfully Created");
-        notifymin()   
-      });
+    history.push('/EduCallLoginPage');
+    // e.preventDefault();
+    // Axios.post("http://db.edusoft.entema-software.com/insertOnlineClass", {
+    //     headers: {
+    //       "Access-Control-Allow-Origin": "*",
+    //       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+    //     },
+    //     stdclass: Sclass,
+    //     stdsec: Ssection,
+    //     Teachers:Teachers,
+    //   }).then(() => {
+    //     console.log("Successfully Created");
+    //     notifymin()
+    //   });
   };
 
   const optionClass = [
@@ -85,7 +85,7 @@ function CallDetails() {
 
   useEffect(() => {
     getTchLov();
-  }, []); 
+  }, []);
 
   return (
     <>
@@ -111,7 +111,10 @@ function CallDetails() {
             </div>
             <form className="new-added-form" onSubmit={handleSubmit}>
               <div className="row">
-                <div className="col-xl-3 col-lg-6 col-12 form-group-1" style={{marginTop:'15px',marginLeft:'40px'}}>
+                <div
+                  className="col-xl-3 col-lg-6 col-12 form-group-1"
+                  style={{ marginTop: "15px", marginLeft: "40px" }}
+                >
                   <label>Teachers</label>
                   <select
                     className="select3 select2-hidden-accessible"
@@ -177,7 +180,7 @@ function CallDetails() {
                       );
                     })}
                   </select>
-                </div>                
+                </div>
                 <div className="col-12 form-group mg-t-8">
                   <button
                     type="submit"

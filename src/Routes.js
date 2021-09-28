@@ -26,26 +26,36 @@ import ResultReport from "./Components/Pages/Result/ResultReport";
 import ResultUpdateForm from "./Components/Pages/Result/ResultUpdateForm";
 
 import Student from "./Components/Pages/Exit/Student";
-import StudentExitUpdate from './Components/Pages/Exit/StudentExitUpdateForm';
+import StudentExitUpdate from "./Components/Pages/Exit/StudentExitUpdateForm";
 import StdERep from "./Components/Pages/Exit/StudentExitReport";
 
 import Teacher from "./Components/Pages/Exit/Teacher";
 import TeachERep from "./Components/Pages/Exit/TeachersExitReport";
-import TeacherExitUpdate from './Components/Pages/Exit/TeacherExitUpdate';
+import TeacherExitUpdate from "./Components/Pages/Exit/TeacherExitUpdate";
 import TeacherDash from "./Components/Pages/Dashboard/TeacherDash";
 
 import Users from "./Components/Pages/Users/Users";
 import UsersReport from "./Components/Pages/Users/UsersReport";
 import UserUpdateForm from "./Components/Pages/Users/UserUpdateForm";
 import CallDetails from "./CallComp/CallDetails";
+import EduCallDashboard from "./CallComp/Dashboard/Dashboard";
+import EduCallLoginPage from "./CallComp/LoginPage/LoginPage";
 
 function Routes() {
   return (
     <>
       <Router>
-        <Switch>        
+        <Switch>
           <Route exact path="/Dashboard" component={Dashboard} />
           <Route exact path="/CallDetails" component={CallDetails} />
+
+          <Route path="/EduCallDashboard">
+            <EduCallDashboard />
+          </Route>
+
+          <Route path="/EduCallLoginPage">
+            <EduCallLoginPage />
+          </Route>
 
           <Route exact path="/AddmissionForm" component={AddmissionForm} />
           <Route exact path="/AdmissionReport" component={AdmissionReport} />
@@ -76,20 +86,36 @@ function Routes() {
 
           <Route exact path="/ResultForm" component={ResultForm} />
           <Route exact path="/ResultReport" component={ResultReport} />
-          <Route exact path="/ResultUpdateForm/:id" component={ResultUpdateForm} />
+          <Route
+            exact
+            path="/ResultUpdateForm/:id"
+            component={ResultUpdateForm}
+          />
 
           <Route exact path="/Student" component={Student} />
-          <Route exact path="/StudentExitUpdate/:id" component={StudentExitUpdate} />
+          <Route
+            exact
+            path="/StudentExitUpdate/:id"
+            component={StudentExitUpdate}
+          />
           <Route exact path="/StdERep" component={StdERep} />
 
           <Route exact path="/Teacher" component={Teacher} />
-          <Route exact path="/TeacherExitUpdate/:id" component={TeacherExitUpdate} />
+          <Route
+            exact
+            path="/TeacherExitUpdate/:id"
+            component={TeacherExitUpdate}
+          />
           <Route exact path="/TeachERep" component={TeachERep} />
           <Route exact path="/TeacherLeaveForm" component={TeacherLeaveForm} />
-          <Route exact path="/TeacherLeaveReport" component={TeacherLeaveReport} />
+          <Route
+            exact
+            path="/TeacherLeaveReport"
+            component={TeacherLeaveReport}
+          />
           <Route exact path="/TeacherDash" component={TeacherDash} />
           <Route exact path="/SalaryReport" component={SalaryReport} />
-          
+
           <Route exact path="/Users" component={Users} />
           <Route exact path="/UsersReport" component={UsersReport} />
           <Route exact path="/UserUpdate/:id" component={UserUpdateForm} />
