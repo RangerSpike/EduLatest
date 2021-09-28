@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import * as wss from '../wssConnection/wssConnection';
 import store from '../../store/store';
 import { setGroupCallActive, setCallState, callStates, setGroupCallIncomingStreams, clearGroupCallData } from '../../store/actions/callActions';
@@ -10,7 +11,7 @@ let groupCallHost = false;
 
 export const connectWithMyPeer = () => {
 
-  myPeer =  new window.Peer();
+  //myPeer =  new window.Peer();
   myPeer = new Peer(undefined, {
     path: '/peerjs',
     host: 'db.edusoft.entema-software.com',
