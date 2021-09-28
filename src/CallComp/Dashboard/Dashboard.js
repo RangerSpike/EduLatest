@@ -34,7 +34,7 @@ const EduCallDashboard = ({ username, callState }) => {
           <ActiveUsersList />
         </div>
         <div className='dashboard_logo_container'>
-          <img className='dashboard_logo_image' src={logo} alt='logo' />
+          <img className='dashboard_logo_image' src={logo} alt='logo' style={{marginTop:'-30px'}}/>
         </div>
       </div>
       <footer> <small>&#9400; Copyright 2021, MadCap Solutions</small> </footer>

@@ -27,7 +27,7 @@ const EduCallLoginPage = ({ saveUsername }) => {
           <img className='login-page_logo_image' src={logo} alt='VideoTalker' />
         </div>
         <div className='login-page_title_container'>
-          <h2>VIDEO CHAT</h2>
+          <h2 style={{color:'#fff'}}>VIDEO CHAT</h2>
         </div>
         <UsernameInput username={username} setUsername={setUsername} />
         <SubmitButton handleSubmitButtonPressed={handleSubmitButtonPressed} />
