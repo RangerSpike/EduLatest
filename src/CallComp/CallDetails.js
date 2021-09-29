@@ -12,6 +12,7 @@ function CallDetails() {
   const history = useHistory() 
   const [TeachersLov, setTeacherLov] = useState([]);
   const [Teachers, setTeacher] = useState("");
+  const [timings, setTimings] = useState("");
   const [Sclass, setSclass] = useState();
   const [Ssection, setSSection] = useState();
 
@@ -28,24 +29,28 @@ function CallDetails() {
       setSSection(e.target.value);
     } else if (input === "Teachers") {
       setTeacher(e.target.value);
+    } else if (input === "timings") {
+      setTimings(e.target.value);
     }
   };
 
   const handleSubmit = (e) => {
-    history.push('/EduCallLoginPage');
-    // e.preventDefault();
-    // Axios.post("http://db.edusoft.entema-software.com/insertOnlineClass", {
-    //     headers: {
-    //       "Access-Control-Allow-Origin": "*",
-    //       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-    //     },
-    //     stdclass: Sclass,
-    //     stdsec: Ssection,
-    //     Teachers:Teachers,
-    //   }).then(() => {
-    //     console.log("Successfully Created");
-    //     notifymin()
-    //   });
+    
+    e.preventDefault();
+    Axios.post("http://localhost:3004/insertOnlineClass", {
+        header: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+        stdclass: Sclass,
+        stdsec: Ssection,
+        Teachers:Teachers,
+        timings:timings,
+      }).then(() => {
+        console.log("Successfully Created");
+        //history.push('/EduCallLoginPage');
+        notifymin()
+      });
   };
 
   const optionClass = [
@@ -180,6 +185,18 @@ function CallDetails() {
                       );
                     })}
                   </select>
+                </div>
+                <div className="col-sm-3   form-group">
+                  <label>Timings</label>
+                  <input
+                    type="text"
+                    placeholder=""
+                    className="form-control"
+                    id="timings"
+                    name="timings"
+                    value={timings}                    
+                    onChange={(e) => handleChange(e)}
+                  />
                 </div>
                 <div className="col-12 form-group mg-t-8">
                   <button

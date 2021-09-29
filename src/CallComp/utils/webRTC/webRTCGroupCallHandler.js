@@ -2,7 +2,7 @@
 import * as wss from '../wssConnection/wssConnection';
 import store from '../../store/store';
 import { setGroupCallActive, setCallState, callStates, setGroupCallIncomingStreams, clearGroupCallData } from '../../store/actions/callActions';
-import Peer from "peerjs";
+//import Peer from "peerjs";
 
 let myPeer;
 let myPeerId;
