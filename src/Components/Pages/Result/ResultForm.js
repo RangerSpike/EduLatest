@@ -29,7 +29,7 @@ function ResultForm() {
   const [resultList, setResultList] = useState([]);
 
   const getStdData = () => {
-    console.log("hi");
+    //console.log("hi");
     axios
       .post("https://db.edusoft.entema-software.com/getStudentBasedOnRegno", {
         headers: {
@@ -41,7 +41,7 @@ function ResultForm() {
       })
       .then((res) => {
         if (res.data.length > 0) {
-          console.log(res.data);
+          //console.log(res.data);
           setStdId(res.data[0].STUDENT_ID);
           setFullName(res.data[0].STD_NAME);
           setSclass(res.data[0].STD_CLASS);
@@ -97,7 +97,7 @@ function ResultForm() {
 
     final = parseInt(iA) + parseInt(ext);
     percentage = (parseInt(final) / parseInt(CalulatedFor)) * 100;
-    console.log(percentage);
+    //console.log(percentage);
 
     if (percentage < 35) {
       Result = "Fail";
@@ -145,7 +145,7 @@ function ResultForm() {
   };
 
   const handleCalculation = () => {
-    console.log(resultList);
+    //console.log(resultList);
     let iA = 0;
     let ext = 0;
     let final = 0;
@@ -167,7 +167,7 @@ function ResultForm() {
 
     final = parseInt(iA) + parseInt(ext);
     percentage = (parseInt(final) / parseInt(CalulatedFor)) * 100;
-    console.log(percentage);
+    //console.log(percentage);
 
     if (percentage < 35) {
       Result = "Fail";
@@ -185,16 +185,16 @@ function ResultForm() {
       setResult(Result);
     }
 
-    console.log("percenage:", percentage);
+    //console.log("percenage:", percentage);
   };
 
   const handleSubmit = (e) => {
-    console.log(
-      "Submit Started" + "-" + CalulatedFor + "-" + RegNo,
-      +"-" + fullName + "-" + Sclass
-    );
+    // console.log(
+    //   "Submit Started" + "-" + CalulatedFor + "-" + RegNo,
+    //   +"-" + fullName + "-" + Sclass
+    // );
 
-    console.log("Submit Started", resultList);
+    //console.log("Submit Started", resultList);
     e.preventDefault();
 
     axios
@@ -226,7 +226,7 @@ function ResultForm() {
         setFinalResult("");
         setPercentage("");
         setResult("");
-        console.log("Values Submitted");
+        //console.log("Values Submitted");
       });
   };
   return (

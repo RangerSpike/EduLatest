@@ -40,7 +40,7 @@ function Student() {
   };
 
   const getStdData = (RegNo) => {
-    console.log("hi");
+    //console.log("hi");
     axios
       .post("https://db.edusoft.entema-software.com/getStudentBasedOnRegno", {
         headers: {
@@ -127,7 +127,7 @@ function Student() {
         stdReason: reason,
         stdSts: stdSts,
       }).then(() => {
-        console.log("Successfully Created");
+        //console.log("Successfully Created");
         setDojDate("");
         //setDoeDate();
         setId("");

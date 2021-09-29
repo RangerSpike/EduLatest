@@ -53,7 +53,7 @@ function StudentExitUpdate(props) {
       })
       .then((res) => {
         if (res.data.length > 0) {
-          console.log(res.data);
+         // console.log(res.data);
           setId(res.data[0].STUDENTS_ID);
           setName(res.data[0].STD_NAME);
           setSClass(res.data[0].STD_CLASS);
@@ -97,7 +97,7 @@ function StudentExitUpdate(props) {
       stdCharC: cci,
       stdReason: reason,
     }).then(() => {
-      console.log("Successfully Created");
+      //console.log("Successfully Created");
       history.push("/StdERep");
     });
   };

@@ -21,12 +21,12 @@ function TadmissionReport() {
       },
     }).then((res) => {
       setData(res.data);
-      console.log("result set in effect: ", res.data);
+      //console.log("result set in effect: ", res.data);
     });
   };
 
   const updateRecordsAfterFilter = () => {
-    console.log("updateDuplicateVar called : ");
+    //console.log("updateDuplicateVar called : ");
     if (tchId || tchName) {
       Axios.post("https://db.edusoft.entema-software.com/getTeacherAdReport", {
         headers: {
@@ -39,7 +39,7 @@ function TadmissionReport() {
         setData(res.data);
         setTchId("");
         setTchName("");
-        console.log("result set in effect: ", res.data);
+        //console.log("result set in effect: ", res.data);
       });
     } else {
       getData();

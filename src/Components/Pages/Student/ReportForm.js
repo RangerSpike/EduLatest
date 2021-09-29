@@ -42,7 +42,7 @@ function ReportForm(props) {
   const notifymin = () =>toast("Min 10 Charecters Required For Phone Number");
 
   const handleChange = (e) => {
-    console.log(e.target.value);
+    //console.log(e.target.value);
     //console.log(e.target.files[0]);
 
     const input = e.target.name;
@@ -68,7 +68,7 @@ function ReportForm(props) {
       setAddress(e.target.value);
     } else if (input === "image") {
       setImage(e.target.files[0]);
-      console.log(e.target.files[0]);
+     // console.log(e.target.files[0]);
     } else if (input === "father") {
       setFather(e.target.value);
     } else if (input === "fatherOccupation") {
@@ -111,7 +111,7 @@ function ReportForm(props) {
 
       // setNewDate(new Date(res.data[0].STD_DOJ));
       // console.log("doj : "+ newDate);
-      console.log("TEST FROM FORMFORMFORM ", initialValues);
+      //console.log("TEST FROM FORMFORMFORM ", initialValues);
     });
   }, []);
 
@@ -207,7 +207,7 @@ function ReportForm(props) {
             stdph: phoneNo,
             stdemail: email,
           }).then(() => {
-            console.log("Successfully Updated");
+            //console.log("Successfully Updated");
             history.push("/AdmissionReport");
           });                    
         })   

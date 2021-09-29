@@ -24,14 +24,14 @@ function StudentExitReport() {
       })
       .then((res) => {
         if (res.data.length > 0) {
-          console.log(res.data);
+          //console.log(res.data);
           setData(res.data);
         }
       });
   };
 
   const updateRecordsAfterFilter = () => {
-    console.log("updateDuplicateVar called : ");
+    //console.log("updateDuplicateVar called : ");
     if (stdId || stdName) {
       axios
         .post("https://db.edusoft.entema-software.com/getStudentExitFilter", {
@@ -44,7 +44,7 @@ function StudentExitReport() {
         })
         .then((res) => {
           setData(res.data);
-          console.log("result set in effect: ", res.data);
+          //console.log("result set in effect: ", res.data);
         });
     } else {
       getData();
@@ -52,7 +52,7 @@ function StudentExitReport() {
   };
 
   const openAdForm = (id) => {
-    console.log(id);
+   // console.log(id);
     history.push(`/StudentExitUpdate/${id}`);
   };
 

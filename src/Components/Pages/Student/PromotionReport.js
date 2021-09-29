@@ -73,7 +73,7 @@ function PromotionReport() {
   const updatPr = () => {
     for (let i = 0; i < formValues.length; i++) {
       if (formValues[i].select) {
-        console.log(formValues[i].studentId);
+        //console.log(formValues[i].studentId);
         x.push(formValues[i].studentId);
       }
     }

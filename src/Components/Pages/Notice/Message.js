@@ -154,7 +154,7 @@ function Message() {
         console.log("SMS SENT");
         submutData();
       });
-    console.log("HANDLE SUB");
+    //console.log("HANDLE SUB");
   };
   return (
     <>

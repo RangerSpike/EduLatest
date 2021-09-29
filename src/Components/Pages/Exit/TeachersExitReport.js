@@ -23,14 +23,14 @@ function TeachersExitReport() {
       })
       .then((res) => {
         if (res.data.length > 0) {
-          console.log(res.data);
+          //console.log(res.data);
           setData(res.data);
         }
       });
   };
 
   const updateRecordsAfterFilter = () => {
-    console.log("updateDuplicateVar called : ");
+   // console.log("updateDuplicateVar called : ");
     if (tchId || tchName) {
       axios
         .post("https://db.edusoft.entema-software.com/getTeacherExitFilter", {
@@ -43,7 +43,7 @@ function TeachersExitReport() {
         })
         .then((res) => {
           setData(res.data);
-          console.log("result set in effect: ", res.data);
+          //console.log("result set in effect: ", res.data);
         });
     } else {
       getData();
@@ -51,7 +51,7 @@ function TeachersExitReport() {
   };
 
   const openAdForm = (id) => {
-    console.log(id);
+    //console.log(id);
     history.push(`/TeacherExitUpdate/${id}`);
   };
 

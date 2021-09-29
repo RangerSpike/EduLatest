@@ -39,6 +39,7 @@ const LoginFrom = () => {
       ) {
         //console.log("Logged in");
         history.push("/Dashboard");
+        window.location.reload();
         setUser({
           userName: details.userName,
         });

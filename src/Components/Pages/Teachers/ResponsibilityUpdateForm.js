@@ -96,7 +96,7 @@ function ResponsiblityUpdateForm(props) {
   };
 
   const getRecordsAfterFilter = () => {
-    console.log("updateDuplicateVar called : ");
+    //console.log("updateDuplicateVar called : ");
     if (Year && Teachers) {
       axios
         .post("https://db.edusoft.entema-software.com/getTeacherRespReport", {
@@ -150,7 +150,7 @@ function ResponsiblityUpdateForm(props) {
   };
 
   const handleSubmit = (e) => {
-    console.log("Submit Started", taskList);
+    //console.log("Submit Started", taskList);
     e.preventDefault();
     if (taskList.length > 0) {
       axios
@@ -170,7 +170,7 @@ function ResponsiblityUpdateForm(props) {
           setYearLov([]);
           setTeacher("");
           setTeacherLov([]);
-          console.log("Values Updated");
+          //console.log("Values Updated");
         });
     } else {
       notifyrow();
@@ -215,7 +215,7 @@ function ResponsiblityUpdateForm(props) {
                   value={Year}
                   onChange={(e) => {
                     setYear(e.target.value);
-                    console.log(e.target.value);
+                    //console.log(e.target.value);
                   }}
                 >
                   <option value="" data-select2-id="9">
@@ -239,7 +239,7 @@ function ResponsiblityUpdateForm(props) {
                   value={Teachers}
                   onChange={(e) => {
                     setTeacher(e.target.value);
-                    console.log(e.target.value);
+                    //console.log(e.target.value);
                   }}
                 >
                   <option value="" data-select2-id="9">

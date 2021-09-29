@@ -61,8 +61,8 @@ export default function Dashboard() {
   const [studentsPromoted, setStudentsPromoted] = useState();
   const [studentsFailed, setStudentsFailed] = useState();
   const [studentsExited, setStudentsExited] = useState();
-
-
+  
+  const [onlineCount,setOnlineCount]=useState()
   const [offlineClass,setOfflineClass] = useState();
   
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -142,18 +142,11 @@ export default function Dashboard() {
     { name: "Students Promoted", value: studentsPromoted },
     { name: "Students Failed", value: studentsFailed },
     { name: "Students Exited", value: studentsExited },
-  ];
-
-  const data1 = [
-    { name: "Total Students", value: 100 },
-    { name: "Students Promoted", value: 222 },
-    { name: "Students Failed", value: 333 },
-    { name: "Students Exited", value: 444 },
-  ];
+  ]; 
 
   const data2 = [
-    { name: "offline Classes taken this month", value: offlineClass },
-   
+    { name: "Offline Classes taken this month", value: offlineClass },
+    { name: "Onlice Classes taken this month", value: onlineCount },   
   ];
 
   const getData = () => {
@@ -200,7 +193,7 @@ export default function Dashboard() {
         setStudentsFailed(json[23].Values);
         setStudentsExited(json[21].Values);
 
-        console.log("hi  ", json);
+       // console.log("hi  ", json);
       });
   };
 
@@ -220,6 +213,7 @@ export default function Dashboard() {
   let rows = [];
 
   const [tchBdata, setTchBdata] = useState([]);
+  const [overAllTeacher, setOverAllTeacher] = useState([]);
 
   const getTeacherData = () => {
     axios
@@ -231,7 +225,8 @@ export default function Dashboard() {
       })
       .then((res) => {
         if (res.data.length > 0) {
-          console.log("setData: ", res.data);
+          //console.log("teachersLengt: ", res.data);
+          setOverAllTeacher(res.data.length)
           for (let i = 0; i < res.data.length; i++) {
             rows.push(barDataTemplate);
 
@@ -242,7 +237,7 @@ export default function Dashboard() {
               amt: +5,
             };
           }
-          console.log("Saman ke row", rows);
+          //console.log("Saman ke row", rows);
           setTchBdata(rows);
         }
       });
@@ -258,10 +253,29 @@ export default function Dashboard() {
       .then((response) => response.json())
       .then((json) => {
         setOfflineClass(json[0].CLASSES_TAKEN)
-        console.log('oooo',json)
+       // console.log('oooo',json)
  
       });
   };
+
+  const getOnlineClassCount = () => {
+    fetch("https://db.edusoft.entema-software.com/getOnlineClassCount", {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      }
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        setOnlineCount(json[0].ONLINE_CLASSES_TAKEN)
+        //console.log('oooo',json)
+ 
+      });
+  };
+
+  useEffect(()=>{
+    getOnlineClassCount()
+  },[])
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
@@ -436,7 +450,7 @@ export default function Dashboard() {
         <div className="featuredItem" style={{ background: "lightgrey" }}>
           <span className="featuredTitle">Overall Teachers</span>
           <div className="featuredMoneyContainer">
-            <span className="featuredMoney">8000</span>
+            <span className="featuredMoney">{overAllTeacher}</span>
             <span className="featuredMoneyRate"></span>
           </div>
           <span className="featuredSub"></span>
@@ -444,7 +458,7 @@ export default function Dashboard() {
         <div className="featuredItem" style={{ background: "lightgrey" }}>
           <span className="featuredTitle">Yearly Expense</span>
           <div className="featuredMoneyContainer">
-            <span className="featuredMoney">2000</span>
+            <span className="featuredMoney">120,000</span>
             <span className="featuredMoneyRate"></span>
           </div>
           <span className="featuredSub"></span>
@@ -453,7 +467,7 @@ export default function Dashboard() {
         <div className="featuredItem" style={{ background: "lightgrey" }}>
           <span className="featuredTitle">Yearly Income</span>
           <div className="featuredMoneyContainer">
-            <span className="featuredMoney">2000</span>
+            <span className="featuredMoney">12,000</span>
             <span className="featuredMoneyRate"></span>
           </div>
           <span className="featuredSub"></span>

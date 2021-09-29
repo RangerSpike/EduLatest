@@ -19,7 +19,7 @@ function ResponsibilityReport() {
   const [TeachersLov, setTeacherLov] = useState([]);  
 
   const updateRecordsAfterFilter = () => {
-    console.log("updateDuplicateVar called : ");
+    //console.log("updateDuplicateVar called : ");
     if (Year && Teachers) {
       Axios.post("https://db.edusoft.entema-software.com/getTeacherRespReport", {
         headers: {
@@ -31,7 +31,7 @@ function ResponsibilityReport() {
       }).then((res) => {
         setData(res.data);        
         // setTchName("")
-        console.log("result set in effect: ", res.data);
+        //console.log("result set in effect: ", res.data);
       });
     } else {
       //getData();
@@ -96,7 +96,7 @@ function ResponsibilityReport() {
                     value={Year}
                     onChange={(e) => {
                       setYear(e.target.value);
-                      console.log(e.target.value);
+                      //console.log(e.target.value);
                     }}
                   >
                     <option value="" data-select2-id="9">
@@ -119,7 +119,7 @@ function ResponsibilityReport() {
                     value={Teachers}
                     onChange={(e) => {
                       setTeacher(e.target.value);
-                      console.log(e.target.value);
+                      //console.log(e.target.value);
                     }}
                   >
                     <option value="" data-select2-id="9">

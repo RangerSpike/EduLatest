@@ -28,7 +28,7 @@ function AdmissionReport() {
   };
 
   const updateRecordsAfterFilter = () => {
-    console.log("updateDuplicateVar called : ");
+    //console.log("updateDuplicateVar called : ");
     if (stdID || stdName) {
       Axios.post("https://db.edusoft.entema-software.com/getStudentAdReport", {
         headers: {
@@ -39,7 +39,7 @@ function AdmissionReport() {
         student_name: stdName ? stdName : `"` + `"`,
       }).then((res) => {
         setData(res.data);
-        console.log("result set in effect: ", res.data);
+        //console.log("result set in effect: ", res.data);
       });
     }else{
       getData();

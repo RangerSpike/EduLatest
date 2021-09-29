@@ -116,7 +116,7 @@ function Teacher() {
           tchSts: "Transferd",
         })
         .then(() => {
-          console.log("Successfully Created");
+          //console.log("Successfully Created");
           setDojDate("");
           setDoeDate();
           setId("");

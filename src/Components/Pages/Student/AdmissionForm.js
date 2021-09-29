@@ -36,7 +36,7 @@ function AdmissionForm() {
   const notifyRoll = () => toast("Roll Number Already Exist!!");
 
   const handleChange = (e) => {
-    console.log(e.target.value);
+    //console.log(e.target.value);
     //console.log(e.target.files[0]);
 
     const input = e.target.name;
@@ -62,7 +62,7 @@ function AdmissionForm() {
       setAddress(e.target.value);
     } else if (input === "image") {
       setImage(e.target.files[0]);
-      console.log(e.target.files[0]);
+      //console.log(e.target.files[0]);
     } else if (input === "father") {
       setFather(e.target.value);
     } else if (input === "fatherOccupation") {
@@ -121,11 +121,11 @@ function AdmissionForm() {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();    
+    e.preventDefault();
     if (phoneNo.length === 10) {
-      uploadImages()        
-      } else {
-        notifymin();
+      uploadImages();
+    } else {
+      notifymin();
     }
   };
 
@@ -190,67 +190,63 @@ function AdmissionForm() {
     { key: "O-", value: "O-" },
   ];
 
-  const uploadImages = () => {    
-      const data = new FormData();
-      console.log(image.name);
-      data.append("image", image, image.name);
+  const uploadImages = () => {
+    const data = new FormData();
+    //console.log(image.name);
+    data.append("image", image, image.name);
 
-      // Make an AJAX upload request using Axios
-      return Axios.post('https://db.edusoft.entema-software.com/upload', data)
-        .then(response => {
-          console.log(response.data.imageUrl);
-          //setImageName(response.data.imageUrl)
-          Axios.post("https://db.edusoft.entema-software.com/createStudent", {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-          },
-          stdname: fullName,
-          stdgender: gender,
-          stddob: setDateFormat(dob),
-          stddoj: setDateFormat(doj),
-          stdrel: religion,
-          stdcast: cast,
-          stdntn: nationality,
-          stdclass: Sclass,
-          stdsec: Ssection,
-          stdroll: rollno,
-          stdbg: bloodGroup,
-          stdadd: address,
-          stdphoto: response.data.imageUrl,
-          stdpg: father,
-          stdpo: fatherOccupation,
-          stdph: phoneNo,
-          stdemail: email,          
-        }).then(() => {          
-          console.log("Successfully Created");
-          setAdmissionId("");
-          setFullName("");
-          setGender("");
-          setDobDate("");
-          setReligion("");
-          setCast("");
-          setNationality("");
-          setSclass("");
-          setSSection("");
-          setRollNo("");
-          setBloodGroup("");
-          setAddress("");
-          setImage();
-          setFather("");
-          setFatherOccupation("");
-          setPhone("");
-          setEmail("");
-          window.scrollTo(0, 0);
-        });          
-        })
-   
-
-    // Once all the files are uploaded 
-    axios.all(uploaders).then(() => {
-      console.log('done');
-    }).catch(err => alert(err.message));
-  }
+    // Make an AJAX upload request using Axios
+    return Axios.post(
+      "https://db.edusoft.entema-software.com/upload",
+      data
+    ).then((response) => {
+      //console.log(response.data.imageUrl);
+      //setImageName(response.data.imageUrl)
+      Axios.post("https://db.edusoft.entema-software.com/createStudent", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+        stdname: fullName,
+        stdgender: gender,
+        stddob: setDateFormat(dob),
+        stddoj: setDateFormat(doj),
+        stdrel: religion,
+        stdcast: cast,
+        stdntn: nationality,
+        stdclass: Sclass,
+        stdsec: Ssection,
+        stdroll: rollno,
+        stdbg: bloodGroup,
+        stdadd: address,
+        stdphoto: response.data.imageUrl,
+        stdpg: father,
+        stdpo: fatherOccupation,
+        stdph: phoneNo,
+        stdemail: email,
+      }).then(() => {
+        // console.log("Successfully Created");
+        setAdmissionId("");
+        setFullName("");
+        setGender("");
+        setDobDate("");
+        setReligion("");
+        setCast("");
+        setNationality("");
+        setSclass("");
+        setSSection("");
+        setRollNo("");
+        setBloodGroup("");
+        setAddress("");
+        setImage();
+        setFather("");
+        setFatherOccupation("");
+        setPhone("");
+        setEmail("");
+        window.scrollTo(0, 0);
+      });
+    });
+  };
 
   return (
     <>
@@ -481,7 +477,11 @@ function AdmissionForm() {
                   <label className="text-dark-medium">
                     Upload Student Photo
                   </label>
-                  <input type="file" name="image" onChange={(e)=>handleChange(e)} />
+                  <input
+                    type="file"
+                    name="image"
+                    onChange={(e) => handleChange(e)}
+                  />
                 </div>
                 <div className="col-xl-3 col-lg-6 col-12 form-group">
                   <label htmlFor="bloodgroup">bloodgroup</label>

@@ -30,7 +30,7 @@ function TeacherExitUpdate(props) {
       })
       .then((res) => {
         if (res.data.length > 0) {
-          console.log(res.data);
+          //console.log(res.data);
           setId(res.data[0].TEACHERS_ID);
           setName(res.data[0].TCH_NAME);     
           setDojDate(res.data[0].TCH_DOJ);
@@ -71,7 +71,7 @@ function TeacherExitUpdate(props) {
           tchReason: reason,
         })
         .then(() => {
-          console.log("Successfully Created");
+          //console.log("Successfully Created");
           history.push("/TeachERep");
         });
     }

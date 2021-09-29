@@ -101,7 +101,7 @@ function Notice() {
             rows = rows + "," + res.data[i].STD_PHONE;
           }
         }
-        console.log("rows:", rows);
+        //console.log("rows:", rows);
         setPno(rows);
         //console.log("result set in effect: ", res.data);
       });
@@ -135,9 +135,9 @@ function Notice() {
             numbers: pno,
           })
           .then(() => {
-            console.log("SMS SENT");
+            //console.log("SMS SENT");
           });
-        console.log("Successfully Created");
+       // console.log("Successfully Created");
         setTitle("");
         setDetails("");
         setPostedto("");

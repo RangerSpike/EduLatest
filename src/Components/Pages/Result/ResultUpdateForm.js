@@ -155,7 +155,7 @@ function ResultUpdateForm(props) {
 
     final = parseInt(iA) + parseInt(ext);
     percentage = (parseInt(final) / parseInt(CalulatedFor)) * 100;
-    console.log(percentage);
+    //console.log(percentage);
 
     if (percentage < 35) {
       Result = "Fail";

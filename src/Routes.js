@@ -46,7 +46,13 @@ function Routes() {
     <>
       <Router>
         <Switch>
-          <Route exact path="/Dashboard" component={Dashboard} />
+
+          {localStorage.getItem("Role") === "Admin" ? (
+            <Route exact path="/Dashboard" component={Dashboard} />
+          ) : (
+            <Route exact path="/Dashboard" component={TeacherDash} />
+          )}
+
           <Route exact path="/CallDetails" component={CallDetails} />
 
           <Route path="/EduCallDashboard">
@@ -113,7 +119,6 @@ function Routes() {
             path="/TeacherLeaveReport"
             component={TeacherLeaveReport}
           />
-          <Route exact path="/TeacherDash" component={TeacherDash} />
           <Route exact path="/SalaryReport" component={SalaryReport} />
 
           <Route exact path="/Users" component={Users} />

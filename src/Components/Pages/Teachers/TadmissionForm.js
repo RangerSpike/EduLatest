@@ -80,7 +80,7 @@ function Tadmissionform() {
   };
 
   const handleChange = (e) => {
-    console.log(e.target.value);
+    //console.log(e.target.value);
 
     const input = e.target.name;
     if (input === "name") {
@@ -91,7 +91,7 @@ function Tadmissionform() {
       setAddress(e.target.value);
     } else if (input === "img") {
       setImage(e.target.files[0]);
-      console.log(e.target.files[0]);
+      //console.log(e.target.files[0]);
     } else if (input === "phoneNo") {
       setPhoneNo(e.target.value);
     } else if (input === "Yoe") {

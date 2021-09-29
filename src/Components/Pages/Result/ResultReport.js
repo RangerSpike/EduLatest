@@ -24,7 +24,7 @@ function ResultReport() {
       })
       .then((res) => {
         if (res.data.length > 0) {
-          console.log(res.data);
+          //console.log(res.data);
           setData(res.data);
         }
       });

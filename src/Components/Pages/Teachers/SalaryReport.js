@@ -19,7 +19,7 @@ function SalaryReport() {
       },
     }).then((res) => {
       setData(res.data);
-      console.log("setData: ", res.data);
+      //console.log("setData: ", res.data);
     });
   };
 
@@ -31,7 +31,7 @@ function SalaryReport() {
       },
     }).then((res) => {
       setExitData(res.data);
-      console.log("setExitData ", res.data);
+     // console.log("setExitData ", res.data);
     });
   };
 

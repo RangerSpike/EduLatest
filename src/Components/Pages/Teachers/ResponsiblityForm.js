@@ -103,7 +103,7 @@ function ResponsiblityForm() {
   };
 
   const handleSubmit = (e) => {
-    console.log("Submit Started", taskList);
+    //.log("Submit Started", taskList);
     e.preventDefault();
     if (taskList.length > 0) {
       axios
@@ -121,7 +121,7 @@ function ResponsiblityForm() {
           setYearLov([]);
           setTeacher("");
           setTeacherLov([]);
-          console.log("Values Submitted");
+          //console.log("Values Submitted");
         });
     } else {
       notifyrow();
@@ -165,7 +165,7 @@ function ResponsiblityForm() {
                   value={Year}
                   onChange={(e) => {
                     setYear(e.target.value);
-                    console.log(e.target.value);
+                    //console.log(e.target.value);
                   }}
                 >
                   <option value="" data-select2-id="9">
@@ -188,7 +188,7 @@ function ResponsiblityForm() {
                   value={Teachers}
                   onChange={(e) => {
                     setTeacher(e.target.value);
-                    console.log(e.target.value);
+                    //console.log(e.target.value);
                   }}
                 >
                   <option value="" data-select2-id="9">
