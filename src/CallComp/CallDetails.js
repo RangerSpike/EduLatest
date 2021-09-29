@@ -35,22 +35,22 @@ function CallDetails() {
   };
 
   const handleSubmit = (e) => {
-    
+    history.push('/EduCallLoginPage');
     e.preventDefault();
-    Axios.post("http://localhost:3004/insertOnlineClass", {
-        header: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        },
-        stdclass: Sclass,
-        stdsec: Ssection,
-        Teachers:Teachers,
-        timings:timings,
-      }).then(() => {
-        console.log("Successfully Created");
-        //history.push('/EduCallLoginPage');
-        notifymin()
-      });
+    // Axios.post("http://localhost:3004/insertOnlineClass", {
+    //     header: {
+    //       "Access-Control-Allow-Origin": "*",
+    //       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+    //     },
+    //     stdclass: Sclass,
+    //     stdsec: Ssection,
+    //     Teachers:Teachers,
+    //     timings:timings,
+    //   }).then(() => {
+    //     console.log("Successfully Created");
+    //     //history.push('/EduCallLoginPage');
+    //     notifymin()
+    //   });
   };
 
   const optionClass = [
