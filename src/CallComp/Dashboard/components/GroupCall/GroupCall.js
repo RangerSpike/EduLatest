@@ -4,12 +4,10 @@ import GroupCallButton from '../GroupCallButton/GroupCallButton';
 import { callStates, setLocalCameraEnabled, setLocalMicrophoneEnabled } from '../../../store/actions/callActions';
 import * as webRTCGroupCallHandler from '../../../utils/webRTC/webRTCGroupCallHandler';
 import GroupCallRoom from '../GroupCallRoom/GroupCallRoom';
-import ConversationButtons from '../ConversationButtons/ConversationButtons';
-import RemoteVideoView from '../RemoteVideoView/RemoteVideoView';
 
 const GroupCall = (props) => {
   // eslint-disable-next-line
-  const { callState, localStream, groupCallActive, groupCallStreams,remoteStream} = props;
+  const { callState, localStream, groupCallActive, groupCallStreams } = props;
 
   const createRoom = () => {
     webRTCGroupCallHandler.createNewGroupCall();
@@ -21,13 +19,10 @@ const GroupCall = (props) => {
 
   return (
     <>
-    {remoteStream && callState === callStates.CALL_IN_PROGRESS && <RemoteVideoView remoteStream={remoteStream} />}
       {!groupCallActive && localStream && callState !== callStates.CALL_IN_PROGRESS &&
         <GroupCallButton onClickHandler={createRoom} label='Create room' />}
       {groupCallActive && <GroupCallRoom {...props} />}
-      {remoteStream && callState === callStates.CALL_IN_PROGRESS && <ConversationButtons {...props} />}
       {groupCallActive && <GroupCallButton onClickHandler={leaveRoom} label='Leave room' />}
-
     </>
   );
 };

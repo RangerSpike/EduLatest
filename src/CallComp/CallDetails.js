@@ -35,24 +35,24 @@ function CallDetails() {
   };
 
   const handleSubmit = (e) => {
-    history.push('/EduCallLoginPage');
+    //history.push('/EduCallLoginPage');
     e.preventDefault();
-    // Axios.post("https://db.edusoft.entema-software.com/insertOnlineClass", {
-    //   header: {
-    //     "Access-Control-Allow-Origin": "*",
-    //     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-    //   },
-    //   stdclass: Sclass,
-    //   stdsec: Ssection,
-    //   Teachers: Teachers,
-    //   timings: timings,
-    // }).then(() => {
-    //   console.log("Successfully Created");
-    //   setTimeout(() => {
-    //     history.push("/EduCallLoginPage");
-    //   }, 1400);
-    //   notifymin();
-    //});
+    Axios.post("https://db.edusoft.entema-software.com/insertOnlineClass", {
+      header: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
+      stdclass: Sclass,
+      stdsec: Ssection,
+      Teachers: Teachers,
+      timings: timings,
+    }).then(() => {
+      console.log("Successfully Created");
+      setTimeout(() => {
+        history.push("/EduCallLoginPage");
+      }, 1400);
+      notifymin();
+    });
   };
 
   const optionClass = [
