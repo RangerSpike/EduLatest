@@ -71,6 +71,7 @@ function Notice() {
   let pList = {
     pno: 0,
   };
+  let rows ;
   const getData = () => {
     axios
       .get("https://db.edusoft.entema-software.com/getNotice", {
@@ -80,9 +81,11 @@ function Notice() {
         },
       })
       .then((res) => {
-        setData(res.data);
-        setDate(res.data[0].DATE);
-        //console.log("result set in effect: ", res.data);
+        if (res.data.length > 0) {
+          setData(res.data);
+          setDate(res.data[0].DATE);
+          //console.log("result set in effect: ", res.data);
+        }
       });
 
     axios
@@ -93,12 +96,13 @@ function Notice() {
         },
       })
       .then((res) => {
-        let rows = "";
-        for (let i = 0; i < res.data.length; i++) {
-          if (rows === "") {
-            rows = res.data[i].STD_PHONE;
-          } else {
-            rows = rows + "," + res.data[i].STD_PHONE;
+        if (res.data.length > 0) {          
+          for (let i = 0; i < res.data.length; i++) {
+            if (rows === "") {
+              rows = res.data[i].STD_PHONE;
+            } else {
+              rows = rows + "," + res.data[i].STD_PHONE;
+            }
           }
         }
         //console.log("rows:", rows);
@@ -131,13 +135,17 @@ function Notice() {
               "Access-Control-Allow-Methods":
                 "GET,PUT,POST,DELETE,PATCH,OPTIONS",
             },
-            message: "Title : "+title + `\nDetails : ${details}`+ `\nRegards : ${postedto}`,
+            message:
+              "Title : " +
+              title +
+              `\nDetails : ${details}` +
+              `\nRegards : ${postedto}`,
             numbers: pno,
           })
           .then(() => {
             //console.log("SMS SENT");
           });
-       // console.log("Successfully Created");
+        // console.log("Successfully Created");
         setTitle("");
         setDetails("");
         setPostedto("");

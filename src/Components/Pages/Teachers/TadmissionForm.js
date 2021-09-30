@@ -37,7 +37,10 @@ function Tadmissionform() {
     data.append("image", img, img.name);
 
     // Make an AJAX upload request using Axios
-    return Axios.post("https://db.edusoft.entema-software.com/upload", data).then((response) => {
+    return Axios.post(
+      "https://db.edusoft.entema-software.com/upload",
+      data
+    ).then((response) => {
       Axios.post("https://db.edusoft.entema-software.com/createTeacher", {
         tch_name: name,
         tch_gender: gender,
@@ -91,7 +94,7 @@ function Tadmissionform() {
       setAddress(e.target.value);
     } else if (input === "img") {
       setImage(e.target.files[0]);
-      //console.log(e.target.files[0]);
+      // console.log(e.target.files[0]);
     } else if (input === "phoneNo") {
       setPhoneNo(e.target.value);
     } else if (input === "Yoe") {
@@ -326,7 +329,7 @@ function Tadmissionform() {
                 id="prevSchool"
                 cols="10"
                 rows="3"
-                disabled={!Yoe}
+                disabled={Yoe > 0 ? true : false}
                 value={prevSchool}
                 onChange={(e) => handleChange(e)}
               />

@@ -202,7 +202,7 @@ export default function Dashboard() {
     Leaves: 0,
     DOM: 0,
     amt: 5,
-  }
+  }  
 
   useEffect(() => {
     getData();
@@ -211,9 +211,11 @@ export default function Dashboard() {
   }, []);
 
   let rows = [];
+  let totrows = [];
 
   const [tchBdata, setTchBdata] = useState([]);
   const [overAllTeacher, setOverAllTeacher] = useState([]);
+  const [totData, setTchTotdata] = useState([]);
 
   const getTeacherData = () => {
     axios
@@ -226,7 +228,7 @@ export default function Dashboard() {
       .then((res) => {
         if (res.data.length > 0) {
           //console.log("teachersLengt: ", res.data);
-          setOverAllTeacher(res.data.length)
+          setOverAllTeacher(res.data.length);
           for (let i = 0; i < res.data.length; i++) {
             rows.push(barDataTemplate);
 
@@ -237,8 +239,19 @@ export default function Dashboard() {
               amt: +5,
             };
           }
-          //console.log("Saman ke row", rows);
           setTchBdata(rows);
+          for (let i = 0; i < res.data.length; i++) {
+            totrows.push(barDataTemplate);
+
+            totrows[i] = {
+              name: res.data[i].TCH_NAME,
+              TotalLeaves: res.data[i].TOTALLEAVES,
+              DOM: res.data[i].DOM,
+              amt: +5,
+            };
+          }
+          //console.log("Saman ke row", rows);
+          setTchTotdata(totrows);
         }
       });
   };
@@ -391,7 +404,6 @@ export default function Dashboard() {
           <Bar dataKey="Leaves" fill="#82ca9d" />
         </BarChart>
       </div>
-
       <div
         className="chart2"
         style={{ marginLeft: "750px", marginTop: "-400px" }}
@@ -437,6 +449,30 @@ export default function Dashboard() {
           <Tooltip />
         </PieChart>
       </div>
+
+      <div style={{ marginLeft: "40px", marginTop: "60px" }}>
+        <BarChart
+          width={500}
+          height={300}
+          data={totData}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="DOM" fill="#8884d8" />
+          <Bar dataKey="TotalLeaves" fill="#82ca9d" />
+        </BarChart>
+      </div>
+
+      
 
       <div className="featured">
         <div className="featuredItem" style={{ background: "lightgrey" }}>

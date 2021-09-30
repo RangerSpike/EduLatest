@@ -126,7 +126,7 @@ function Navbar() {
 
   return (
     <nav className="rabbit">
-      <Link to="/" className="rabbit-logo" onClick={closeMobileMenu}>
+      <Link to="/Dashboard" className="rabbit-logo" onClick={closeMobileMenu}>
         <img
           src="madcaplogot.png"
           alt="logo img"
