@@ -9,7 +9,7 @@ function SalaryReport() {
   const history = useHistory();
 
   const [data, setData] = useState([]);
-  const [exitData, setExitData] = useState([]);  
+  const [exitData, setExitData] = useState([]);
 
   const getData = () => {
     Axios.get("https://db.edusoft.entema-software.com/getTchLeaveMerger", {
@@ -31,7 +31,7 @@ function SalaryReport() {
       },
     }).then((res) => {
       setExitData(res.data);
-     // console.log("setExitData ", res.data);
+      console.log("setExitData ", res.data);
     });
   };
 
@@ -52,7 +52,7 @@ function SalaryReport() {
   };
 
   const calculateSalary = (dom, leaves, salary) => {
-    let perDaySAlary = parseInt(salary) / dom;    
+    let perDaySAlary = parseInt(salary) / dom;
     let attendedDays = 0;
     if (leaves > 3) {
       attendedDays = dom - (leaves - 3);
@@ -64,11 +64,19 @@ function SalaryReport() {
 
     return finalSalary.toFixed(2);
   };
-  const calculateExitSalary = (tod, edays, sal) => {
+
+  const calculateExitSalary = (tod, edays, sal, leaves) => {
     let perDaySAlary = parseInt(sal) / tod;
     let attendedDays = edays;
+    let finalLeaves = 0;
+    let finalSalary = 0;
 
-    let finalSalary = attendedDays * perDaySAlary;
+    if (leaves > 3) {
+      finalLeaves = leaves - 3;
+      finalSalary = (attendedDays - finalLeaves) * perDaySAlary;
+    } else {
+      finalSalary = attendedDays * perDaySAlary;
+    }
 
     return finalSalary.toFixed(2);
   };
@@ -401,7 +409,8 @@ function SalaryReport() {
                         {calculateExitSalary(
                           item.TOTAL_DAYS,
                           item.EXITED_DAYS,
-                          item.TCH_SALARY
+                          item.TCH_SALARY,
+                          item.LEAVE_COUNT
                         )}
                       </td>
                     </tr>
