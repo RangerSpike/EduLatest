@@ -111,15 +111,19 @@ function TeacherLeaveReport() {
         <div className="card-body">
           <div className="heading-layout1">
             <div className="item-title">
-              <h3 style={{ padding: "50px" }}>Teacher Salary Report</h3>
-              <button
-                type="button"
-                className="fw-btn-fill btn-gradient-yellow"
-                style={{ width: "100px", cursor: "pointer" }}
-                onClick={() => openAdForm()}
-              >
-                Generate Salaries
-              </button>
+              <h3 style={{ padding: "50px" }}>Teacher Leave Report</h3>
+              {localStorage.getItem("Role") === "Admin" ? (
+                <button
+                  type="button"
+                  className="fw-btn-fill btn-gradient-yellow"
+                  style={{ width: "100px", cursor: "pointer" }}
+                  onClick={() => openAdForm()}
+                >
+                  Generate Salaries
+                </button>
+              ) : (
+                null
+              )}
             </div>
           </div>
 
@@ -212,7 +216,7 @@ function TeacherLeaveReport() {
                       {/* <td style={styleback}>{item.stich_name}</td> */}
 
                       <td>{item.TCH_NAME}</td>
-                      <td style={{ wordBreak:"break-all"}}>{item.REASON}</td>
+                      <td style={{ wordBreak: "break-all" }}>{item.REASON}</td>
                       <td>{item.DOL}</td>
                       <td>{item.LEAVE_STATUS}</td>
                       {localStorage.getItem("Role") === "Admin" ? (
